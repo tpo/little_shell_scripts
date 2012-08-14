@@ -1,0 +1,3 @@
+#!/bin/sh
+
+less +G -f /var/log/kern.log
