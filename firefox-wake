@@ -2,3 +2,4 @@
 #
 pkill -CONT firefox
 pkill -CONT firefox-bin
+pkill -CONT plugin-container

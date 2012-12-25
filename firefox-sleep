@@ -2,3 +2,4 @@
 #
 pkill -STOP firefox
 pkill -STOP firefox-bin
+pkill -STOP plugin-container
