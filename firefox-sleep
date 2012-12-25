@@ -1,3 +1,4 @@
 #!/bin/bash
 #
 pkill -STOP firefox
+pkill -STOP firefox-bin

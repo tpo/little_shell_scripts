@@ -1,3 +1,4 @@
 #!/bin/bash
 #
 pkill -CONT firefox
+pkill -CONT firefox-bin
