@@ -1,5 +1,6 @@
 #!/bin/bash
 #
-pkill -STOP firefox
-pkill -STOP firefox-bin
-pkill -STOP plugin-container
+# Debian has firefox-bin Ubuntu firefox
+# Debian has fullpath with arguments
+pkill -STOP -f "(^|/)+firefox(-bin)*( |$)+"
+pkill -STOP -f "(^|/)+plugin-container( |$)+"

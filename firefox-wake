@@ -1,5 +1,5 @@
 #!/bin/bash
 #
-pkill -CONT firefox
-pkill -CONT firefox-bin
-pkill -CONT plugin-container
+# see firefox-sleep
+pkill -CONT -f "(^|/)+firefox(-bin)*( |$)+"
+pkill -CONT -f "(^|/)+plugin-container( |$)+"
