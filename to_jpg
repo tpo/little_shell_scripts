@@ -1,7 +1,16 @@
 #!/bin/bash
 #
+jpg_name() {
+  local filename="$1"
+  base=$( basename "$1" .png )
+  dir=$(  dirname  "$1" )
+  [ -z "$dir" ] && dir="."
+
+  echo "${dir}/${base}.jpg"
+}
+
 if [ "$2" == "" ]; then
-  gm convert $1 $1.jpg
+  gm convert "$1" $( jpg_name "$1" )
 else
-  gm convert $1 $2
+  gm convert "$1" "$2"
 fi
