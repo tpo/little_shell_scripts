@@ -11,3 +11,10 @@ help() {
 
 [ "$1" == "--help" ] && help
 
+# "xargs echo -n" removes trailing newline
+#
+if [ "$1" != "" ]; then
+  echo "$@" | xargs echo -n | xclip -i -selection clipboard
+else
+  xargs echo -n |xclip -i -selection clipboard
+fi
