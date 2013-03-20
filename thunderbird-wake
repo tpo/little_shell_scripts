@@ -1,0 +1,4 @@
+#!/bin/bash
+#
+# see thunderbird-sleep
+pkill -CONT thunderbird
