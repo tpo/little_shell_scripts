@@ -1,0 +1,23 @@
+#!/bin/bash
+#
+# abgeleitet von catwhich
+
+fullpath=`which $1`
+if [ "$?" == 0 ]; then
+   vim "$fullpath"
+else
+   location=`locate $1`
+   if [ "$?" == 0 ]; then
+
+      if [ `echo "$location"|wc -l` != 1 ]; then
+         echo "Ambiguous - multiple matches found" >&2
+         sleep 1
+	 location=`echo "$location"|head -n 1`
+      fi
+      vim "$location"
+   else
+
+      echo "Sorry none found"
+      exit -1
+   fi
+fi
