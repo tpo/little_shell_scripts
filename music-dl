@@ -1,0 +1,22 @@
+#!/bin/bash
+#
+# download URL from youtube, soundcloud etc. and transform to audio file
+
+cd /home/tpo/music
+
+file=$( youtube-dl --title --get-filename "$1" )
+
+youtube-dl --continue --title "$1"
+
+type=$( file "$file" )
+
+# check for known audio types
+if   echo "$type" | grep -q "Audio file"; then
+  true # do nothing
+elif echo "$type" | grep -q "MPEG ADTS" ; then
+  true # do nothing
+else
+  # extract audio
+  youtube-dl --continue --title --extract-audio "$1"
+fi
+
