@@ -1,5 +1,10 @@
 #!/bin/bash
 #
-# copy selection (mouse select) to clipboard (CTRL-V)
+help() {
+   echo "copy selection (mouse select) to clipboard (CTRL-V)"
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
 
 xclip -o | xclip -i -selection clipboard
