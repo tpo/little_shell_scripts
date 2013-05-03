@@ -1,0 +1,5 @@
+#!/bin/bash
+#
+# copy_stdin_to_file file_name
+
+cat > "$1"
