@@ -1,0 +1,19 @@
+#!/bin/bash
+#
+help() {
+   echo "$0 [file]"
+   echo
+   echo "copy file to clipboard (CTRL-V)"
+   echo "if no file is given, copies stdin"
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+(
+  if [ -z "$1" ]; then
+    cat
+  else
+    cat "$1"
+  fi
+) | xclip -i -selection clipboard
