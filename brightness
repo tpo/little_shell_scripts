@@ -1,6 +1,14 @@
 #!/bin/bash
 
-if [ -z "$1" ]; then
+help() {
+  echo "$0 [percent]"
+  echo 
+  echo "    set brightness to percent (default ist 60%)"
+}
+
+if [ "$1" == "--help" ]; then
+   help
+elif [ -z "$1" ]; then
    percent=60
 else
    percent=$1
