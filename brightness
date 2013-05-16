@@ -9,3 +9,4 @@ fi
 max=$( cat /sys/class/backlight/intel_backlight/max_brightness )
 want=$(( $max / 100 * $percent ))
 sudo sh -c "echo $want > /sys/class/backlight/intel_backlight/brightness"
+echo "set brightness to $percent"
