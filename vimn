@@ -1,0 +1,5 @@
+#!/bin/bash
+
+file=$( echo "$1"|sed 's/:.*//' )
+line=$( echo "$1"|sed 's/.*://' )
+vim +$line $file
