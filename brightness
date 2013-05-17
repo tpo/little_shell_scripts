@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+   percent=60
+else
+   percent=$1
+fi
+
+max=$( cat /sys/class/backlight/intel_backlight/max_brightness )
+want=$(( $max / 100 * $percent ))
+sudo sh -c "echo $want > /sys/class/backlight/intel_backlight/brightness"
