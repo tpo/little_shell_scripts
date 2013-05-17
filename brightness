@@ -3,7 +3,7 @@
 help() {
   echo "$0 [percent]"
   echo 
-  echo "    set brightness to percent (default ist 60%)"
+  echo "    set panel brightness on intel chips in percent (default ist 60%)"
 }
 
 if [ "$1" == "--help" ]; then
