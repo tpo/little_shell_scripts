@@ -1,0 +1,3 @@
+#!/bin/sh
+
+wget ${1:-sourcepole.ch} -O /dev/null
