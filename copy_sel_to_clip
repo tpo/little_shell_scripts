@@ -1,7 +1,10 @@
 #!/bin/bash
-#
+
 help() {
-   echo "copy selection (mouse select) to clipboard (CTRL-V)"
+   echo 'usage: copy_sel_to_clip'
+   echo
+   echo 'copy selection (mouse select) to clipboard (CTRL-V)'
+   echo
    exit 1
 }
 

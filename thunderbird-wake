@@ -1,4 +1,15 @@
 #!/bin/bash
-#
-# see thunderbird-sleep
+
+help() {
+   echo 'usage: thunderbird-wake'
+   echo
+   echo 'wake up all thunderbird processes'
+   echo
+   echo 'See also: thunderbird-sleep'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
 pkill -CONT thunderbird

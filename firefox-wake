@@ -1,5 +1,18 @@
 #!/bin/bash
-#
-# see firefox-sleep
+
+help() {
+   echo 'usage: firefox-wake'
+   echo
+   echo 'wake up all firefox (and plugin) processes'
+   echo
+   echo "Note: it's advisable to add an 'alias ffw=firefox-wake"
+   echo
+   echo 'See also: firefox-sleep'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
 pkill -CONT -f "(^|/)+firefox(-bin)*( |$)+"
 pkill -CONT -f "(^|/)+plugin-container( |$)+"

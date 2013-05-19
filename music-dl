@@ -1,8 +1,14 @@
 #!/bin/bash
-#
-# download URL from youtube, soundcloud etc. and transform to audio file
 
-cd /home/tpo/music
+help() {
+  echo 'usage: music-dl URL'
+  echo
+  echo 'download URL from youtube, soundcloud etc. and transform to audio file'
+  echo
+  exit 1
+}
+
+[ "$1" == "--help" ] && help
 
 file=$( youtube-dl --title --get-filename "$1" )
 

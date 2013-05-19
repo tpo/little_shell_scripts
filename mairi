@@ -1,12 +1,12 @@
 #!/bin/bash
 
 help() {
-  echo "mairi _search _parameters"
+  echo 'usage: mairi _search _parameters'
   echo
-  echo "mairi searches your mail and displays results in mutt"
+  echo 'mairi searches your mail and displays results in mutt'
   echo
-  echo "mairi is a simple wrapper around mairix and mutt and accepts"
-  echo "the same parameters as mairix"
+  echo 'mairi is a simple wrapper around mairix and mutt and accepts'
+  echo 'the same parameters as mairix'
   exit 1
 }
 

@@ -1,16 +1,14 @@
 #!/bin/bash
 
 help() {
-   echo 'catwhich executable'
+   echo 'usage: catwhich executable'
    echo
    echo '    cat executable that is somewhere in $PATH'
    echo '    or can be located via "locate"'
    exit
 }
 
-if [ "$1" == "--help" ]; then
-   help
-fi
+[ "$1" == "--help" ] && help
 
 fullpath=`which $1`
 if [ "$?" == 0 ]; then

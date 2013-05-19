@@ -1,5 +1,19 @@
 #!/bin/bash
-#
+
+help() {
+   echo 'usage: firefox-sleep'
+   echo
+   echo 'suspend all firefox (and plugin) processes'
+   echo
+   echo "Note: it's advisable to add an 'alias ffs=firefox-sleep"
+   echo
+   echo 'See also: firefox-sleep'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
 # Debian has firefox-bin Ubuntu firefox
 # Debian has fullpath with arguments
 pkill -STOP -f "(^|/)+firefox(-bin)*( |$)+"

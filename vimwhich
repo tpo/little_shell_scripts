@@ -1,6 +1,17 @@
 #!/bin/bash
 #
-# abgeleitet von catwhich
+# derived von catwhich
+
+help() {
+   echo 'usage: vimwhich'
+   echo
+   echo 'edits executable that is somewhere in $PATH'
+   echo '    or can be located via "locate"'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
 
 fullpath=`which $1`
 if [ "$?" == 0 ]; then

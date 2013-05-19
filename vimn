@@ -1,5 +1,15 @@
 #!/bin/bash
 
+help() {
+   echo 'usage: vimn file:n'
+   echo
+   echo "edit file and jump to line 'n'"
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
 file=$( echo "$1"|sed 's/:.*//' )
 line=$( echo "$1"|sed 's/.*://' )
 vim +$line $file

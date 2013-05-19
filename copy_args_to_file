@@ -1,15 +1,11 @@
 #!/bin/bash
-#
-# copy_args_to_file file_name arg1 arg2 ...
-#
-# copy arguments to file
 
 help() {
-   echo "copy arguments to file"
+   echo 'usage: to_copy_args file_name arg1 arg2 ...'
    echo
-   echo "usage: to_copy_args file_name arg1 arg2 ..."
+   echo 'copy arguments to file'
    echo
-   echo "  if no argument is given, then copy stdin to clipboard"
+   echo '  if no argument is given, then copy stdin to clipboard'
    exit 1
 }
 

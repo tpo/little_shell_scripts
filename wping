@@ -1,3 +1,14 @@
 #!/bin/sh
 
+help() {
+   echo 'usage: wping [URL]'
+   echo
+   echo 'retrieves website via HTTP in order to see whether the web/internet'
+   echo 'works. Default site is http://sourcepole.ch'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
 wget ${1:-sourcepole.ch} -O /dev/null

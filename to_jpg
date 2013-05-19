@@ -1,5 +1,15 @@
 #!/bin/bash
-#
+
+help() {
+   echo 'usage: to_jpg image.png [image.jpg]'
+   echo
+   echo 'transform png image to jpg format'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
 jpg_name() {
   local filename="$1"
   base=$( basename "$1" .png )
