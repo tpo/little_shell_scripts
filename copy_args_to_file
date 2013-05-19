@@ -6,6 +6,7 @@ help() {
    echo 'copy arguments to file'
    echo
    echo '  if no argument is given, then copy stdin to clipboard'
+   echo 
    exit 1
 }
 

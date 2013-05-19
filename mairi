@@ -7,6 +7,7 @@ help() {
   echo
   echo 'mairi is a simple wrapper around mairix and mutt and accepts'
   echo 'the same parameters as mairix'
+  echo 
   exit 1
 }
 

@@ -5,6 +5,7 @@ help() {
    echo
    echo '    cat executable that is somewhere in $PATH'
    echo '    or can be located via "locate"'
+   echo 
    exit
 }
 

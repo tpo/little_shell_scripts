@@ -4,6 +4,7 @@ help() {
   echo 'usage: brightness [percent]'
   echo 
   echo '    set panel brightness on intel chips in percent (default ist 60%)'
+  echo 
   exit
 }
 
