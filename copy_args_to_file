@@ -4,6 +4,17 @@
 #
 # copy arguments to file
 
+help() {
+   echo "copy arguments to file"
+   echo
+   echo "usage: to_copy_args file_name arg1 arg2 ..."
+   echo
+   echo "  if no argument is given, then copy stdin to clipboard"
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
 file="$1"
 shift 1
 
