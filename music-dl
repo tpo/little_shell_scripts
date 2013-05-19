@@ -3,7 +3,7 @@
 help() {
   echo 'usage: music-dl URL'
   echo
-  echo 'download URL from youtube, soundcloud etc. and transform to audio file'
+  echo '    download URL from youtube, soundcloud etc. and transform to audio file'
   echo
   exit 1
 }

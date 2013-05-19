@@ -3,11 +3,11 @@
 help() {
    echo 'usage: firefox-sleep'
    echo
-   echo 'suspend all firefox (and plugin) processes'
+   echo '    suspend all firefox (and plugin) processes'
    echo
-   echo "Note: it's advisable to add an 'alias ffs=firefox-sleep"
+   echo "    Note: it's advisable to add an 'alias ffs=firefox-sleep"
    echo
-   echo 'See also: firefox-sleep'
+   echo '    See also: firefox-sleep'
    echo
    exit 1
 }

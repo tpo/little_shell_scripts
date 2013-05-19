@@ -3,8 +3,8 @@
 help() {
    echo 'usage: wping [URL]'
    echo
-   echo 'retrieves website via HTTP in order to see whether the web/internet'
-   echo 'works. Default site is http://sourcepole.ch'
+   echo '    retrieves website via HTTP in order to see whether the web/internet'
+   echo '    works. Default site is http://sourcepole.ch'
    echo
    exit 1
 }

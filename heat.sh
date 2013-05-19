@@ -3,9 +3,9 @@
 help() {
    echo 'usage: heat.sh'
    echo
-   echo 'run infinite loop that will consume 100% of a CPU core'
+   echo '    run infinite loop that will consume 100% of a CPU core'
    echo
-   echo 'Useful for fan and temperature regulation testing'
+   echo '    Useful for fan and temperature regulation testing'
    echo
    exit 1
 }

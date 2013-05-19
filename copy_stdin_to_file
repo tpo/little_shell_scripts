@@ -3,7 +3,7 @@
 help() {
    echo 'usage: copy_stdin_to_file file_name'
    echo
-   echo 'copy input to file'
+   echo '    copy input to file'
    echo
    exit 1
 }

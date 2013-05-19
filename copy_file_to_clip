@@ -3,9 +3,9 @@
 help() {
    echo 'usage: copy_file_to_clip [file]'
    echo
-   echo 'copy file to clipboard (CTRL-V)'
+   echo '    copy file to clipboard (CTRL-V)'
    echo
-   echo 'if no file is given, copies stdin'
+   echo '    if no file is given, copies stdin'
    echo
    exit 1
 }

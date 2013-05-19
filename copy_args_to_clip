@@ -3,9 +3,9 @@
 help() {
    echo 'usage: to_copy_args arg1 arg2 ...'
    echo
-   echo 'copy arguments to clipboard (CTRL-V)'
+   echo '    copy arguments to clipboard (CTRL-V)'
    echo
-   echo '  if no argument is given, then copy stdin to clipboard'
+   echo '    if no argument is given, then copy stdin to clipboard'
    echo 
    exit 1
 }

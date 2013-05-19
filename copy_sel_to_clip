@@ -3,7 +3,7 @@
 help() {
    echo 'usage: copy_sel_to_clip'
    echo
-   echo 'copy selection (mouse select) to clipboard (CTRL-V)'
+   echo '    copy selection (mouse select) to clipboard (CTRL-V)'
    echo
    exit 1
 }

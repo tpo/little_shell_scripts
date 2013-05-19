@@ -3,7 +3,7 @@
 help() {
    echo 'usage: vimn file:n'
    echo
-   echo "edit file and jump to line 'n'"
+   echo "    edit file and jump to line 'n'"
    echo
    exit 1
 }

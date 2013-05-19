@@ -3,7 +3,7 @@
 help() {
    echo 'usage: to_jpg image.png [image.jpg]'
    echo
-   echo 'transform png image to jpg format'
+   echo '    transform png image to jpg format'
    echo
    exit 1
 }

@@ -3,9 +3,9 @@
 help() {
    echo 'usage: thunderbird-wake'
    echo
-   echo 'wake up all thunderbird processes'
+   echo '    wake up all thunderbird processes'
    echo
-   echo 'See also: thunderbird-sleep'
+   echo '    See also: thunderbird-sleep'
    echo
    exit 1
 }
