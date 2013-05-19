@@ -4,4 +4,7 @@
 #
 # copy arguments to file
 
-echo "$@" > "$1"
+file="$1"
+shift 1
+
+echo "$@" > "$file"
