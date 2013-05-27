@@ -129,6 +129,21 @@ usage: vimwhich
     edits executable that is somewhere in $PATH
     or can be located via "locate"
 
+### vimx
+
+usage: vimx [params] file
+       vimx --help
+
+    create and edit executable bash script
+
+### vimxb
+
+usage: vimx [params] file
+       vimx --help
+
+    create and edit executable bash script under ~/bin
+
+
 ### wping
 
 usage: wping [URL]
