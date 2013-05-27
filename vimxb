@@ -1,0 +1,27 @@
+#!/bin/bash
+#
+# based off vimx
+
+help() {
+   echo 'usage: vimx [params] file'
+   echo '       vimx --help'
+   echo
+   echo '    create and edit executable bash script under ~/bin'
+   echo
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+set -e
+
+eval "thefile=\${$#}"
+
+if [[ "$thefile" =~ / ]]; then
+  echo "only filenames without paths allowed"
+  exit -1
+fi
+
+cd ~/bin
+vimx "$@"
