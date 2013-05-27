@@ -1,0 +1,27 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: vimx [params] file'
+   echo '       vimx --help'
+   echo
+   echo '    create and edit executable bash script'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+set -e
+
+# file must be the last parameter
+# http://brian.pontarelli.com/2007/11/27/the-last-positional-parameter-in-bash/
+eval "thefile=\${$#}"
+
+if [ ! -e "$thefile" ]; then
+  vim -c '0,0i
+#!/bin/bash
+#' "$@"
+  chmod +x $thefile
+else
+  vim "$@"
+fi
