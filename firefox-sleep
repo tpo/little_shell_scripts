@@ -17,4 +17,5 @@ help() {
 # Debian has firefox-bin Ubuntu firefox
 # Debian has fullpath with arguments
 pkill -STOP -f "(^|/)+firefox(-bin)*( |$)+"
+pkill -STOP -f "x-www-browser"
 pkill -STOP -f "(^|/)+plugin-container( |$)+"
