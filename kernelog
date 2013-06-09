@@ -1,3 +1,14 @@
-#!/bin/sh
+#!/bin/bash
+
+help() {
+  echo 'usage: kernelog'
+  echo
+  echo '    Will jump to the end of /var/log/kern.log, page it with'
+  echo "    'less' and update it when it changes."
+  echo 
+  exit 1
+}
+
+[ "$1" == "--help" ] && help
 
 sudo less +G -f /var/log/kern.log
