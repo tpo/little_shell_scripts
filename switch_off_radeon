@@ -1,0 +1,21 @@
+#!/bin/bash
+#
+# see http://mschoofs.blogspot.ch/2012/07/switch-off-ati-vga-in-hybrid-cards-with.html
+
+help() {
+  echo 'usage: switch_off_radeon'
+  echo
+  echo '    tries to switch off the heat producing Radeon VGA card'
+  echo
+  exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+sudo sh -c "echo OFF > /sys/kernel/debug/vgaswitcheroo/switch"
+if lspci -vnnn | grep VGA | grep "Advanced Micro Devices" | grep -q "prog-if ff"; then
+  echo "successfull switched off Radeon"
+else
+  echo "failed to switch off Radeon"
+  exit 1
+fi
