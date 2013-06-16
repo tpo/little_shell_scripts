@@ -15,6 +15,12 @@ usage: catwhich executable
     cat executable that is somewhere in $PATH
     or can be located via "locate"
 
+### changelog
+
+usage: changelog
+
+    edit the user's system changelog
+
 ### copy_args_to_clip
 
 usage: to_copy_args arg1 arg2 ...

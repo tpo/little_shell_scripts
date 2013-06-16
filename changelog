@@ -1,0 +1,15 @@
+#!/bin/bash
+
+help() {
+  echo 'usage: changelog'
+  echo 
+  echo "    edit the user's system changelog"
+  echo 
+  exit
+}
+
+if [ "$1" == "--help" ]; then
+   help
+fi
+
+vim ~/doc/comp/ChangeLog
