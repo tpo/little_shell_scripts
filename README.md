@@ -4,9 +4,9 @@ Here's the --help for each shell script:
 
 ### brightness
 
-usage: brightness [percent]
+usage: brightness [--show|percent]
 
-    set panel brightness on intel chips in percent (default ist 60%)
+    set or show panel brightness on intel chips in percent (default ist 60%)
 
 ### catwhich
 

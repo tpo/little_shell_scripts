@@ -1,22 +1,34 @@
 #!/bin/bash
 
 help() {
-  echo 'usage: brightness [percent]'
+  echo 'usage: brightness [--show|percent]'
   echo 
-  echo '    set panel brightness on intel chips in percent (default ist 60%)'
+  echo '    set or show panel brightness on intel chips in percent (default ist 60%)'
   echo 
   exit
 }
 
 if [ "$1" == "--help" ]; then
    help
-elif [ -z "$1" ]; then
-   percent=60
-else
-   percent=$1
 fi
 
 max=$( cat /sys/class/backlight/intel_backlight/max_brightness )
-want=$(( $max / 100 * $percent ))
-sudo sh -c "echo $want > /sys/class/backlight/intel_backlight/brightness"
-echo "set brightness to $percent"
+
+if [ "$1" == "--show" ]; then
+   current=$( cat /sys/class/backlight/intel_backlight/brightness )
+   percent=$(( $current * 100 / $max ))
+   echo "current brightness is $percent%"
+   exit 0
+else
+
+   if [ -z "$1" ]; then
+      percent=60
+   else
+      percent=$1
+   fi
+
+   want=$(( $max / 100 * $percent ))
+   sudo sh -c "echo $want > /sys/class/backlight/intel_backlight/brightness"
+   echo "set brightness to $percent"
+   exit 0
+fi
