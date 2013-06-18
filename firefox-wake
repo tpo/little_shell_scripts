@@ -14,6 +14,7 @@ help() {
 
 [ "$1" == "--help" ] && help
 
+pkill -CONT -f "(^|/)+iceweasel( |$)+"
 pkill -CONT -f "(^|/)+firefox(-bin)*( |$)+"
 pkill -CONT -f "x-www-browser"
 pkill -CONT -f "(^|/)+plugin-container( |$)+"
