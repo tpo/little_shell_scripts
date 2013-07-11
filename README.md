@@ -2,6 +2,54 @@
 
 Here's the --help for each shell script:
 
+### bash_aliases
+
+These bash_aliases need to be called from ~/.bashrc or similar like this:
+
+    . /path/to/this/bash_aliases
+
+They provide to following commands:
+
+They provide to following commands:
+
+    df  - execute "df -h"
+    du  - execute "du -h"
+    bc  - allow for calculations with decimal places by default in bc
+    psa - show all processes but not kernel threads
+    hg  - grep shell history
+    hl  - page shell history
+    pg  - grep processes
+
+Shortcuts to put firefox or thunderbird to rest.
+Requires firefox-sleep/wake and thunderbird-sleep/wake
+
+    ffs, ffw, ths, thw
+
+git shortcuts
+
+    g    - status
+    gd   - diff
+    ga   - add
+    gc   - commit
+    gca  - commit -a
+    gcam - commit -a -m
+    gci  - commit --interactive
+
+chmod shortcuts
+
+    +x  file
+    +r  file
+    +w  file
+    a+x file
+    a+r file
+    a+w file
+
+change directory
+
+    cdreal  file - chdir to wherever the file is located
+    cdwhich file - chdir to wherever the executable is located
+    mcd     file - make directory and cd into it
+
 ### brightness
 
 usage: brightness [--show|percent]
