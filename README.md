@@ -8,9 +8,7 @@ These bash_aliases need to be called from ~/.bashrc or similar like this:
 
     . /path/to/this/bash_aliases
 
-They provide to following commands:
-
-They provide to following commands:
+They provide the following commands:
 
     df  - execute "df -h"
     du  - execute "du -h"

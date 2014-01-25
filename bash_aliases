@@ -5,9 +5,7 @@ help() {
   echo 
   echo '    . /path/to/this/bash_aliases'
   echo
-  echo 'They provide to following commands:'
-  echo
-  echo 'They provide to following commands:'
+  echo 'They provide the following commands:'
   echo
   echo '    df  - execute "df -h"'
   echo '    du  - execute "du -h"'
