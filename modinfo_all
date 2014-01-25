@@ -2,12 +2,16 @@
 
 help() {
   echo "$0 : list information on all currently installed kernel modules"
+  echo "$0 --desc : list only description of each module"
 }
 
 [ "$1" = "--help" ] && help && exit 1
 
 for i in  `lsmod | sed '1d' | cut -d ' ' -f 1-2`; do
   /bin/echo -e "module:\t\t$i"
-  /sbin/modinfo $i
-  echo
+  if [ "$1" = "--desc" ]; then
+    /sbin/modinfo $i | grep '^description:'
+  else
+    /sbin/modinfo $i
+  fi
 done

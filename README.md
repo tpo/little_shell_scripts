@@ -150,6 +150,7 @@ usage: mairi _search _parameters
 ### modinfo_all
 
 ./modinfo_all : list information on all currently installed kernel modules
+./modinfo_all --desc : list only description of each module
 ### music-dl
 
 usage: music-dl URL
