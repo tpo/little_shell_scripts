@@ -149,6 +149,9 @@ usage: mairi _search _parameters
     mairi is a simple wrapper around mairix and mutt and accepts
     the same parameters as mairix
 
+### modinfo_all
+
+./modinfo_all : list information on all currently installed kernel modules
 ### music-dl
 
 usage: music-dl URL
