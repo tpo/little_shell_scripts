@@ -103,6 +103,12 @@ usage: copy_stdin_to_file file_name
 
     copy input to file
 
+### exif-del
+
+usage: exif-del image
+
+    remove all meta-tags from exif informations
+
 ### firefox-sleep
 
 usage: firefox-sleep

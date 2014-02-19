@@ -1,0 +1,13 @@
+#!/bin/bash
+
+help() {
+  echo "usage: exif-del image"
+  echo
+  echo "    remove all meta-tags from exif informations"
+  echo
+  exit 255
+}
+
+[ "$1" == "--help" ] && help
+
+exiftool -All= "$1"
