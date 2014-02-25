@@ -1,0 +1,22 @@
+#!/bin/bash
+
+help() {
+  echo "usage: umount_encrypted mountpoint"
+  echo
+  echo "    see also mount_encrypted"
+  echo
+  exit 255
+}
+
+set -e # exit on error
+
+[ "$1" == "--help" ] || [ "$1" == "" ] && help
+
+# remove trailing slash
+MNT=$( echo "$1" | sed 's/\/$//' )
+CRYPT_DEV=$( mount | grep "on $MNT" | sed 's/ .*//' | sed 's/.*\///' )
+LOOP=$( cryptsetup status $CRYPT_DEV | grep device: | sed 's/.* //' )
+
+umount "$MNT"
+cryptsetup remove $CRYPT_DEV
+losetup -d $LOOP

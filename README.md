@@ -157,6 +157,12 @@ usage: mairi _search _parameters
 
 ./modinfo_all : list information on all currently installed kernel modules
 ./modinfo_all --desc : list only description of each module
+### mount_encrypted
+
+usage: mount_encrypted image mountpoint
+
+    see also umount_encrypted
+
 ### music-dl
 
 usage: music-dl URL
@@ -190,6 +196,12 @@ usage: thunderbird-wake
 usage: to_jpg image.png [image.jpg]
 
     transform png image to jpg format
+
+### umount_encrypted
+
+usage: umount_encrypted mountpoint
+
+    see also mount_encrypted
 
 ### vimn
 

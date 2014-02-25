@@ -1,0 +1,20 @@
+#!/bin/bash
+
+help() {
+  echo "usage: mount_encrypted image mountpoint"
+  echo
+  echo "    see also umount_encrypted"
+  echo
+  exit 255
+}
+
+[ "$1" == "--help" ] || [ "$1" == "" ] || [ "$2" == "" ] && help
+
+IMG="$1"
+DEV_NAME=$( realpath $IMG | tr -c '[:alnum:]' '_' )
+MNT="$2"
+LOOP=`losetup -f`
+losetup $LOOP "$IMG"
+cryptsetup create -c aes $DEV_NAME $LOOP
+mount /dev/mapper/$DEV_NAME "$MNT"
+
