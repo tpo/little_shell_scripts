@@ -169,6 +169,22 @@ usage: music-dl URL
 
     download URL from youtube, soundcloud etc. and transform to audio file
 
+### pas
+
+usage: pas
+
+    suspend all pulseaudio processes
+
+    See also: paw
+
+### paw
+
+usage: paw
+
+    wake up all pulseaudio processes
+
+    See also: pas
+
 ### switch_off_radeon
 
 usage: switch_off_radeon
