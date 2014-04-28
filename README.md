@@ -69,7 +69,7 @@ usage: changelog
 
 ### copy_args_to_clip
 
-usage: to_copy_args arg1 arg2 ...
+usage: copy_args_to_clip arg1 arg2 ...
 
     copy arguments to clipboard (CTRL-V)
 
@@ -77,7 +77,7 @@ usage: to_copy_args arg1 arg2 ...
 
 ### copy_args_to_file
 
-usage: to_copy_args file_name arg1 arg2 ...
+usage: copy_args_to_file file_name arg1 arg2 ...
 
     copy arguments to file
 

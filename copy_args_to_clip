@@ -1,7 +1,7 @@
 #!/bin/bash
 
 help() {
-   echo 'usage: to_copy_args arg1 arg2 ...'
+   echo 'usage: copy_args_to_clip arg1 arg2 ...'
    echo
    echo '    copy arguments to clipboard (CTRL-V)'
    echo
