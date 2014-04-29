@@ -219,6 +219,35 @@ usage: umount_encrypted mountpoint
 
     see also mount_encrypted
 
+### versioned_backup
+
+versioned_backup filename [.file_extension]
+
+  makes a versioned backup of filename. If provided
+  then the version number will be inserted before the
+  .file_extension
+
+  Example:
+
+  $ ls
+  foo
+  $ versioned_backup foo
+  $ ls
+  foo
+  foo.0001
+  $ versioned_backup foo
+  $ ls
+  foo
+  foo.0001
+  foo.0002
+  $ touch bar.mp3
+  $ versioned_backup bar .mp3
+  $ ls
+  foo
+  foo.0001
+  foo.0002
+  bar.mp3
+  bar.0001.mp3
 ### vimn
 
 usage: vimn file:n

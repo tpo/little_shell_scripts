@@ -1,0 +1,87 @@
+#!/usr/bin/ruby
+#
+# 1. make a versioned backup of a file
+
+require 'fileutils'    # File.copy
+require 'tempfile'
+
+def help_and_exit
+  puts "versioned_backup filename [.file_extension]"
+  puts
+  puts "  makes a versioned backup of filename. If provided"
+  puts "  then the version number will be inserted before the"
+  puts "  .file_extension"
+  puts
+  puts "  Example:"
+  puts
+  puts "  $ ls"
+  puts "  foo"
+  puts "  $ versioned_backup foo"
+  puts "  $ ls"
+  puts "  foo"
+  puts "  foo.0001"
+  puts "  $ versioned_backup foo"
+  puts "  $ ls"
+  puts "  foo"
+  puts "  foo.0001"
+  puts "  foo.0002"
+  puts "  $ touch bar.mp3"
+  puts "  $ versioned_backup bar .mp3"
+  puts "  $ ls"
+  puts "  foo"
+  puts "  foo.0001"
+  puts "  foo.0002"
+  puts "  bar.mp3"
+  puts "  bar.0001.mp3"
+  exit -1
+end
+
+def fatal_error(msg)
+  puts "Error: #{msg}"
+  exit -1
+end
+
+if ARGV[0]
+  filename = ARGV[0].chomp
+  help_and_exit if filename == "--help"
+else
+  fatal_error "first argument is missing but required"
+  exit -1
+end
+
+if ARGV[1]
+  file_extension = ARGV[1].chomp
+else
+  file_extension = nil
+end
+
+if not test ?e, filename
+  fatal_error "#{filename} doesn't exist"
+  exit -1
+end
+
+latest_revision = 0
+
+if file_extension != nil
+  filename_without_extension = filename.sub(/#{file_extension}$/,'')
+else
+  filename_without_extension = filename
+end
+
+# `ls {filename}.* 2>&1`.each do |name|
+Dir.glob("#{filename_without_extension}.*").each do |name|
+ if name =~ /(\d\d\d\d).gpg$/
+   latest_revision = $1.to_i if $1.to_i > latest_revision
+ end
+end
+
+latest_revision += 1
+
+backup = sprintf( "#{filename_without_extension}.%04d", latest_revision)
+if file_extension != nil
+  backup += file_extension
+end
+
+`cp '#{filename}' '#{backup}'`
+
+exit $?.exitstatus
