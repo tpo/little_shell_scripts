@@ -1,0 +1,26 @@
+#!/bin/bash
+
+help() {
+  echo 'usage: ssh-update-config'
+  echo 
+  echo '    construct a new ~/.ssh/config from ~/.ssh/config.d'
+  echo 
+  exit
+}
+
+if [ "$1" == "--help" ]; then
+   help
+fi
+
+error_and_exit() {
+  echo $1
+  exit -1
+}
+
+config=~/.ssh/config
+
+if ! versioned_backup $config ; then
+  error_and_exit "ERROR: failed to make backup of $config"
+fi
+
+cat ~/.ssh/config.d/* > $config

@@ -185,6 +185,12 @@ usage: paw
 
     See also: pas
 
+### ssh-update-config
+
+usage: ssh-update-config
+
+    construct a new ~/.ssh/config from ~/.ssh/config.d
+
 ### switch_off_radeon
 
 usage: switch_off_radeon
