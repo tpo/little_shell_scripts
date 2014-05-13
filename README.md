@@ -187,12 +187,10 @@ usage: paw
 ### psa
 
 usage: psa [pattern]
-       psa --help
 
-    Show all processes in full detail (ps auxw)
-    excluding kernel processes. If a pattern is
-    given, then the process list is grep'ed with
-    that pattern.
+    Show all processes in full detail (ps auxw) excluding kernel
+    processes. If a pattern is given, then the process list is
+    grep'ed with that pattern.
 ### ssh-update-config
 
 usage: ssh-update-config
