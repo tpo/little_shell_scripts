@@ -5,6 +5,7 @@ help() {
    echo '       vimx --help'
    echo
    echo '    create and edit executable bash script'
+   echo '    that has a --help command'
    echo
    exit 1
 }
@@ -18,9 +19,18 @@ set -e
 eval "thefile=\${$#}"
 
 if [ ! -e "$thefile" ]; then
-  vim -c '0,0i
+  vim -c "0,0i
 #!/bin/bash
-#' "$@"
+
+help() {
+   echo 'usage: $thefile'
+   echo '       $thefile --help'
+   echo
+   exit 1
+}
+
+[ \"\$1\" == \"--help\" ] && help
+" "$@"
   chmod +x $thefile
 else
   vim "$@"
