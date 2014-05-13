@@ -75,6 +75,15 @@ alias a+x='chmod a+x'
 alias a+r='chmod a+r'
 alias a+w='chmod a+w'
 
+# git
+alias g='git status'
+alias gd='git diff'
+alias ga='git add'
+alias gc='git commit'
+alias gca='git commit -a'
+alias gcam='git commit -a -m'
+alias gci='git commit --interactive'
+
 cdreal() {
    if [ ! "$1" ]; then
       dst=.
