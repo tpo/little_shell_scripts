@@ -276,7 +276,6 @@ usage: vimwhich
 ### vimx
 
 usage: vimx [params] file
-       vimx --help
 
     create and edit executable bash script
     that has a --help command
@@ -284,7 +283,6 @@ usage: vimx [params] file
 ### vimxb
 
 usage: vimx [params] file
-       vimx --help
 
     create and edit executable bash script under ~/bin
 

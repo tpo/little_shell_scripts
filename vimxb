@@ -4,7 +4,6 @@
 
 help() {
    echo 'usage: vimx [params] file'
-   echo '       vimx --help'
    echo
    echo '    create and edit executable bash script under ~/bin'
    echo
