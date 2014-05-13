@@ -4,10 +4,9 @@ help() {
    echo 'usage: psa [pattern]'
    echo '       psa --help'
    echo
-   echo '    Show all processes in full detail (ps auxw)'
-   echo '    excluding kernel processes. If a pattern is'
-   echo "    given, then the process list is grep'ed with"
-   echo '    that pattern.'
+   echo '    Show all processes in full detail (ps auxw) excluding kernel'
+   echo '    processes. If a pattern is given, then the process list is'
+   echo "    grep'ed with that pattern."
    exit 1
 }
 
