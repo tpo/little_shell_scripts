@@ -2,7 +2,6 @@
 
 help() {
    echo 'usage: psa [pattern]'
-   echo '       psa --help'
    echo
    echo '    Show all processes in full detail (ps auxw) excluding kernel'
    echo '    processes. If a pattern is given, then the process list is'
