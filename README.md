@@ -13,7 +13,6 @@ They provide the following commands:
     df  - execute "df -h"
     du  - execute "du -h"
     bc  - allow for calculations with decimal places by default in bc
-    psa - show all processes but not kernel threads
     hg  - grep shell history
     hl  - page shell history
     pg  - grep processes
@@ -185,6 +184,15 @@ usage: paw
 
     See also: pas
 
+### psa
+
+usage: psa [pattern]
+       psa --help
+
+    Show all processes in full detail (ps auxw)
+    excluding kernel processes. If a pattern is
+    given, then the process list is grep'ed with
+    that pattern.
 ### ssh-update-config
 
 usage: ssh-update-config
@@ -273,6 +281,7 @@ usage: vimx [params] file
        vimx --help
 
     create and edit executable bash script
+    that has a --help command
 
 ### vimxb
 

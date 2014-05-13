@@ -10,7 +10,6 @@ help() {
   echo '    df  - execute "df -h"'
   echo '    du  - execute "du -h"'
   echo '    bc  - allow for calculations with decimal places by default in bc'
-  echo '    psa - show all processes but not kernel threads'
   echo '    hg  - grep shell history'
   echo '    hl  - page shell history'
   echo '    pg  - grep processes'
@@ -62,10 +61,6 @@ alias ffs=firefox-sleep
 alias ffw=firefox-wake
 alias ths=thunderbird-sleep
 alias thw=thunderbird-wake
-
-# do not show kernel threads:
-# omit lines with "0:00 [kworker/6:0]" or similar
-alias psa="ps auxw|grep -v -P '\d:\d\d \['"
 
 hg()  { history | grep "$1"; }
 hl()  { history | less +G;   }
