@@ -108,6 +108,13 @@ usage: exif-del image
 
     remove all meta-tags from exif informations
 
+### find_ls_sort
+
+usage: find_ls_sort
+       find_ls_sort --help
+
+    A fusion of find and ls. Very useful for comparing systems.
+
 ### firefox-sleep
 
 usage: firefox-sleep

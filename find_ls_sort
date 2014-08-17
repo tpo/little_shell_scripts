@@ -1,0 +1,17 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: find_ls_sort'
+   echo '       find_ls_sort --help'
+   echo
+   echo '    A fusion of find and ls. Very useful for comparing systems.'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+# mode, user, group, size, path (fixed widths)
+# sort by 5th field (path)
+find -printf "%M %10u %10g %10s %p\n" | sort -k 5
+
