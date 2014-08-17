@@ -158,9 +158,11 @@ usage: mairi _search _parameters
 ./modinfo_all --desc : list only description of each module
 ### mount_encrypted
 
-usage: mount_encrypted image mountpoint
+usage: mount_encrypted image [mountpoint]
 
     see also umount_encrypted
+
+    if mountpoint is not provided mounts under /media/image
 
 ### music-dl
 
