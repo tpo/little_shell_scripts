@@ -47,7 +47,7 @@ help() {
   exit
 }
 
-if [ "$1" == "--help" ]; then
+if [ "$1" = "--help" ]; then
    help
 fi
 
@@ -68,9 +68,12 @@ pg()  { ps auxw | grep "$1"; }
 mcd() { mkdir "$1"; cd "$1"; }
 
 # chmod
-alias +x='chmod +x'
-alias +r='chmod +r'
-alias +w='chmod +w'
+if [ -z "$ZSH_NAME" ]; then 
+  # being in a ZSH we can't alias '+something'
+  alias +x='chmod +x'
+  alias +r='chmod +r'
+  alias +w='chmod +w'
+fi
 alias a+x='chmod a+x'
 alias a+r='chmod a+r'
 alias a+w='chmod a+w'
