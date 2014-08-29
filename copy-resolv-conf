@@ -1,0 +1,13 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: copy-resolv-conf destination_machine'
+   echo '       copy-resolv-conf --help'
+   echo
+   echo '    Copies your /etc/resolv.conf over to the destination_machine'
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+scp /etc/resolv.conf "$1:/etc/resolv.conf"

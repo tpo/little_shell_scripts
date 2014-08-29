@@ -90,6 +90,12 @@ usage: copy_file_to_clip [file]
 
     if no file is given, copies stdin
 
+### copy-resolv-conf
+
+usage: copy-resolv-conf destination_machine
+       copy-resolv-conf --help
+
+ Copies your /etc/resolv.conf over to the destination_machine
 ### copy_sel_to_clip
 
 usage: copy_sel_to_clip
