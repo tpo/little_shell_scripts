@@ -18,5 +18,6 @@ CRYPT_DEV=$( mount | grep "on $MNT" | sed 's/ .*//' | sed 's/.*\///' )
 LOOP=$( cryptsetup status $CRYPT_DEV | grep device: | sed 's/.* //' )
 
 umount "$MNT"
+rmdir "$MNT"
 cryptsetup remove $CRYPT_DEV
 losetup -d $LOOP
