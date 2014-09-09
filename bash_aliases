@@ -86,6 +86,23 @@ alias gc='git commit'
 alias gca='git commit -a'
 alias gcam='git commit -a -m'
 alias gci='git commit --interactive'
+gcm() {
+  local file="$1"
+  local comment="$2"
+
+  git commit "$file" -m "$comment"
+}
+gac() {
+  local file="$1"
+  local comment="$2"
+
+  git add "$file"
+  if [ -z "$comment" ]; then
+    git commit "$file"
+  else
+    git commit "$file" -m "$comment"
+  fi
+}
 
 cdreal() {
    if [ ! "$1" ]; then
