@@ -1,0 +1,20 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: bromium'
+   echo '       bromium --help'
+   echo
+   echo '    run a fresh new chromium instance without any'
+   echo '    previous history'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+cd ~/.config && mv chromium bromium && chromium
+
+echo "rm? (CTRL-C!)"
+read
+
+rm -R chromium; mv bromium chromium
