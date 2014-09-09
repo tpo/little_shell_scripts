@@ -53,6 +53,13 @@ usage: brightness [--show|percent]
 
     set or show panel brightness on intel chips in percent (default ist 60%)
 
+### bromium
+
+usage: bromium
+       bromium --help
+
+    run chromium with an empty temporary profile
+
 ### catwhich
 
 usage: catwhich executable
