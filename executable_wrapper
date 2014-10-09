@@ -1,0 +1,69 @@
+#!/bin/sh
+
+help() {
+   echo 'usage: executable_wrapper'
+   echo
+   echo '    This script is used to wrap executables in order to'
+   echo '    analyse how they are called by other scripts, daemons etc.'
+   echo
+   echo '    It will log all parameters and the environment of the'
+   echo '    originally called executable to a log file for inspection.'
+   echo
+   echo '    How to use:'
+   echo '    ==========='
+   echo
+   echo "    Let's suppose you want to wrap the executable 'foo':"
+   echo
+   echo "    1. make sure that the 'executable_wrapper' script will"
+   echo "       be executed instead of the executable 'foo':"
+   echo
+   echo '       # cd /usr/local/bin'
+   echo '       # ln -s ~/path_to/executable_wrapper foo'
+   echo
+   echo '       Note that by convention /usr/local/bin comes first'
+   echo '       in $PATH on Unix systems'
+   echo
+   echo "    2. make the original executable 'foo' available as"
+   echo "       'foo.orig'"
+   echo
+   echo '       # cd /usr/local/bin'
+   echo '       # ln -s /bin/foo foo.orig'
+   echo
+   echo '    You can also set the name of the original executable in'
+   echo '    the variable original_exec_name inside the'
+   echo "    'executable_wrapper' script if you need to do so."
+   echo
+   echo '    3. output will be logged to /tmp/foo.log.XXXXXX,'
+   echo "       where 'XXXXX' will be some random string."
+   echo '       You can also set the log name in the variable'
+   echo "       'log_name' inside the 'executable_wrapper' script"
+   echo
+   exit 1
+}
+
+exec_name=$( basename "$0" )
+[ "$exec_name" = "executable_wrapper" -a "$1" = "--help" ] && help
+
+original_exec_name=$exec_name.orig
+log_name=$( mktemp "/tmp/$exec_name.log.XXXXXX" )
+
+(
+  cat << EOHERE
+Executed as:   $0
+Num of params: $#
+Param       1: _${1}_
+Param       2: _${2}_
+Param       3: _${3}_
+Param       4: _${4}_
+Param       5: _${5}_
+Param       6: _${6}_
+Param       7: _${7}_
+Param       8: _${8}_
+Param       9: _${9}_
+All params  @: _${@}_
+Environment:
+`set`
+EOHERE
+) >> "$log_name"
+
+exec "$original_exec_name" "$@"
