@@ -27,7 +27,7 @@ git shortcuts
     g    - status
     gd   - diff
     ga   - add
-    gac  - add and commit
+    gac  - add and commit, commit msg is optional
     gc   - commit
     gca  - commit -a
     gcam - commit -a -m
