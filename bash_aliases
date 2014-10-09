@@ -24,6 +24,7 @@ help() {
   echo '    g    - status'
   echo '    gd   - diff'
   echo '    ga   - add'
+  echo '    gac  - add and commit'
   echo '    gc   - commit'
   echo '    gca  - commit -a'
   echo '    gcam - commit -a -m'
