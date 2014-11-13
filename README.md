@@ -38,7 +38,7 @@ git shortcuts
     gcam - commit -a -m
     gci  - commit --interactive
 
-chmod shortcuts
+chmod shortcuts (not available in zsh)
 
     +x  file
     +r  file

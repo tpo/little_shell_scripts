@@ -35,7 +35,7 @@ help() {
   echo '    gcam - commit -a -m'
   echo '    gci  - commit --interactive'
   echo
-  echo 'chmod shortcuts'
+  echo 'chmod shortcuts (not available in zsh)'
   echo
   echo '    +x  file'
   echo '    +r  file'
