@@ -13,6 +13,7 @@ help() {
   echo '    hg  - grep shell history'
   echo '    hl  - page shell history'
   echo '    pg  - grep processes'
+  echo '    rgl - rgrep regex | less'
   echo
   echo 'Shortcuts to put firefox or thunderbird to rest.'
   echo 'Requires firefox-sleep/wake and thunderbird-sleep/wake'
@@ -67,6 +68,7 @@ hg()  { history | grep "$1"; }
 hl()  { history | less +G;   }
 pg()  { ps auxw | grep "$1"; }
 mcd() { mkdir "$1"; cd "$1"; }
+rgl() { rgrep "$1" | less; }
 
 # chmod
 if [ -z "$ZSH_NAME" ]; then 

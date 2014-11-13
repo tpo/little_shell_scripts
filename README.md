@@ -16,6 +16,7 @@ They provide the following commands:
     hg  - grep shell history
     hl  - page shell history
     pg  - grep processes
+    rgl - rgrep regex | less
 
 Shortcuts to put firefox or thunderbird to rest.
 Requires firefox-sleep/wake and thunderbird-sleep/wake
