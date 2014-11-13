@@ -17,6 +17,7 @@ They provide the following commands:
     hl  - page shell history
     pg  - grep processes
     rgl - rgrep regex | less
+    aps - execute ansible-playbook 'setup.yml'
 
 Shortcuts to put firefox or thunderbird to rest.
 Requires firefox-sleep/wake and thunderbird-sleep/wake

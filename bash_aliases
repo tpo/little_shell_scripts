@@ -14,6 +14,7 @@ help() {
   echo '    hl  - page shell history'
   echo '    pg  - grep processes'
   echo '    rgl - rgrep regex | less'
+  echo "    aps - execute ansible-playbook 'setup.yml'"
   echo
   echo 'Shortcuts to put firefox or thunderbird to rest.'
   echo 'Requires firefox-sleep/wake and thunderbird-sleep/wake'
@@ -52,6 +53,8 @@ help() {
 if [ "$1" = "--help" ]; then
    help
 fi
+
+alias aps="ansible-playbook setup.yml"
 
 alias df="df -h"
 alias du="du -h"
