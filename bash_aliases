@@ -16,6 +16,9 @@ help() {
   echo '    rgl - rgrep regex | less'
   echo "    aps - execute ansible-playbook 'setup.yml'"
   echo
+  echo '    apt-find file - say which Debian package contains "file"'
+  echo '                    needs apt-file'
+  echo
   echo 'Shortcuts to put firefox or thunderbird to rest.'
   echo 'Requires firefox-sleep/wake and thunderbird-sleep/wake'
   echo
@@ -54,6 +57,7 @@ if [ "$1" = "--help" ]; then
    help
 fi
 
+alias apt-find="apt-file find"
 alias aps="ansible-playbook setup.yml"
 
 alias df="df -h"

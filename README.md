@@ -19,6 +19,9 @@ They provide the following commands:
     rgl - rgrep regex | less
     aps - execute ansible-playbook 'setup.yml'
 
+    apt-find file - say which Debian package contains "file"
+                    needs apt-file
+
 Shortcuts to put firefox or thunderbird to rest.
 Requires firefox-sleep/wake and thunderbird-sleep/wake
 
