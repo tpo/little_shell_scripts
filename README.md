@@ -136,6 +136,21 @@ usage: executable_wrapper
 
     Let's suppose you want to wrap the executable 'foo':
 
+    First approach
+    --------------
+
+    1. rename the original executable
+
+       # cd /where/the/original/lives
+       # mv foo foo.orig
+
+    2. copy executable_wrapper where 'foo' was before
+
+       # cp executable_wrapper /where/the/original/lives/foo
+
+    Second approach
+    ---------------
+
     1. make sure that the 'executable_wrapper' script will
        be executed instead of the executable 'foo':
 
