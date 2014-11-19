@@ -44,7 +44,7 @@ help() {
 exec_name=$( basename "$0" )
 [ "$exec_name" = "executable_wrapper" -a "$1" = "--help" ] && help
 
-original_exec_name=$exec_name.orig
+original_exec_path=$(dirname "$0")/$exec_name.orig
 log_name=$( mktemp "/tmp/$exec_name.log.XXXXXX" )
 
 (
