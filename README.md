@@ -17,7 +17,8 @@ They provide the following commands:
     hl  - page shell history
     pg  - grep processes
     rgl - rgrep regex | less
-    aps - execute ansible-playbook 'setup.yml'
+    aps - execute 'ansible-playbook setup.yml'
+    apst- execute 'ansible-playbook setup.yml --tags='
 
     apt-find file - say which Debian package contains "file"
                     needs apt-file

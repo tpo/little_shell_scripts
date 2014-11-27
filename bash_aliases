@@ -14,7 +14,8 @@ help() {
   echo '    hl  - page shell history'
   echo '    pg  - grep processes'
   echo '    rgl - rgrep regex | less'
-  echo "    aps - execute ansible-playbook 'setup.yml'"
+  echo "    aps - execute 'ansible-playbook setup.yml'"
+  echo "    apst- execute 'ansible-playbook setup.yml --tags='"
   echo
   echo '    apt-find file - say which Debian package contains "file"'
   echo '                    needs apt-file'
@@ -59,6 +60,7 @@ fi
 
 alias apt-find="apt-file find"
 alias aps="ansible-playbook setup.yml"
+apst()   { ansible-playbook setup.yml --tags="$1"; }
 
 alias df="df -h"
 alias du="du -h"
