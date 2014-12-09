@@ -81,4 +81,4 @@ Environment:
 EOHERE
 ) >> "$log_name"
 
-exec "$original_exec_name" "$@"
+exec "$original_exec_path" "$@"
