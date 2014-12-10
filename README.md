@@ -274,6 +274,12 @@ usage: psa [pattern]
     Show all processes in full detail (ps auxw) excluding kernel
     processes. If a pattern is given, then the process list is
     grep'ed with that pattern.
+### show_csv
+
+usage: show_csv [file.csv] [separator]
+       show_csv --help
+
+    pretty print and page CSV file with 'less'
 ### ssh-update-config
 
 usage: ssh-update-config

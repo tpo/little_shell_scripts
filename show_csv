@@ -1,0 +1,21 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: show_csv [file.csv] [separator]'
+   echo '       show_csv --help'
+   echo
+   echo "    pretty print and page CSV file with 'less'"
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+# if $1 not given or '-' then use stdin
+file="$1"
+[ "$file" = '-' -o "$file" = '' ] && file=/dev/stdin
+
+# default separator is ';'
+separator=$2
+[ "$2" ] || separator=\;
+
+column "-s$separator" -t -n "$file" |less -S
