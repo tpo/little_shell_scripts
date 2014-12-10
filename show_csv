@@ -14,8 +14,6 @@ help() {
 file="$1"
 [ "$file" = '-' -o "$file" = '' ] && file=/dev/stdin
 
-# default separator is ';'
-separator=$2
-[ "$2" ] || separator=\;
+separator=${2:-;}   # default separator is ';'
 
 column "-s$separator" -t -n "$file" |less -S
