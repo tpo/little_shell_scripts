@@ -60,7 +60,11 @@ fi
 
 alias apt-find="apt-file find"
 alias aps="ansible-playbook setup.yml"
-apst()   { ansible-playbook setup.yml --tags="$1"; }
+apst()   {
+  local tags="$1"
+  shift
+  ansible-playbook setup.yml --tags="$tags" "$@"
+}
 
 alias df="df -h"
 alias du="du -h"
