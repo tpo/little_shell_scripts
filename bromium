@@ -11,4 +11,8 @@ help() {
 
 [ "$1" == "--help" ] && help
 
-exec chromium --temp-profile --incognito
+if [ "$1" ]; then
+  exec chromium --temp-profile --incognito "about:blank"
+else
+  exec chromium --temp-profile --incognito "$@"
+fi
