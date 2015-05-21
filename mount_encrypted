@@ -12,6 +12,25 @@ help() {
 
 [ "$1" == "--help" ] || [ "$1" == "" ] && help
 
+exit_err() {
+  exit 1
+}
+
+unmkdir() {
+  rmdir "$MNT"
+  exit_err
+}
+
+unlosetup() {
+  losetup -d $LOOP
+  unmkdir
+}
+
+uncryptsetup() {
+  cryptsetup remove $DEV_NAME
+  unlosetup
+}
+
 IMG="$1"
 DEV_NAME=$( realpath $IMG | tr -c '[:alnum:]' '_' )
 if [ "$2" == "" ]; then
@@ -19,15 +38,36 @@ if [ "$2" == "" ]; then
   # - replace forward slashes and '..' with underscores
   MNT=`echo "$IMG" | tr / _ | sed 's/\.\./__/g'`
   MNT="/media/$MNT"
-  if ! mkdir $MNT; then
-    exit 254
+
+  if [ -d "$MNT" ]; then
+    echo "directory already exists"
+    exit_err
+
+  else
+    if ! mkdir $MNT; then
+      exit_err
+    fi
   fi
 else
   MNT="$2"
 fi
-LOOP=`losetup -f`
-losetup $LOOP "$IMG"
-cryptsetup create -c aes $DEV_NAME $LOOP
-mount /dev/mapper/$DEV_NAME "$MNT"
 
-echo "image is mounted under $MNT"
+LOOP=`losetup -f`
+if ! losetup $LOOP "$IMG"; then
+  unmkdir
+
+else
+  echo "cryptsetup create -c aes $DEV_NAME $LOOP"
+  if ! cryptsetup create -c aes $DEV_NAME $LOOP; then
+    unlosetup
+
+  else
+    if ! mount /dev/mapper/$DEV_NAME "$MNT"; then
+      uncryptsetup
+
+    else
+      echo "image is mounted under $MNT"
+
+    fi
+  fi
+fi
