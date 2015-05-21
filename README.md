@@ -376,6 +376,15 @@ usage: vimx [params] file
     create and edit executable bash script under ~/bin
 
 
+### wake-sleep-log
+
+usage: wake-sleep-log
+       wake-sleep-log --help
+
+  searches /var/log/kern.log for power management events
+  and displays a list when the machine went to slee and
+  woke up again
+
 ### wping
 
 usage: wping [URL]

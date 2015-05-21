@@ -1,0 +1,23 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: wake-sleep-log'
+   echo '       wake-sleep-log --help'
+   echo
+   echo '  searches /var/log/kern.log for power management events'
+   echo '  and displays a list when the machine went to slee and'
+   echo '  woke up again'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+host=`hostname`
+
+sudo zgrep --no-filename                                        \
+            -e "PM: Preparing system for mem sleep"             \
+            -e "PM: Finishing wakeup." /var/log/kern.log*       \
+| sed -e "s/ $host.*Preparing system for mem sleep/ down\n/"      \
+      -e "s/ $host.*Finishing wakeup./ up/"
+  
