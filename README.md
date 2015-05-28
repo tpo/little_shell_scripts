@@ -251,6 +251,13 @@ usage: music-dl URL
 
     download URL from youtube, soundcloud etc. and transform to audio file
 
+### mv_ln
+
+usage: mv_ln src_ln dest_dir
+       mv_ln --help
+
+  Move the symbolic link src_ln into dest_dir while
+  keeping it relative
 ### pas
 
 usage: pas
