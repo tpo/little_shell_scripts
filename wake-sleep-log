@@ -15,9 +15,11 @@ help() {
 
 host=`hostname`
 
-sudo zgrep --no-filename                                        \
-            -e "PM: Preparing system for mem sleep"             \
-            -e "PM: Finishing wakeup." /var/log/kern.log*       \
-| sed -e "s/ $host.*Preparing system for mem sleep/ down\n/"      \
+ordered_logs=$( ls /var/log/kern.log* | sort -n -r )
+
+sudo zgrep --no-filename                                       \
+            -e "PM: Preparing system for mem sleep"            \
+            -e "PM: Finishing wakeup." $ordered_logs           \
+| sed -e "s/ $host.*Preparing system for mem sleep/ down\n/"   \
       -e "s/ $host.*Finishing wakeup./ up/"
   
