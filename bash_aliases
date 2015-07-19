@@ -7,16 +7,16 @@ help() {
   echo
   echo 'They provide the following commands:'
   echo
-  echo '    df  - execute "df -h"'
-  echo '    du  - execute "du -h"'
-  echo '    bc  - allow for calculations with decimal places by default in bc'
-  echo '    hg  - grep shell history'
-  echo '    hl  - page shell history'
-  echo '    pg  - grep processes'
-  echo '    rgl - rgrep regex | less'
-  echo "    aps - execute 'ansible-playbook setup.yml'"
-  echo "    apst- execute 'ansible-playbook setup.yml --tags='"
-  echo "    apstv- execute 'ansible-playbook setup.yml \\"
+  echo '    df    - execute "df -h"'
+  echo '    du    - execute "du -h"'
+  echo '    bc    - allow for calculations with decimal places by default in bc'
+  echo '    hg    - grep shell history'
+  echo '    hl    - page shell history'
+  echo '    pg    - grep processes'
+  echo '    rgl   - rgrep regex | less'
+  echo "    aps   - execute 'ansible-playbook setup.yml'"
+  echo "    apst  - execute 'ansible-playbook setup.yml --tags='"
+  echo "    apstv - execute 'ansible-playbook setup.yml \\"
   echo "                        --vault-password-file ~/vault_from_gpg_agent.py \\"
   echo "                        --tags='"
   echo

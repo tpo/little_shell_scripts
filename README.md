@@ -10,16 +10,16 @@ These bash_aliases need to be called from ~/.bashrc or similar like this:
 
 They provide the following commands:
 
-    df  - execute "df -h"
-    du  - execute "du -h"
-    bc  - allow for calculations with decimal places by default in bc
-    hg  - grep shell history
-    hl  - page shell history
-    pg  - grep processes
-    rgl - rgrep regex | less
-    aps - execute 'ansible-playbook setup.yml'
-    apst- execute 'ansible-playbook setup.yml --tags='
-    apstv- execute 'ansible-playbook setup.yml \
+    df    - execute "df -h"
+    du    - execute "du -h"
+    bc    - allow for calculations with decimal places by default in bc
+    hg    - grep shell history
+    hl    - page shell history
+    pg    - grep processes
+    rgl   - rgrep regex | less
+    aps   - execute 'ansible-playbook setup.yml'
+    apst  - execute 'ansible-playbook setup.yml --tags='
+    apstv - execute 'ansible-playbook setup.yml \
                         --vault-password-file ~/vault_from_gpg_agent.py \
                         --tags='
 
