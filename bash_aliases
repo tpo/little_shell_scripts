@@ -16,6 +16,9 @@ help() {
   echo '    rgl - rgrep regex | less'
   echo "    aps - execute 'ansible-playbook setup.yml'"
   echo "    apst- execute 'ansible-playbook setup.yml --tags='"
+  echo "    apstv- execute 'ansible-playbook setup.yml \\"
+  echo "                        --vault-password-file ~/vault_from_gpg_agent.py \\"
+  echo "                        --tags='"
   echo
   echo '    apt-find file - say which Debian package contains "file"'
   echo '                    needs apt-file'
@@ -64,6 +67,13 @@ apst()   {
   local tags="$1"
   shift
   ansible-playbook setup.yml --tags="$tags" "$@"
+}
+apstv()   {
+  local tags="$1"
+  shift
+  ansible-playbook setup.yml \
+	  --vault-password-file ~/bin/vault_from_gpg_agent.py \
+	  --tags="$tags" "$@"
 }
 
 alias df="df -h"

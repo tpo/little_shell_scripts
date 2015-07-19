@@ -19,6 +19,9 @@ They provide the following commands:
     rgl - rgrep regex | less
     aps - execute 'ansible-playbook setup.yml'
     apst- execute 'ansible-playbook setup.yml --tags='
+    apstv- execute 'ansible-playbook setup.yml \
+                        --vault-password-file ~/vault_from_gpg_agent.py \
+                        --tags='
 
     apt-find file - say which Debian package contains "file"
                     needs apt-file
