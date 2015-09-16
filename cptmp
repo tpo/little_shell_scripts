@@ -1,0 +1,17 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: cptmp [opts] file'
+   echo
+   echo '    copy given file to /tmp/foo.XXXXX'
+   echo
+   echo '    cptmp accepts the same arguments as cp'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+tmpfile=$( mktemp /tmp/foo.XXXXXX )
+echo "copying to $tmpfile"
+exec cp "$@" $tmpfile

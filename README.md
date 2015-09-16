@@ -126,6 +126,14 @@ usage: copy_stdin_to_file file_name
 
     copy input to file
 
+### cptmp
+
+usage: cptmp [opts] file
+
+    copy given file to /tmp/foo.XXXXX
+
+    cptmp accepts the same arguments as cp
+
 ### executable_wrapper
 
 usage: executable_wrapper
