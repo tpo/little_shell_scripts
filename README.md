@@ -366,6 +366,12 @@ usage: vimn file:n
 
     edit file and jump to line 'n'
 
+### vimtmp
+
+usage: vimtmp
+
+    create a /tmp/foo.XXXXX file and edit it
+
 ### vimwhich
 
 usage: vimwhich

@@ -1,0 +1,15 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: vimtmp'
+   echo
+   echo '    create a /tmp/foo.XXXXX file and edit it'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+tmpfile=$( mktemp /tmp/foo.XXXXXX )
+echo "editing $tmpfile"
+exec vim $tmpfile
