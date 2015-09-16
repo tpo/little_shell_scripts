@@ -53,6 +53,7 @@ help() {
   echo '    cdreal  file - chdir to wherever the file is located'
   echo '    cdwhich file - chdir to wherever the executable is located'
   echo '    mcd     file - make directory and cd into it'
+  echo '    mcdt         - make temporary directory and cd into it'
   echo
   exit
 }
@@ -91,6 +92,9 @@ hg()  { history | grep "$1"; }
 hl()  { history | less +G;   }
 pg()  { ps auxw | grep "$1"; }
 mcd() { mkdir "$1"; cd "$1"; }
+mcdt() { local tmpdir=$( mktemp -d /tmp/foo.XXXXXX )
+	 echo "jumping into cd $tmpdir"
+	 cd $tmpdir }
 rgl() { rgrep "$1" | less; }
 
 # chmod

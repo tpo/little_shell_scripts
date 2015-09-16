@@ -56,6 +56,7 @@ change directory
     cdreal  file - chdir to wherever the file is located
     cdwhich file - chdir to wherever the executable is located
     mcd     file - make directory and cd into it
+    mcdt         - make temporary directory and cd into it
 
 ### brightness
 
