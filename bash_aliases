@@ -94,7 +94,8 @@ pg()  { ps auxw | grep "$1"; }
 mcd() { mkdir "$1"; cd "$1"; }
 mcdt() { local tmpdir=$( mktemp -d /tmp/foo.XXXXXX )
 	 echo "jumping into cd $tmpdir"
-	 cd $tmpdir }
+	 cd $tmpdir
+}
 rgl() { rgrep "$1" | less; }
 
 # chmod
