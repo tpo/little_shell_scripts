@@ -5,6 +5,8 @@ help() {
    echo
    echo '    wake up all thunderbird processes'
    echo
+   echo "    Note: it's advisable to add an 'alias tbw=thunderbird-wake'"
+   echo
    echo '    See also: thunderbird-sleep'
    echo
    exit 1
@@ -12,4 +14,5 @@ help() {
 
 [ "$1" == "--help" ] && help
 
-pkill -CONT thunderbird
+pkill -CONT -f "(^|/)+icedove( |$)+"
+pkill -CONT -f "(^|/)+thunderbird( |$)+"

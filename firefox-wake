@@ -5,7 +5,7 @@ help() {
    echo
    echo '    wake up all firefox (and plugin) processes'
    echo
-   echo "    Note: it's advisable to add an 'alias ffw=firefox-wake"
+   echo "    Note: it's advisable to add an 'alias ffw=firefox-wake'"
    echo
    echo '    See also: firefox-sleep'
    echo
