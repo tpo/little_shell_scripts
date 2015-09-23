@@ -5,6 +5,8 @@ help() {
    echo
    echo '    suspend all thunderbird processes'
    echo
+   echo "    Note: it's advisable to add an 'alias tbs=thunderbird-sleep'"
+   echo
    echo '    See also: thunderbird-wake'
    echo
    exit 1
@@ -12,4 +14,7 @@ help() {
 
 [ "$1" == "--help" ] && help
 
-pkill -STOP thunderbird
+# Debian has icedove
+# Ubuntu has thunderbird
+pkill -STOP -f "(^|/)+icedove( |$)+"
+pkill -STOP -f "(^|/)+thunderbird( |$)+"
