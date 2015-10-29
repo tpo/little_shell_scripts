@@ -1,17 +1,23 @@
 #!/bin/bash
 
 help() {
-   echo 'usage: cptmp [opts] file'
+   echo 'usage: cptmp [--dir] [opts] file'
    echo
    echo '    copy given file to /tmp/foo.XXXXX'
    echo
    echo '    cptmp accepts the same arguments as cp'
+   echo
+   echo '    --dir   /tmp/foo.XXXXX will be a directory'
    echo
    exit 1
 }
 
 [ "$1" == "--help" ] && help
 
-tmpfile=$( mktemp /tmp/foo.XXXXXX )
+if [ "$1" == "--dir" ]; then
+  tmpfile=$( mktemp -d /tmp/foo.XXXXXX )
+else
+  tmpfile=$( mktemp /tmp/foo.XXXXXX )
+fi
 echo "copying to $tmpfile"
 exec cp "$@" $tmpfile

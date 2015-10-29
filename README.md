@@ -161,11 +161,13 @@ usage: copy_stdin_to_file file_name
 
 ### cptmp
 
-usage: cptmp [opts] file
+usage: cptmp [--dir] [opts] file
 
     copy given file to /tmp/foo.XXXXX
 
     cptmp accepts the same arguments as cp
+
+    --dir   /tmp/foo.XXXXX will be a directory
 
 ### executable_wrapper
 
