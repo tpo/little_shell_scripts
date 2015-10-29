@@ -54,6 +54,9 @@ help() {
   echo '    cdwhich file - chdir to wherever the executable is located'
   echo '    mcd     name - make directory and cd into it'
   echo '    mcdt         - make temporary directory and cd into it'
+  echo '    mcptmp  file - make temporary directory, cp given file into it'
+  echo '                   and cd into the tmp dir. Supports the same'
+  echo '                   options as cptmp.'
   echo
   exit
 }
@@ -95,6 +98,10 @@ mcd() { mkdir "$1"; cd "$1"; }
 mcdt() { local tmpdir=$( mktemp -d /tmp/foo.XXXXXX )
 	 echo "jumping into cd $tmpdir"
 	 cd $tmpdir
+}
+mcptmp() { tmpdir=$( cptmp --dir "$@" | grep 'copying to /tmp/foo.' | awk '{ print $3 }' )
+	   echo "jumping into cd $tmpdir"
+	   cd $tmpdir
 }
 rgl() { rgrep "$1" | less; }
 

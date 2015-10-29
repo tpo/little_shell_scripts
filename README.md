@@ -57,6 +57,9 @@ change directory
     cdwhich file - chdir to wherever the executable is located
     mcd     name - make directory and cd into it
     mcdt         - make temporary directory and cd into it
+    mcptmp  file - make temporary directory, cp given file into it
+                   and cd into the tmp dir. Supports the same
+                   options as cptmp.
 
 ### brightness
 
