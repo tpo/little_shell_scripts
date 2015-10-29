@@ -52,7 +52,7 @@ help() {
   echo
   echo '    cdreal  file - chdir to wherever the file is located'
   echo '    cdwhich file - chdir to wherever the executable is located'
-  echo '    mcd     file - make directory and cd into it'
+  echo '    mcd     name - make directory and cd into it'
   echo '    mcdt         - make temporary directory and cd into it'
   echo
   exit
