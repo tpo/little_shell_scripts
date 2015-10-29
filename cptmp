@@ -16,6 +16,7 @@ help() {
 
 if [ "$1" == "--dir" ]; then
   tmpfile=$( mktemp -d /tmp/foo.XXXXXX )
+  shift
 else
   tmpfile=$( mktemp /tmp/foo.XXXXXX )
 fi
