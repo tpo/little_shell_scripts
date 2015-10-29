@@ -78,6 +78,13 @@ usage: catwhich executable
     cat executable that is somewhere in $PATH
     or can be located via "locate"
 
+### cert-fingerprint
+
+usage: cert-fingerprint certificate.crt
+       cert-fingerprint --help
+
+    print fingerprint of x509 certificate
+
 ### cert-show-all
 
 usage: cert-show-all [--debug] [certificates.crt]
