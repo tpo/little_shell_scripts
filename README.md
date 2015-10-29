@@ -78,6 +78,15 @@ usage: catwhich executable
     cat executable that is somewhere in $PATH
     or can be located via "locate"
 
+### cert-show-all
+
+usage: cert-show-all [--debug] [certificates.crt]
+       cert-show-all --help
+
+    print all certificates contained in certificates.crt chain
+
+      --debug   include original encoded certificates in printout
+
 ### changelog
 
 usage: changelog
@@ -207,9 +216,9 @@ usage: firefox-sleep
 
     suspend all firefox (and plugin) processes
 
-    Note: it's advisable to add an 'alias ffs=firefox-sleep
+    Note: it's advisable to add an 'alias ffs=firefox-sleep'
 
-    See also: firefox-sleep
+    See also: firefox-wake
 
 ### firefox-wake
 
@@ -217,7 +226,7 @@ usage: firefox-wake
 
     wake up all firefox (and plugin) processes
 
-    Note: it's advisable to add an 'alias ffw=firefox-wake
+    Note: it's advisable to add an 'alias ffw=firefox-wake'
 
     See also: firefox-sleep
 
@@ -317,6 +326,8 @@ usage: thunderbird-sleep
 
     suspend all thunderbird processes
 
+    Note: it's advisable to add an 'alias tbs=thunderbird-sleep'
+
     See also: thunderbird-wake
 
 ### thunderbird-wake
@@ -324,6 +335,8 @@ usage: thunderbird-sleep
 usage: thunderbird-wake
 
     wake up all thunderbird processes
+
+    Note: it's advisable to add an 'alias tbw=thunderbird-wake'
 
     See also: thunderbird-sleep
 

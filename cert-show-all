@@ -1,0 +1,62 @@
+#!/usr/bin/perl
+
+sub help {
+  print <<'EOHELP';
+usage: cert-show-all [--debug] [certificates.crt]
+       cert-show-all --help
+
+    print all certificates contained in certificates.crt chain
+
+      --debug   include original encoded certificates in printout
+
+EOHELP
+}
+
+sub println {
+  print $_[0]."\n";
+}
+
+use strict;
+use warnings;
+
+my $cert_no=1;
+my $current_cert="";
+
+my $DEBUG=0;
+
+if( $#ARGV >= 0 ) {
+  if( $ARGV[0] eq "--help" ) {
+    help();
+    exit();
+  }
+  elsif( $ARGV[0] eq "--debug" ) {
+    $DEBUG=1;
+    shift @ARGV;
+  }
+}
+
+while( <> ) {
+  my $line = $_;
+
+  $current_cert .= $line;
+  if( $line =~ /-----END CERTIFICATE-----/  ) {
+
+    # print out current certificate
+    #
+    println();
+    println("=======================");
+    println("Certificate: ".$cert_no);
+    println("=======================");
+    println();
+    #
+    print $current_cert if $DEBUG;
+    #
+    open( OPENSSL, "|openssl x509 -noout -text" );
+    print OPENSSL $current_cert;
+    close OPENSSL;
+
+    # perpare next cert
+    $current_cert = "";
+    $cert_no++;
+  }
+}
