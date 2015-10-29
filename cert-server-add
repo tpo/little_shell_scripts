@@ -1,0 +1,46 @@
+#!/bin/bash
+#
+# based on:
+#
+# http://www.gsoft.com.au/~doconnor/ssl-tls.html "Getting systems to trust your key"
+
+
+help() {
+   echo 'usage: cert-server-add remote.host.name [port]'
+   echo '       cert-server-add --help'
+   echo
+   echo '    connects to server, retrieves its certificate and'
+   echo "    adds it to the local system's trusted certificates"
+   echo
+   echo '    ATTENTION:'
+   echo
+   echo '        * No checks on the retrieved certifica are done,'
+   echo '          f.ex. if it claims to be a CA certificate etc.'
+   echo
+   echo '        * the certificate is put under /etc/ssl/certs/,'
+   echo '          which is probably not entirely compatible'
+   echo '          accross all distributions'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+
+set -e # exit on error
+
+REMHOST=$1
+PEMFILE="${1}.pem"
+REMPORT=${2:-443}
+CERT_DIR="/etc/ssl/certs/"
+
+cd $CERT_DIR
+
+if [ -e "$PEMFILE" ]; then
+  echo "${CERT_DIR}/${PEMFILE} allready exists - aborting"
+  exit -1
+fi
+
+cert-retrieve ${REMHOST} ${REMPORT} > $PEMFILE
+
+ln -s $PEMFILE `openssl x509 -hash -noout -in $PEMFILE`.0

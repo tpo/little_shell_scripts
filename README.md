@@ -85,6 +85,23 @@ usage: cert-fingerprint certificate.crt
 
     print fingerprint of x509 certificate
 
+### cert-server-add
+
+usage: cert-server-add remote.host.name [port]
+       cert-server-add --help
+
+    connects to server, retrieves its certificate and
+    adds it to the local system's trusted certificates
+
+    ATTENTION:
+
+        * No checks on the retrieved certifica are done,
+          f.ex. if it claims to be a CA certificate etc.
+
+        * the certificate is put under /etc/ssl/certs/,
+          which is probably not entirely compatible
+          accross all distributions
+
 ### cert-show-all
 
 usage: cert-show-all [--debug] [certificates.crt]
