@@ -1,0 +1,36 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: cert-show (--help|certificate)'
+   echo
+   echo '    print all kinds of certificates'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] || [ "$1" == "" ] && help
+
+CERT="$1"
+EXT=$( file_extension --lowercase "$CERT" )
+
+case "$EXT" in
+   pfx|p12)
+         openssl pkcs12 -in "$CERT" -nokeys
+      ;;
+   csr)
+         openssl req    -in "$CERT" -noout -text
+      ;;
+   cer|der|crt|pem)
+      if grep -q "BEGIN CERTIFICATE" "$CERT"; then
+         # assume PEM format
+         openssl x509   -in "$CERT" -noout -text -inform pem
+      else
+         # assume DER format
+         openssl x509   -in "$CERT" -noout -text -inform der
+      fi
+      ;;
+   *)
+         openssl x509   -in "$CERT" -noout -text
+      ;;
+esac
+

@@ -105,6 +105,12 @@ usage: cert-server-add remote.host.name [port]
           which is probably not entirely compatible
           accross all distributions
 
+### cert-show
+
+usage: cert-show (--help|certificate)
+
+    print all kinds of certificates
+
 ### cert-show-all
 
 usage: cert-show-all [--debug] [certificates.crt]
