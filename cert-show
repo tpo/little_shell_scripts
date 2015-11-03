@@ -17,6 +17,9 @@ case "$EXT" in
    pfx|p12)
          openssl pkcs12 -in "$CERT" -nokeys
       ;;
+   key)
+         openssl rsa    -in "$CERT" -noout -text
+      ;;
    csr)
          openssl req    -in "$CERT" -noout -text
       ;;
