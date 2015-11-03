@@ -16,6 +16,8 @@ help() {
   echo '    rgl   - rgrep regex | less'
   echo "    aps   - execute 'ansible-playbook setup.yml'"
   echo "    apst  - execute 'ansible-playbook setup.yml --tags='"
+  echo "    apsv  - execute 'ansible-playbook setup.yml \\"
+  echo "                        --vault-password-file ~/vault_from_gpg_agent.py"
   echo "    apstv - execute 'ansible-playbook setup.yml \\"
   echo "                        --vault-password-file ~/vault_from_gpg_agent.py \\"
   echo "                        --tags='"
@@ -72,6 +74,7 @@ apst()   {
   shift
   ansible-playbook setup.yml --tags="$tags" "$@"
 }
+alias apsv="ansible-playbook setup.yml --vault-password-file ~/bin/vault_from_gpg_agent.py"
 apstv()   {
   local tags="$1"
   shift

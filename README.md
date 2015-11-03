@@ -19,6 +19,8 @@ They provide the following commands:
     rgl   - rgrep regex | less
     aps   - execute 'ansible-playbook setup.yml'
     apst  - execute 'ansible-playbook setup.yml --tags='
+    apsv  - execute 'ansible-playbook setup.yml \
+                        --vault-password-file ~/vault_from_gpg_agent.py
     apstv - execute 'ansible-playbook setup.yml \
                         --vault-password-file ~/vault_from_gpg_agent.py \
                         --tags='
@@ -240,8 +242,7 @@ usage: exif-del image
 
 ### find_ls_sort
 
-usage: find_ls_sort
-       find_ls_sort --help
+usage: find_ls_sort [--help]
 
     A fusion of find and ls. Very useful for comparing systems.
 
