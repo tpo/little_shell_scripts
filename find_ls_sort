@@ -1,8 +1,7 @@
 #!/bin/bash
 
 help() {
-   echo 'usage: find_ls_sort'
-   echo '       find_ls_sort --help'
+   echo 'usage: find_ls_sort [--help]'
    echo
    echo '    A fusion of find and ls. Very useful for comparing systems.'
    echo
