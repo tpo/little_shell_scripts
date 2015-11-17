@@ -76,6 +76,12 @@ usage: bromium
 
     run chromium with an empty temporary profile
 
+### catnamed
+
+usage: catnamed file ...
+
+    print name of file and then cat it
+
 ### catwhich
 
 usage: catwhich executable
