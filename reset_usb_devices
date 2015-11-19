@@ -1,0 +1,40 @@
+#!/bin/bash
+#
+# created by Eli Billauer
+#
+# * http://billauer.co.il/blog/2013/02/usb-reset-ehci-uhci-linux/
+#
+# license unknown
+
+help() {
+   echo 'usage: reset_usb_devices'
+   echo
+   echo '    resets all USB devices that the script finds'
+   echo 
+   exit
+}
+
+[ "$1" == "--help" ] && help
+
+# expant patterns which don't match to a null string
+shopt -s nullglob
+
+if [[ $EUID != 0 ]] ; then
+  echo This must be run as root!
+  exit 1
+fi
+
+for xhci in /sys/bus/pci/drivers/?hci_hcd ; do
+
+  if ! cd $xhci ; then
+    echo Weird error. Failed to change directory to $xhci
+    exit 1
+  fi
+
+  echo Resetting devices from $xhci...
+
+  for i in ????:??:??.? ; do
+    echo -n "$i" > unbind
+    echo -n "$i" > bind
+  done
+done

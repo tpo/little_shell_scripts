@@ -344,6 +344,12 @@ usage: psa [pattern]
     Show all processes in full detail (ps auxw) excluding kernel
     processes. If a pattern is given, then the process list is
     grep'ed with that pattern.
+### reset_usb_devices
+
+usage: reset_usb_devices
+
+    resets all USB devices that the script finds
+
 ### show_csv
 
 usage: show_csv [file.csv] [separator]
