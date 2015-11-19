@@ -4,7 +4,8 @@
 #
 # * http://billauer.co.il/blog/2013/02/usb-reset-ehci-uhci-linux/
 #
-# license unknown
+# license/copyright: CC0
+# * https://creativecommons.org/choose/zero/
 
 help() {
    echo 'usage: reset_usb_devices'
