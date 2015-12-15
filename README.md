@@ -356,6 +356,13 @@ usage: show_csv [file.csv] [separator]
        show_csv --help
 
     pretty print and page CSV file with 'less'
+### show_rh_updates
+
+usage: show_rh_updates [--help]
+
+    shows current and new version of packages that would get
+    updated.
+
 ### ssh-update-config
 
 usage: ssh-update-config

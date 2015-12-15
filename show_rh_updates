@@ -1,0 +1,39 @@
+#!/bin/bash
+#
+# based on drag's script - see http://arstechnica.com/civis/viewtopic.php?t=1081335
+#
+ 
+help() {
+   echo 'usage: show_rh_updates [--help]'
+   echo
+   echo '    shows current and new version of packages that would get'
+   echo '    updated.'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+print() {
+  printf "%40s %40s %40s\n" "$1" "$2" "$3"
+}
+
+print "package name" "current version" "update version"
+print "------------" "---------------" "--------------"
+
+yum -q check-update | while read i
+do
+    i=$(echo $i) #this strips off yum's irritating use of whitespace
+    if [ "${i}x" != "x" ]
+    then
+        UVERSION=${i#*\ }
+        UVERSION=${UVERSION%\ *}
+        PNAME=${i%%\ *}
+        PNAME=${PNAME%.*}
+        VERSION=$(rpm -q "${PNAME}" --qf '%{VERSION}')
+        if [ "$?" != "0" ]; then
+          continue
+        fi
+        print "$PNAME" "$VERSION" "$UVERSION"
+    fi
+done
