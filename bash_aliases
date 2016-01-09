@@ -1,6 +1,6 @@
 #!/bin/bash
 
-help() {
+help_bash_aliases() {
   echo 'These bash_aliases need to be called from ~/.bashrc or similar like this:'
   echo 
   echo '    . /path/to/this/bash_aliases'
@@ -64,7 +64,7 @@ help() {
 }
 
 if [ "$1" = "--help" ]; then
-   help
+   help_bash_aliases
 fi
 
 alias apt-find="apt-file find"
