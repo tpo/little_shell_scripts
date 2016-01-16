@@ -1,0 +1,31 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: file_extension [--lowercase|--uppercase] file_path'
+   echo
+   echo '    print file extension of given file'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] || [ "$1" == "" ] && help
+
+case "$1" in
+   --lowercase)
+     translate="tr [:upper:] [:lower:]"
+     shift
+     ;;
+   --uppercase)
+     translate="tr [:lower:] [:upper:]"
+     shift
+     ;;
+esac
+
+filename=$(basename "$1")
+extension="${filename##*.}"
+
+if [ "$translate" ]; then
+   extension=$( echo "$extension" | $translate )
+fi
+
+echo "$extension"

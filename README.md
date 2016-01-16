@@ -246,6 +246,12 @@ usage: exif-del image
 
     remove all meta-tags from exif informations
 
+### file_extension
+
+usage: file_extension [--lowercase|--uppercase] file_path
+
+    print file extension of given file
+
 ### find_ls_sort
 
 usage: find_ls_sort [--help]
