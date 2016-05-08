@@ -13,7 +13,7 @@ help() {
 
 chromium50_bug="--disable-gpu"
 # see
-# * https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=822170
+# * https://bugs.debian.org/822170
 # * https://groups.google.com/forum/?_escaped_fragment_=topic/qubes-users/bdU_oOUcO94#!topic/qubes-users/bdU_oOUcO94
 
 if [ "$1" ]; then
