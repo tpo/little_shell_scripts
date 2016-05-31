@@ -1,16 +1,19 @@
 #!/bin/bash
 
 help() {
-  echo "usage: mount_encrypted image [mountpoint]"
+  echo "usage: mount_encrypted [options] image [mountpoint]"
   echo
   echo "    see also umount_encrypted"
   echo
   echo "    if mountpoint is not provided mounts under /media/image"
   echo
+  echo "    --ro     mount read only"
+  echo
   exit 255
 }
 
 [ "$1" == "--help" ] || [ "$1" == "" ] && help
+[ "$1" == "--ro" ] && shift && RO="-o ro"
 
 exit_err() {
   exit 1
@@ -62,7 +65,7 @@ else
     unlosetup
 
   else
-    if ! mount /dev/mapper/$DEV_NAME "$MNT"; then
+    if ! mount $RO /dev/mapper/$DEV_NAME "$MNT"; then
       uncryptsetup
 
     else
