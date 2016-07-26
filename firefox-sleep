@@ -14,10 +14,11 @@ help() {
 
 [ "$1" == "--help" ] && help
 
-# Debian has firefox-bin and iceweasel
+# Debian has firefox-bin, firefox-esr and iceweasel
 # Ubuntu has firefox
 # Debian has fullpath with arguments
 pkill -STOP -f "(^|/)+iceweasel( |$)+"
 pkill -STOP -f "(^|/)+firefox(-bin)*( |$)+"
+pkill -STOP -f "(^|/)+firefox-esr( |$)+"
 pkill -STOP -f "x-www-browser"
 pkill -STOP -f "(^|/)+plugin-container( |$)+"

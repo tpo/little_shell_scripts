@@ -16,5 +16,6 @@ help() {
 
 pkill -CONT -f "(^|/)+iceweasel( |$)+"
 pkill -CONT -f "(^|/)+firefox(-bin)*( |$)+"
+pkill -CONT -f "(^|/)+firefox-esr( |$)+"
 pkill -CONT -f "x-www-browser"
 pkill -CONT -f "(^|/)+plugin-container( |$)+"
