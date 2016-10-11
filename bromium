@@ -16,8 +16,21 @@ chromium50_bug="--disable-gpu"
 # * https://bugs.debian.org/822170
 # * https://groups.google.com/forum/?_escaped_fragment_=topic/qubes-users/bdU_oOUcO94#!topic/qubes-users/bdU_oOUcO94
 
+tmp_user_dir=$( mktemp -d /tmp/bromium.XXXX )
+
+# see http://peter.sh/experiments/chromium-command-line-switches/ for options
+
 if [ "$1" ]; then
-  exec chromium $chromium50_bug --temp-profile --incognito "$@"
+  chromium $chromium50_bug --user-data-dir="$tmp_user_dir" --temp-profile --disable-notifications --incognito "$@"
 else
-  exec chromium $chromium50_bug --temp-profile --incognito "about:blank"
+  chromium $chromium50_bug --user-data-dir="$tmp_user_dir" --temp-profile --disable-notifications --incognito "about:blank"
+fi
+
+# be really sure that "$tmp_user_dir" contains a correct tmpdir
+# before rm -rf /* or such
+#
+if [[ "$tmp_user_dir" =~ /tmp/bromium ]]; then
+  rm -r "$tmp_user_dir"
+else
+  echo "hae? $tmp_user_dir"
 fi
