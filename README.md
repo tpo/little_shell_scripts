@@ -493,3 +493,21 @@ usage: wping [URL]
     retrieves website via HTTP in order to see whether the web/internet
     works. Default site is http://sourcepole.ch
 
+### zuletzt
+
+usage: zuletzt
+       zuletzt --help
+
+       'zuletzt' means 'last time' in German. It will
+       play the next multimedia file.
+
+       Do create a file ZULETZT which contains:
+
+         1600_##.mp3
+         0
+
+       Then call `zuletzt` and it will play the
+       file 1600_01.mp3 and increase the '0' to '1'
+       after having successfully played the file with
+       mpv.
+

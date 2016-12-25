@@ -1,0 +1,43 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: zuletzt'
+   echo '       zuletzt --help'
+   echo
+   echo "       'zuletzt' means 'last time' in German. It will"
+   echo "       play the next multimedia file."
+   echo
+   echo '       Do create a file ZULETZT which contains:'
+   echo
+   echo '         1600_##.mp3'
+   echo '         0'
+   echo
+   echo '       Then call `zuletzt` and it will play the'
+   echo "       file 1600_01.mp3 and increase the '0' to '1'"
+   echo '       after having successfully played the file with'
+   echo '       mpv.'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+[ -e ZULETZT ] || ( echo "ERROR: you need to create the ZULETZT file first" && help )
+
+file_pattern=$( head -n 1 ZULETZT )
+n_last_heard=$(   tail -n 1 ZULETZT )
+
+# drop anything other than '#' and then count the chars (the '#'s)
+place_holder_len=$( echo "$file_pattern" | sed 's/[^#]*//g' | wc -m )
+place_holder_len=$(( $place_holder_len - 1 )) # for some reason `wc` counts the newline
+
+printf_pattern=$( echo "$file_pattern" | sed "s/##*/%0${place_holder_len}d/" )
+file_to_play=$( printf "$printf_pattern" $n_last_heard )
+
+mpv "$file_to_play"
+
+(
+  n_last_heard=$(( $n_last_heard + 1 ))
+  echo "$file_pattern"
+  echo "$n_last_heard"
+) > ZULETZT
