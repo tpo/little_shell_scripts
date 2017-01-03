@@ -371,6 +371,23 @@ usage: show_rh_updates [--help]
     shows current and new version of packages that would get
     updated.
 
+### ssh-host
+
+usage: ssh-hosts [host]
+
+    Either output the whole ~/.ssh/config file or,
+    if given, emit HostName of host.
+
+    This script is most useful together with bash
+    completion:
+
+        _ssh_hosts()
+        {
+            local cur prev words cword
+            _init_completion -n = || return
+            _known_hosts_real -a -F ~/.ssh/config "$cur"
+        } && complete -F _ssh_hosts ssh-hosts
+
 ### ssh-update-config
 
 usage: ssh-update-config

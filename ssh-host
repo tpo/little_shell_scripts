@@ -1,0 +1,42 @@
+#!/bin/bash
+#
+
+help() {
+   echo 'usage: ssh-hosts [host]'
+   echo
+   echo '    Either output the whole ~/.ssh/config file or,'
+   echo '    if given, emit HostName of host.'
+   echo
+   echo '    This script is most useful together with bash'
+   echo '    completion:'
+   echo
+   echo '        _ssh_hosts()'
+   echo '        {'
+   echo '            local cur prev words cword'
+   echo '            _init_completion -n = || return'
+   echo '            _known_hosts_real -a -F ~/.ssh/config "$cur"'
+   echo '        } && complete -F _ssh_hosts ssh-hosts'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+[ "$1" == "" ] && cat ~/.ssh/config
+
+host="$1"
+
+IFS=$'\n'
+matched=no
+for i in `cat ~/.ssh/config`
+do
+    if [ "$matched" == "yes" ]; then
+
+	if [[ "$i" =~ ^HostName\  ]]; then
+	    echo "$i" | sed 's/HostName *//'
+            break
+	fi
+    elif [[ "$i" =~ ^Host\ *$host ]]; then
+        matched=yes
+    fi
+done
