@@ -375,8 +375,8 @@ usage: show_rh_updates [--help]
 
 usage: ssh-hosts [host]
 
-    Either output the whole ~/.ssh/config file or,
-    if given, emit HostName of host.
+    Host lookup inside ~/.ssh/config. If no host
+    is given then output the whole ~/.ssh/config file.
 
     This script is most useful together with bash
     completion:

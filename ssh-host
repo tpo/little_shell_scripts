@@ -4,8 +4,8 @@
 help() {
    echo 'usage: ssh-hosts [host]'
    echo
-   echo '    Either output the whole ~/.ssh/config file or,'
-   echo '    if given, emit HostName of host.'
+   echo '    Host lookup inside ~/.ssh/config. If no host'
+   echo '    is given then output the whole ~/.ssh/config file.'
    echo
    echo '    This script is most useful together with bash'
    echo '    completion:'
