@@ -373,7 +373,7 @@ usage: show_rh_updates [--help]
 
 ### ssh-host
 
-usage: ssh-hosts [host]
+usage: ssh-host [host]
 
     Host lookup inside ~/.ssh/config. If no host
     is given then output the whole ~/.ssh/config file.
@@ -381,12 +381,12 @@ usage: ssh-hosts [host]
     This script is most useful together with bash
     completion:
 
-        _ssh_hosts()
+        _ssh_host()
         {
             local cur prev words cword
             _init_completion -n = || return
             _known_hosts_real -a -F ~/.ssh/config "$cur"
-        } && complete -F _ssh_hosts ssh-hosts
+        } && complete -F _ssh_host ssh-host
 
 ### ssh-update-config
 

@@ -2,7 +2,7 @@
 #
 
 help() {
-   echo 'usage: ssh-hosts [host]'
+   echo 'usage: ssh-host [host]'
    echo
    echo '    Host lookup inside ~/.ssh/config. If no host'
    echo '    is given then output the whole ~/.ssh/config file.'
@@ -10,12 +10,12 @@ help() {
    echo '    This script is most useful together with bash'
    echo '    completion:'
    echo
-   echo '        _ssh_hosts()'
+   echo '        _ssh_host()'
    echo '        {'
    echo '            local cur prev words cword'
    echo '            _init_completion -n = || return'
    echo '            _known_hosts_real -a -F ~/.ssh/config "$cur"'
-   echo '        } && complete -F _ssh_hosts ssh-hosts'
+   echo '        } && complete -F _ssh_host ssh-host'
    echo
    exit 1
 }
