@@ -14,6 +14,9 @@ CERT="$1"
 EXT=$( file_extension --lowercase "$CERT" )
 
 case "$EXT" in
+   p7b)
+         openssl pkcs7  -in "$CERT"
+      ;;
    pfx|p12)
          openssl pkcs12 -in "$CERT" -nokeys
       ;;
