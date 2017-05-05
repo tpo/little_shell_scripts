@@ -286,6 +286,12 @@ usage: heat.sh
 
     Useful for fan and temperature regulation testing
 
+### host_only_ip
+
+usage: host_only_ip hostname
+       host_only_ip --help
+
+       Same as `host`, but will return IP address only.
 ### kernelog
 
 usage: kernelog

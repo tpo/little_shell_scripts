@@ -1,0 +1,13 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: host_only_ip hostname'
+   echo '       host_only_ip --help'
+   echo
+   echo '       Same as `host`, but will return IP address only.'
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+ 
+host "$1" | grep 'has address' | sed 's/.*has address //'
