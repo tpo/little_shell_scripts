@@ -1,0 +1,33 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: konsole_fork_ssh'
+   echo '       konsole_fork_ssh --help'
+   echo
+   echo '    Fork a konsole tab that is running a ssh session.'
+   echo
+   echo '    The idea is to bind this program to a key-combination'
+   echo '    and press the respectiv key while working inside konsole.'
+   echo
+   echo '    When the currently active tab is running a ssh session,'
+   echo '    konsole will open a new Tab and execute ssh to the same host.'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+# debug:
+# exec > /tmp/foo.log 2>&1
+
+konsole_session=$( qdbus org.kde.konsole /Konsole org.kde.konsole.Window.currentSession  )
+bash_pid=$(        qdbus org.kde.konsole /Sessions/$konsole_session org.kde.konsole.Session.processId )
+ssh_pid=$(         pgrep -P $bash_pid )
+
+# check if indeed the child of the bash was a ssh
+#
+if [ "$ssh_pid" ]; then
+  ssh_command=$( ps --pid $ssh_pid -o "%a" h )
+  new_konsole_session=$( qdbus org.kde.konsole /Konsole org.kde.konsole.Window.newSession )
+  qdbus org.kde.konsole /Sessions/$new_konsole_session org.kde.konsole.Session.runCommand "$ssh_command"
+fi

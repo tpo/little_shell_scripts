@@ -299,6 +299,19 @@ usage: kernelog
     Will jump to the end of /var/log/kern.log, page it with
     'less' and update it when it changes.
 
+### konsole_fork_ssh
+
+usage: konsole_fork_ssh
+       konsole_fork_ssh --help
+
+    Fork a konsole tab that is running a ssh session.
+
+    The idea is to bind this program to a key-combination
+    and press the respectiv key while working inside konsole.
+
+    When the currently active tab is running a ssh session,
+    konsole will open a new Tab and execute ssh to the same host.
+
 ### mairi
 
 usage: mairi _search _parameters
