@@ -18,16 +18,29 @@ help() {
 [ "$1" == "--help" ] && help
 
 # debug:
-# exec > /tmp/foo.log 2>&1
+#set -x
+#exec > /tmp/foo.log 2>&1
 
-konsole_session=$( qdbus org.kde.konsole /Konsole org.kde.konsole.Window.currentSession  )
-bash_pid=$(        qdbus org.kde.konsole /Sessions/$konsole_session org.kde.konsole.Session.processId )
-ssh_pid=$(         pgrep -P $bash_pid )
+windows=$( qdbus org.kde.konsole | grep ^/konsole/MainWindow_.$ )
 
-# check if indeed the child of the bash was a ssh
-#
-if [ "$ssh_pid" ]; then
-  ssh_command=$( ps --pid $ssh_pid -o "%a" h )
-  new_konsole_session=$( qdbus org.kde.konsole /Konsole org.kde.konsole.Window.newSession )
-  qdbus org.kde.konsole /Sessions/$new_konsole_session org.kde.konsole.Session.runCommand "$ssh_command"
-fi
+for window in $windows; do 
+
+  active=$( qdbus org.kde.konsole $window org.qtproject.Qt.QWidget.isActiveWindow 2>/dev/null )
+  if [ "$active" == "true" ]; then
+    window_num=$( echo "$window" | sed 's#/konsole/MainWindow_##' )
+    
+    konsole_session=$( qdbus org.kde.konsole /Windows/$window_num org.kde.konsole.Window.currentSession  )
+    bash_pid=$(        qdbus org.kde.konsole /Sessions/$konsole_session org.kde.konsole.Session.processId )
+    ssh_pid=$(         pgrep -P $bash_pid )
+    
+    # check if indeed the child of the bash was a ssh
+    #
+    if [ "$ssh_pid" ]; then
+      ssh_command=$( ps --pid $ssh_pid -o "%a" h )
+      new_konsole_session=$( qdbus org.kde.konsole /Windows/$window_num org.kde.konsole.Window.newSession )
+      qdbus org.kde.konsole /Sessions/$new_konsole_session org.kde.konsole.Session.runCommand "$ssh_command"
+    fi
+    break
+  fi
+done
+
