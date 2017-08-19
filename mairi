@@ -16,6 +16,6 @@ help() {
 # terminate if mairix doesn't find a message:
 set -e
 
-/usr/bin/mairix $@
+/usr/bin/mairix "$@"
 sleep 1.5
 mutt -f /home/tpo/mairix
