@@ -43,7 +43,7 @@ if [ "$2" == "" ]; then
   MNT="/media/$MNT"
 
   if [ -d "$MNT" ]; then
-    echo "directory already exists"
+    echo "directory '$MNT' already exists"
     exit_err
 
   else
