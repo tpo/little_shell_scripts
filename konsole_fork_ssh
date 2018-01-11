@@ -21,33 +21,23 @@ help() {
 #set -x
 #exec > /tmp/foo.log 2>&1
 
-windows=$( qdbus org.kde.konsole | grep ^/konsole/MainWindow_.$ )
+KONSOLE_DBUS_SESSION=/Sessions/35
+KONSOLE_DBUS_WINDOW=/Windows/2
 
-for window in $windows; do 
+shell_pid=$(       qdbus org.kde.konsole $KONSOLE_DBUS_SESSION org.kde.konsole.Session.processId )
+child_pid=$(       pgrep -P $shell_pid )
 
-  active=$( qdbus org.kde.konsole $window org.qtproject.Qt.QWidget.isActiveWindow 2>/dev/null )
-  if [ "$active" == "true" ]; then
-    window_num=$( echo "$window" | sed 's#/konsole/MainWindow_##' )
-    
-    konsole_session=$( qdbus org.kde.konsole /Windows/$window_num org.kde.konsole.Window.currentSession  )
-    shell_pid=$(       qdbus org.kde.konsole /Sessions/$konsole_session org.kde.konsole.Session.processId )
-    child_pid=$(       pgrep -P $shell_pid )
-    
-    # check if we indeed a child of the shell was found
-    #
-    if [ "$child_pid" ]; then
-      child_commandline=$( ps --pid $child_pid -o "%a" h )
+# check if we indeed a child of the shell was found
+#
+if [ "$child_pid" ]; then
+  child_commandline=$( ps --pid $child_pid -o "%a" h )
 
-      # restrict forking to ssh commands
-      #
-      command=$( echo "$child_commandline" | sed 's/ .*//' )
-      if [ "$command" == "ssh" ]; then
+  # restrict forking to ssh commands
+  #
+  command=$( echo "$child_commandline" | sed 's/ .*//' )
+  if [ "$command" == "ssh" ]; then
 
-        new_konsole_session=$( qdbus org.kde.konsole /Windows/$window_num org.kde.konsole.Window.newSession )
-        qdbus org.kde.konsole /Sessions/$new_konsole_session org.kde.konsole.Session.runCommand "$child_commandline"
-      fi
-    fi
-    break
+    new_konsole_session=$( qdbus org.kde.konsole $KONSOLE_DBUS_WINDOW org.kde.konsole.Window.newSession )
+    qdbus org.kde.konsole /Sessions/$new_konsole_session org.kde.konsole.Session.runCommand "$child_commandline"
   fi
-done
-
+fi
