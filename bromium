@@ -32,9 +32,9 @@ else
 fi
 
 if [ "$1" ]; then
-  chromium $chromium50_bug --user-data-dir="$tmp_user_dir" --temp-profile --disable-notifications $incognito "$@"
+  chromium $chromium50_bug --user-data-dir="$tmp_user_dir" --temp-profile --password-store=basic --disable-notifications $incognito "$@"
 else
-  chromium $chromium50_bug --user-data-dir="$tmp_user_dir" --temp-profile --disable-notifications $incognito "about:blank"
+  chromium $chromium50_bug --user-data-dir="$tmp_user_dir" --temp-profile --password-store=basic --disable-notifications $incognito "about:blank"
 fi
 
 # be really sure that "$tmp_user_dir" contains a correct tmpdir
