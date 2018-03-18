@@ -71,10 +71,14 @@ usage: brightness [--show|percent]
 
 ### bromium
 
-usage: bromium
+usage: bromium [--enable-cookies] [URL]
        bromium --help
 
-    run chromium with an empty temporary profile
+    Run chromium with an empty temporary profile.
+
+    By default bromium will run in "incognito"
+    mode. If you want to allow cookies then
+    use --enable-cookies
 
 ### catnamed
 

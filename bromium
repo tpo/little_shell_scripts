@@ -1,10 +1,14 @@
 #!/bin/bash
 
 help() {
-   echo 'usage: bromium'
+   echo 'usage: bromium [--enable-cookies] [URL]'
    echo '       bromium --help'
    echo
-   echo '    run chromium with an empty temporary profile'
+   echo '    Run chromium with an empty temporary profile.'
+   echo
+   echo '    By default bromium will run in "incognito"'
+   echo '    mode. If you want to allow cookies then'
+   echo '    use --enable-cookies'
    echo
    exit 1
 }
@@ -20,10 +24,17 @@ tmp_user_dir=$( mktemp -d /tmp/bromium.XXXX )
 
 # see http://peter.sh/experiments/chromium-command-line-switches/ for options
 
-if [ "$1" ]; then
-  chromium $chromium50_bug --user-data-dir="$tmp_user_dir" --temp-profile --disable-notifications --incognito "$@"
+if [ "$1" == "--enable-cookies" ]; then
+  incognito=""
+  shift
 else
-  chromium $chromium50_bug --user-data-dir="$tmp_user_dir" --temp-profile --disable-notifications --incognito "about:blank"
+  incognito="--incognito"
+fi
+
+if [ "$1" ]; then
+  chromium $chromium50_bug --user-data-dir="$tmp_user_dir" --temp-profile --disable-notifications $incognito "$@"
+else
+  chromium $chromium50_bug --user-data-dir="$tmp_user_dir" --temp-profile --disable-notifications $incognito "about:blank"
 fi
 
 # be really sure that "$tmp_user_dir" contains a correct tmpdir
