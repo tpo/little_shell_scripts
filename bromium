@@ -15,11 +15,6 @@ help() {
 
 [ "$1" == "--help" ] && help
 
-chromium50_bug="--disable-gpu"
-# see
-# * https://bugs.debian.org/822170
-# * https://groups.google.com/forum/?_escaped_fragment_=topic/qubes-users/bdU_oOUcO94#!topic/qubes-users/bdU_oOUcO94
-
 tmp_user_dir=$( mktemp -d /tmp/bromium.XXXX )
 
 # see http://peter.sh/experiments/chromium-command-line-switches/ for options
@@ -32,9 +27,9 @@ else
 fi
 
 if [ "$1" ]; then
-  chromium $chromium50_bug --user-data-dir="$tmp_user_dir" --temp-profile --password-store=basic --disable-notifications $incognito "$@"
+  chromium --user-data-dir="$tmp_user_dir" --temp-profile --password-store=basic --disable-notifications $incognito "$@"
 else
-  chromium $chromium50_bug --user-data-dir="$tmp_user_dir" --temp-profile --password-store=basic --disable-notifications $incognito "about:blank"
+  chromium --user-data-dir="$tmp_user_dir" --temp-profile --password-store=basic --disable-notifications $incognito "about:blank"
 fi
 
 # be really sure that "$tmp_user_dir" contains a correct tmpdir
