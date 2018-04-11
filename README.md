@@ -415,8 +415,23 @@ usage: ssh-host [host]
 
 usage: ssh-update-config
 
-    construct a new ~/.ssh/config from ~/.ssh/config.d
+    Construct a new ~/.ssh/config from ~/.ssh/config.d.
+    A backup of the current ~/.ssh/config is done
+    automatically.
 
+    If called as `ssh-update-config`:
+
+      * then ~/.ssh/config.d/* is `cat`ed together and
+        the result used as ~/.ssh/config
+
+    If called as `ssh-update-config-template` then:
+
+      * ~/.ssh/config.d/main.template is
+        `source`d instead and the result written to.
+        ~/.ssh/config
+
+    ssh-update-config requires the `versioned_backup`
+    script
 ### switch_off_radeon
 
 usage: switch_off_radeon

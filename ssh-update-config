@@ -3,8 +3,23 @@
 help() {
   echo 'usage: ssh-update-config'
   echo 
-  echo '    construct a new ~/.ssh/config from ~/.ssh/config.d'
+  echo '    Construct a new ~/.ssh/config from ~/.ssh/config.d.'
+  echo '    A backup of the current ~/.ssh/config is done'
+  echo '    automatically.'
+  echo
+  echo '    If called as `ssh-update-config`:'
+  echo
+  echo '      * then ~/.ssh/config.d/* is `cat`ed together and'
+  echo '        the result used as ~/.ssh/config'
+  echo
+  echo '    If called as `ssh-update-config-template` then:'
+  echo
+  echo '      * ~/.ssh/config.d/main.template is'
+  echo '        `source`d instead and the result written to.'
+  echo '        ~/.ssh/config'
   echo 
+  echo '    ssh-update-config requires the `versioned_backup`'
+  echo '    script'
   exit
 }
 
@@ -17,10 +32,26 @@ error_and_exit() {
   exit -1
 }
 
+cat_template() {
+    echo "cat << EOT"
+    cat "$1"
+    echo EOT
+}
+
 config=~/.ssh/config
+name=$( basename "$0" )
 
 if ! versioned_backup $config ; then
   error_and_exit "ERROR: failed to make backup of $config"
 fi
 
-cat ~/.ssh/config.d/* > $config
+if [ "$name" == "ssh-update-config-template" ]; then
+
+    . ~/.ssh/config.d/main.template > ~/.ssh/config
+
+else # we were called as ssh-update-config
+
+    cat ~/.ssh/config.d/* > ~/.ssh/config
+
+fi
+
