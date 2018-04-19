@@ -10,6 +10,7 @@ These bash_aliases need to be called from ~/.bashrc or similar like this:
 
 They provide the following commands:
 
+    ackp  - execute "ack --pager="less -R""
     df    - execute "df -h"
     du    - execute "du -h"
     bc    - allow for calculations with decimal places by default in bc

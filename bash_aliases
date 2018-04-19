@@ -7,6 +7,7 @@ help_bash_aliases() {
   echo
   echo 'They provide the following commands:'
   echo
+  echo '    ackp  - execute "ack --pager="less -R""'
   echo '    df    - execute "df -h"'
   echo '    du    - execute "du -h"'
   echo '    bc    - allow for calculations with decimal places by default in bc'
@@ -66,6 +67,8 @@ help_bash_aliases() {
 if [ "$1" = "--help" ]; then
    help_bash_aliases
 fi
+
+alias ackp="ack --pager='less -R'"
 
 alias apt-find="apt-file find"
 alias aps="ansible-playbook setup.yml"
