@@ -1,21 +1,21 @@
 #!/bin/bash
 
 help() {
-  echo 'usage: ssh-update-config'
+	echo 'usage: (ssh-update-config|ssh-update-config-template)'
   echo 
   echo '    Construct a new ~/.ssh/config from ~/.ssh/config.d.'
   echo '    A backup of the current ~/.ssh/config is done'
   echo '    automatically.'
   echo
-  echo '    If called as `ssh-update-config`:'
+  echo '    If called as `ssh-update-config` then:'
   echo
-  echo '      * then ~/.ssh/config.d/* is `cat`ed together and'
+  echo '      * ~/.ssh/config.d/* is `cat`ed together and'
   echo '        the result used as ~/.ssh/config'
   echo
   echo '    If called as `ssh-update-config-template` then:'
   echo
   echo '      * ~/.ssh/config.d/main.template is'
-  echo '        `source`d instead and the result written to.'
+  echo '        `source`d instead and the result written to'
   echo '        ~/.ssh/config'
   echo 
   echo '    ssh-update-config requires the `versioned_backup`'
