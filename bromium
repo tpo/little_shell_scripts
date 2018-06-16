@@ -10,6 +10,11 @@ help() {
    echo '    mode. If you want to allow cookies then'
    echo '    use --enable-cookies'
    echo
+   echo '    If you are using bromium as a privacy tool'
+   echo '    then you may want to consider changing your'
+   echo '    default search provider. See'
+   echo '    https://stackoverflow.com/a/50888866'
+   echo
    exit 1
 }
 

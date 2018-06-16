@@ -81,6 +81,11 @@ usage: bromium [--enable-cookies] [URL]
     mode. If you want to allow cookies then
     use --enable-cookies
 
+    If you are using bromium as a privacy tool
+    then you may want to consider changing your
+    default search provider. See
+    https://stackoverflow.com/a/50888866
+
 ### catnamed
 
 usage: catnamed file ...
