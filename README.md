@@ -331,6 +331,13 @@ usage: mairi _search _parameters
     mairi is a simple wrapper around mairix and mutt and accepts
     the same parameters as mairix
 
+### mcdts
+
+usage: mcdts
+       mcdts --help
+
+   Open shell in new temporary directory, delete directory after exit
+
 ### modinfo_all
 
 ./modinfo_all : list information on all currently installed kernel modules

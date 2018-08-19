@@ -1,0 +1,25 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: mcdts'
+   echo '       mcdts --help'
+   echo
+   echo '   Open shell in new temporary directory, delete directory after exit'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+mcdts_start_dir=`pwd`
+
+mcdts_tmpdir=$( mktemp -d /tmp/foo.XXXXXX )
+cd "$mcdts_tmpdir"
+echo "exit from shell to automatically delete your current"
+echo "working directory '$mcdts_tmpdir'"
+
+bash
+
+cd "$mcdts_start_dir"
+[ -d "$mcdts_tmpdir" ] && rm -r "$mcdts_tmpdir"
+
