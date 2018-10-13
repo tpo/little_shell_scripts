@@ -68,7 +68,7 @@ change directory
 
 usage: brightness [--show|percent]
 
-    set or show panel brightness on intel chips in percent (default ist 60%)
+    set or show panel brightness on intel chips in percent (default is 60%)
 
 ### bromium
 
