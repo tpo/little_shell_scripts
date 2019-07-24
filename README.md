@@ -512,6 +512,19 @@ Here's the --help for each shell script:
 	    foo.0002
 	    bar.mp3
 	    bar.0001.mp3
+### vimgrep
+
+	usage: vimgrep (REGULAR_EXPRESSION|rg_option)+
+	       vimgrep --help
+	
+	    will:
+	      - use ripgrep (`rg`) to grep files
+	      - display the result
+	      - ask for confirmation
+	      - edit the files with vim
+	
+	    Attention: this will run `rg` twice
+	
 ### vimn
 
 	usage: vimn file:n

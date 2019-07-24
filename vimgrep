@@ -1,0 +1,28 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: vimgrep (REGULAR_EXPRESSION|rg_option)+'
+   echo '       vimgrep --help'
+   echo
+   echo '    will:'
+   echo '      - use ripgrep (`rg`) to grep files'
+   echo '      - display the result'
+   echo '      - ask for confirmation'
+   echo '      - edit the files with vim'
+   echo
+   echo '    Attention: this will run `rg` twice'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" -o "$1" == "" ] && help
+
+echo
+rg --color always "$@" 
+echo
+
+echo "CTRL-C now if you do not want to edit the file(s) above."
+
+read answer
+
+vim $( rg -l "$1" )
