@@ -21,7 +21,7 @@ echo
 rg --color always "$@" 
 echo
 
-echo "CTRL-C now if you do not want to edit the file(s) above."
+echo "CTRL-C now if you do not want to edit the file(s) above or ENTER to continue."
 
 read answer
 
