@@ -11,6 +11,7 @@ help_bash_aliases() {
   echo '    df    - execute "df -h"'
   echo '    du    - execute "du -h"'
   echo '    bc    - allow for calculations with decimal places by default in bc'
+  echo '    findhere - aka "find . -name"'
   echo '    hg    - grep shell history'
   echo '    hl    - page shell history'
   echo '    pg    - grep processes'
@@ -90,6 +91,8 @@ alias df="df -h"
 alias du="du -h"
 # bc: scale=20
 alias bc="bc -l"
+
+alias findhere="find . -name"
 
 # firefox/thunderbird
 alias ffs=firefox-sleep

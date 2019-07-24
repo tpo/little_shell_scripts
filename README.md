@@ -14,6 +14,7 @@ Here's the --help for each shell script:
 	    df    - execute "df -h"
 	    du    - execute "du -h"
 	    bc    - allow for calculations with decimal places by default in bc
+	    findhere - aka "find . -name"
 	    hg    - grep shell history
 	    hl    - page shell history
 	    pg    - grep processes
