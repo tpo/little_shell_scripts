@@ -353,6 +353,11 @@ Here's the --help for each shell script:
 	
 	    --ro     mount read only
 	
+### mount_iso
+
+	usage: mount_iso iso_image destination
+	       mount_iso --help
+	
 ### music-dl
 
 	usage: music-dl URL

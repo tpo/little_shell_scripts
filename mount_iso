@@ -1,0 +1,12 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: mount_iso iso_image destination'
+   echo '       mount_iso --help'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" -o "$1" == "" -o "$2" == "" ] && help
+
+sudo mount -o loop "$1" "$2"
