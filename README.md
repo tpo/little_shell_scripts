@@ -126,7 +126,7 @@ Here's the --help for each shell script:
 	
 ### cert-show
 
-	usage: cert-show (--help|certificate)
+	usage: cert-show (--help|certificate|--host host:port)
 	
 	    print all kinds of certificates
 	

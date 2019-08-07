@@ -1,7 +1,7 @@
 #!/bin/bash
 
 help() {
-   echo 'usage: cert-show (--help|certificate)'
+   echo 'usage: cert-show (--help|certificate|--host host:port)'
    echo
    echo '    print all kinds of certificates'
    echo
@@ -10,36 +10,45 @@ help() {
 
 [ "$1" == "--help" ] || [ "$1" == "" ] && help
 
-CERT="$1"
-EXT=$( file_extension --lowercase "$CERT" )
+if [ "$1" == "--host" ]; then
+   [ "$2" == "" ] && help
 
-case "$EXT" in
-   p7b)
-         openssl pkcs7  -in "$CERT"
-      ;;
-   pfx|p12)
-         openssl pkcs12 -in "$CERT" -nokeys
-      ;;
-   key)
-         openssl rsa    -in "$CERT" -noout -text
-      ;;
-   csr)
-         openssl req    -in "$CERT" -noout -text
-      ;;
-   crl)
-         openssl crl    -in "$CERT" -noout -text -inform der
-      ;;
-   cer|der|crt|pem)
-      if grep -q "BEGIN CERTIFICATE" "$CERT"; then
-         # assume PEM format
-         openssl x509   -in "$CERT" -noout -text -inform pem
-      else
-         # assume DER format
-         openssl x509   -in "$CERT" -noout -text -inform der
-      fi
-      ;;
-   *)
-         openssl x509   -in "$CERT" -noout -text
-      ;;
-esac
+   connection="$2"
+   echo exit | \
+   openssl s_client -showcerts -connect $connection | \
+   openssl x509 -inform pem -noout -text
 
+else
+   CERT="$1"
+   EXT=$( file_extension --lowercase "$CERT" )
+   
+   case "$EXT" in
+      p7b)
+            openssl pkcs7  -in "$CERT"
+         ;;
+      pfx|p12)
+            openssl pkcs12 -in "$CERT" -nokeys
+         ;;
+      key)
+            openssl rsa    -in "$CERT" -noout -text
+         ;;
+      csr)
+            openssl req    -in "$CERT" -noout -text
+         ;;
+      crl)
+            openssl crl    -in "$CERT" -noout -text -inform der
+         ;;
+      cer|der|crt|pem)
+         if grep -q "BEGIN CERTIFICATE" "$CERT"; then
+            # assume PEM format
+            openssl x509   -in "$CERT" -noout -text -inform pem
+         else
+            # assume DER format
+            openssl x509   -in "$CERT" -noout -text -inform der
+         fi
+         ;;
+      *)
+            openssl x509   -in "$CERT" -noout -text
+         ;;
+   esac
+fi
