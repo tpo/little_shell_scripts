@@ -93,6 +93,21 @@ Here's the --help for each shell script:
 	
 	    print name of file and then cat it
 	
+### cat_null_terminated
+
+	usage: cat_null_terminated file
+	       cat_null_terminated --help
+	
+	   When file contains "lines" or "items" separated
+	   by null values, then cat_null_terminated will
+	   replace those nulls with line breaks and `cat`
+	   the file out
+	
+	   Many special files under /proc contain such
+	   null-separated lines.
+	
+	   see https://unix.stackexchange.com/a/29132
+	
 ### catwhich
 
 	usage: catwhich executable

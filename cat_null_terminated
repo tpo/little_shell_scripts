@@ -1,0 +1,22 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: cat_null_terminated file'
+   echo '       cat_null_terminated --help'
+   echo
+   echo '   When file contains "lines" or "items" separated'
+   echo '   by null values, then cat_null_terminated will'
+   echo '   replace those nulls with line breaks and `cat`'
+   echo '   the file out'
+   echo
+   echo '   Many special files under /proc contain such'
+   echo '   null-separated lines.'
+   echo
+   echo '   see https://unix.stackexchange.com/a/29132'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+cat "$1" | xargs --null --max-args=1 echo
