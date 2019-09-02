@@ -10,20 +10,21 @@ Here's the --help for each shell script:
 	
 	They provide the following commands:
 	
-	    ackp  - execute "ack --pager="less -R""
-	    df    - execute "df -h"
-	    du    - execute "du -h"
-	    bc    - allow for calculations with decimal places by default in bc
-	    findhere - aka "find . -name"
-	    hg    - grep shell history
-	    hl    - page shell history
-	    pg    - grep processes
-	    rgl   - rgrep regex | less
-	    aps   - execute 'ansible-playbook setup.yml'
-	    apst  - execute 'ansible-playbook setup.yml --tags='
-	    apsv  - execute 'ansible-playbook setup.yml \
-	                        --vault-password-file ~/vault_from_gpg_agent.py
-	    apstv - execute 'ansible-playbook setup.yml \
+	    ackp      - execute "ack --pager="less -R""
+	    df        - execute "df -h"
+	    du        - execute "du -h"
+	    bc        - allow for calculations with decimal places by default in bc
+	    findhere  - aka "find . -name "*argument*""
+	    findheres - strict findhere, aka "find . -name"
+	    hg        - grep shell history
+	    hl        - page shell history
+	    pg        - grep processes
+	    rgl       - rgrep regex | less
+	    aps       - execute 'ansible-playbook setup.yml'
+	    apst      - execute 'ansible-playbook setup.yml --tags='
+	    apsv      - execute 'ansible-playbook setup.yml \
+	                         --vault-password-file ~/vault_from_gpg_agent.py
+	    apstv     - execute 'ansible-playbook setup.yml \
 	                        --vault-password-file ~/vault_from_gpg_agent.py \
 	                        --tags='
 	
