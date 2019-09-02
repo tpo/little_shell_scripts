@@ -7,20 +7,21 @@ help_bash_aliases() {
   echo
   echo 'They provide the following commands:'
   echo
-  echo '    ackp  - execute "ack --pager="less -R""'
-  echo '    df    - execute "df -h"'
-  echo '    du    - execute "du -h"'
-  echo '    bc    - allow for calculations with decimal places by default in bc'
-  echo '    findhere - aka "find . -name"'
-  echo '    hg    - grep shell history'
-  echo '    hl    - page shell history'
-  echo '    pg    - grep processes'
-  echo '    rgl   - rgrep regex | less'
-  echo "    aps   - execute 'ansible-playbook setup.yml'"
-  echo "    apst  - execute 'ansible-playbook setup.yml --tags='"
-  echo "    apsv  - execute 'ansible-playbook setup.yml \\"
-  echo "                        --vault-password-file ~/vault_from_gpg_agent.py"
-  echo "    apstv - execute 'ansible-playbook setup.yml \\"
+  echo '    ackp      - execute "ack --pager="less -R""'
+  echo '    df        - execute "df -h"'
+  echo '    du        - execute "du -h"'
+  echo '    bc        - allow for calculations with decimal places by default in bc'
+  echo '    findhere  - aka "find . -name"'
+  echo '    findhere  - aka "find . -name"'
+  echo '    hg        - grep shell history'
+  echo '    hl        - page shell history'
+  echo '    pg        - grep processes'
+  echo '    rgl       - rgrep regex | less'
+  echo "    aps       - execute 'ansible-playbook setup.yml'"
+  echo "    apst      - execute 'ansible-playbook setup.yml --tags='"
+  echo "    apsv      - execute 'ansible-playbook setup.yml \\"
+  echo "                         --vault-password-file ~/vault_from_gpg_agent.py"
+  echo "    apstv     - execute 'ansible-playbook setup.yml \\"
   echo "                        --vault-password-file ~/vault_from_gpg_agent.py \\"
   echo "                        --tags='"
   echo
