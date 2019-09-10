@@ -17,6 +17,7 @@ help_bash_aliases() {
   echo '    hl        - page shell history'
   echo '    pg        - grep processes'
   echo '    rgl       - rgrep regex | less'
+  echo '    rgp       - execute "rg --color=ansi | less -R"'
   echo "    aps       - execute 'ansible-playbook setup.yml'"
   echo "    apst      - execute 'ansible-playbook setup.yml --tags='"
   echo "    apsv      - execute 'ansible-playbook setup.yml \\"
@@ -71,6 +72,9 @@ if [ "$1" = "--help" ]; then
 fi
 
 alias ackp="ack --pager='less -R'"
+rgp() {
+  rg --color=ansi "$@" | less -R
+}
 
 alias apt-find="apt-file find"
 alias aps="ansible-playbook setup.yml"
