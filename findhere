@@ -1,0 +1,15 @@
+#!/bin/bash
+
+help() {
+  echo 'usage: findhere SEARCH_STRING'
+  echo 
+  echo '    will execute "find . -name "*SEARCH_STRING*""'
+  echo 
+  exit
+}
+
+[ "$1" == "--help" ] && help
+
+findhere() {
+  find . -name "*$1*"
+}

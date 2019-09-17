@@ -14,8 +14,6 @@ Here's the --help for each shell script:
 	    df        - execute "df -h"
 	    du        - execute "du -h"
 	    bc        - allow for calculations with decimal places by default in bc
-	    findhere  - aka "find . -name "*argument*""
-	    findheres - strict findhere, aka "find . -name"
 	    hg        - grep shell history
 	    hl        - page shell history
 	    pg        - grep processes
@@ -279,6 +277,12 @@ Here's the --help for each shell script:
 	usage: file_extension [--lowercase|--uppercase] file_path
 	
 	    print file extension of given file
+	
+### findhere
+
+	usage: findhere SEARCH_STRING
+	
+	    will execute "find . -name "*SEARCH_STRING*""
 	
 ### find_ls_sort
 
