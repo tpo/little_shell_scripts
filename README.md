@@ -2,6 +2,18 @@
 
 Here's the --help for each shell script:
 
+### 7ze
+
+	usage: 7ze file [archive.zip]
+	
+	    Add 'file' to AES256 enctrypted archive.
+	    If the name of the archive is not given then
+	    'file.zip' will be used as archive name.
+	
+	    Archive with file encrypted in this way should
+	    be compatible with windows.
+	
+	    7ze will ask for the password.
 ### bash_aliases
 
 	These bash_aliases need to be called from ~/.bashrc or similar like this:

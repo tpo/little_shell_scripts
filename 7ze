@@ -1,0 +1,29 @@
+#!/bin/bash
+
+help() {
+  echo "usage: 7ze file [archive.zip]"
+  echo
+  echo "    Add 'file' to AES256 enctrypted archive."
+  echo "    If the name of the archive is not given then"
+  echo "    'file.zip' will be used as archive name."
+  echo
+  echo "    Archive with file encrypted in this way should"
+  echo "    be compatible with windows."
+  echo
+  echo "    7ze will ask for the password."
+  exit 1
+}
+
+[ "$1" == "--help" ] || [ "$1" == "" ] && help
+
+file="$1"
+
+if [ "$2" == "" ]; then
+	archive="$file.zip"
+else
+	archive="$2"
+fi
+
+echo -n "pass: "; read pass
+
+7z a -p"$pass" -mem=AES256 "$archive" "$file"
