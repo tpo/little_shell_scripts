@@ -428,11 +428,17 @@ Here's the --help for each shell script:
 	
 ### psa
 
-	usage: psa [pattern]
+	usage: psa [-w] [pattern]
 	
 	    Show all processes in full detail (ps faux) excluding kernel
 	    processes. If a pattern is given, then the process list is
 	    grep'ed with that pattern.
+	
+	    psa will by default chop off long lines.
+	
+	    -w    wrap lines instead of chopping them off
+	
+	    psa depends on the linechop tool.
 ### reset_usb_devices
 
 	usage: reset_usb_devices
