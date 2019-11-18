@@ -1,0 +1,23 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: linechop'
+   echo '       linechop --help'
+   echo
+   echo '    chop lines of at right margin of the screen'
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+# The below is ugly. It'd be better to query the current
+# "automatic margin" mode (aka am_mode aka "am"
+# -> man terminfo)) and to reset it to what it was
+# before. But I have yet to find out how to do that.
+# Help welcome.
+#
+# we could use 'cut' but it doesn't know about utf-8
+
+tput rmam
+cat -
+tput smam

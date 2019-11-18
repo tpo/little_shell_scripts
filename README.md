@@ -356,6 +356,12 @@ Here's the --help for each shell script:
 	    When the currently active tab is running a ssh session,
 	    konsole will open a new Tab and execute ssh to the same host.
 	
+### linechop
+
+	usage: linechop
+	       linechop --help
+	
+	    chop lines of at right margin of the screen
 ### mairi
 
 	usage: mairi _search _parameters
