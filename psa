@@ -3,7 +3,7 @@
 help() {
    echo 'usage: psa [pattern]'
    echo
-   echo '    Show all processes in full detail (ps auxw) excluding kernel'
+   echo '    Show all processes in full detail (ps faux) excluding kernel'
    echo '    processes. If a pattern is given, then the process list is'
    echo "    grep'ed with that pattern."
    exit 1
@@ -15,8 +15,8 @@ if [ -z "$1" ]; then
 
    # Pattern of kernel process in `ps auxw` :
    # ... 0:00 [kthreadd]
-   ps auxw | grep -v -P '\d:\d\d \[.*\]$'
+   ps faux | grep -v -P '\d:\d\d \[.*\]$'
 else
-   ps auxw | grep -v -P '\d:\d\d \[.*\]$' | grep "$1"
+   ps faux | grep -v -P '\d:\d\d \[.*\]$' | grep "$1"
 fi
 

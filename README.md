@@ -424,7 +424,7 @@ Here's the --help for each shell script:
 
 	usage: psa [pattern]
 	
-	    Show all processes in full detail (ps auxw) excluding kernel
+	    Show all processes in full detail (ps faux) excluding kernel
 	    processes. If a pattern is given, then the process list is
 	    grep'ed with that pattern.
 ### reset_usb_devices
