@@ -27,8 +27,8 @@ if [ -z "$1" ]; then
 
    # Pattern of kernel process in `ps auxw` :
    # ... 0:00 [kthreadd]
-   ps faux | grep -v -P '\d:\d\d \[.*\]$' | $chopper
+   ps faux | grep -v -P '\d:\d\d  \\_ \[.*\]$' | $chopper
 else
-   ps faux | grep -v -P '\d:\d\d \[.*\]$' | grep "$1" | $chopper
+   ps faux | grep -v -P '\d:\d\d  \\_ \[.*\]$' | grep "$1" | $chopper
 fi
 
