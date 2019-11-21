@@ -70,9 +70,9 @@ end
 
 # `ls {filename}.* 2>&1`.each do |name|
 Dir.glob("#{filename_without_extension}.*").each do |name|
- if name =~ /(\d\d\d\d).gpg$/
-   latest_revision = $1.to_i if $1.to_i > latest_revision
- end
+  if name =~ /(\d\d\d\d)$/
+    latest_revision = $1.to_i if $1.to_i > latest_revision
+  end
 end
 
 latest_revision += 1
