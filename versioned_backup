@@ -26,7 +26,7 @@ def help_and_exit
   puts "    foo.0001"
   puts "    foo.0002"
   puts "    $ touch bar.mp3"
-  puts "    $ versioned_backup bar .mp3"
+  puts "    $ versioned_backup bar.mp3 .mp3"
   puts "    $ ls"
   puts "    foo"
   puts "    foo.0001"
@@ -69,8 +69,8 @@ else
 end
 
 # `ls {filename}.* 2>&1`.each do |name|
-Dir.glob("#{filename_without_extension}.*").each do |name|
-  if name =~ /(\d\d\d\d)$/
+Dir.glob("#{filename_without_extension}.*#{file_extension}").each do |name|
+  if name =~ /(\d\d\d\d)#{file_extension}$/
     latest_revision = $1.to_i if $1.to_i > latest_revision
   end
 end

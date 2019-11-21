@@ -556,7 +556,7 @@ Here's the --help for each shell script:
 	    foo.0001
 	    foo.0002
 	    $ touch bar.mp3
-	    $ versioned_backup bar .mp3
+	    $ versioned_backup bar.mp3 .mp3
 	    $ ls
 	    foo
 	    foo.0001
