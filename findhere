@@ -2,13 +2,15 @@
 
 
 help() {
-  echo 'usage: findhere SEARCH_STRING'
+  echo 'usage: findhere SEARCH_STRING [OTHER_FIND_OPTIONS]'
   echo 
-  echo '    will execute "find . -name "*SEARCH_STRING*""'
+  echo '    will execute "find . -name "*SEARCH_STRING*" [OTHER_FIND_OPTIONS]"'
   echo 
   exit
 }
 
-[ "$1" == "--help" ] && help
+[ "$1" == "--help" ] || [ "$1" == "" ] && help
 
-find . -name "*$1*"
+name="$1"; shift
+
+find . -name "*$name*" "$@"
