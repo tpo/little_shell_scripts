@@ -540,6 +540,11 @@ Here's the --help for each shell script:
 	      - ask for confirmation
 	      - edit the files with vim
 	
+	    You can set the VVV environment variable to
+	    set options for vim:
+	
+	        VVV=-o vimgrep foo
+	
 	    Attention: this will run `rg` twice
 	
 ### vimn

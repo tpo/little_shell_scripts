@@ -10,6 +10,11 @@ help() {
    echo '      - ask for confirmation'
    echo '      - edit the files with vim'
    echo
+   echo '    You can set the VVV environment variable to'
+   echo '    set options for vim:'
+   echo
+   echo '        VVV=-o vimgrep foo'
+   echo
    echo '    Attention: this will run `rg` twice'
    echo
    exit 1
@@ -25,4 +30,4 @@ echo "CTRL-C now if you do not want to edit the file(s) above or ENTER to contin
 
 read answer
 
-vim $( rg -l "$1" )
+vim $VVV $( rg -l "$1" )
