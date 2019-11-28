@@ -70,11 +70,81 @@ unwrap_executable() {
    fi
 }
 
-execute_original() {
-   local executable_path="$0"
+# test_fail test_number
+#
+test_fail() {
+   fail "Test $1 failed" $1
+}
 
-   local original_exec_path="$executable_path.orig"
-   local executed_as_name=$( basename "$executable_path" )
+test() {
+   local myself="$1"
+
+   tmp_executable=$( mktemp )
+   echo "true" > "$tmp_executable"
+   chmod +x "$tmp_executable"
+
+   # == wrap ==
+
+   "$myself" wrap "$tmp_executable"
+   [ -e "$tmp_executable.orig" ]         || test_fail 1
+
+   grep -q "$MARKER" "$tmp_executable" ] || test_fail 2
+
+   # == exec ==
+
+   "$tmp_executable" gogo                || test_fail 3
+   grep -q "Executed as:" "$tmp_executable.log."* \
+                                         || test_fail 4
+   grep -q "Param       1: _gogo_" "$tmp_executable.log."* \
+                                         || test_fail 5
+
+   # == unwrap ==
+
+   "$myself" unwrap "$tmp_executable"
+   [ -e "$tmp_executable.orig" ]         && test_fail 6
+
+   grep -q "$MARKER" "$tmp_executable"   && test_fail 7
+
+   # == clean up ==
+
+   rm "$tmp_executable"
+   rm "$tmp_executable.log."*
+
+   echo "hooray, it seems like $myself works correctly :-)!"
+}
+
+# =============== main ===============
+
+MARKER="this marker is being used to identify the executable_wrapper script"
+
+if [[ "/$0" =~ /executable_wrapper$ ]]; then
+  # we are called as "executable_wrapper"...
+
+  executable="$2"
+
+  case "$1" in
+    --help)
+       help # and exit
+       ;;
+    wrap)
+       wrap_executable_with "$executable" "$0" # and exit
+       ;;
+    unwrap)
+       unwrap_executable "$executable" # and exit
+       ;;
+    test)
+       test "$0" # and exit
+       ;;
+    *)
+       help # and exit
+       ;;
+  esac
+else
+   # we are not called as "executable_wrapper" but as some
+   # wrapped executable
+
+   original_exec_path="$0.orig"
+   executed_as_name=$( basename "$0" )
 
    log_name=$( mktemp "/tmp/$executed_as_name.log.XXXXXX" )
    
@@ -99,78 +169,5 @@ execute_original() {
    ) >> "$log_name"
    
    exec "$original_exec_path" "$@"
-}
-
-# test_fail test_number
-#
-test_fail() {
-   fail "Test $1 failed" $1
-}
-
-test() {
-   local myself="$1"
-
-   tmp_executable=$( mktemp )
-   echo "true" > "$tmp_executable"
-   chmod +x "$tmp_executable"
-
-   # == wrap ==
-
-   "$myself" wrap "$tmp_executable"
-   [ -e "$tmp_executable.orig" ]         || test_fail 1
-
-   grep -q "$MARKER" "$tmp_executable" ] || test_fail 2
-
-   # == exec ==
-
-   "$tmp_executable"                     || test_fail 3
-   grep -q "Executed as:" "$tmp_executable.log."* \
-                                         || test_fail 4
-
-   # == unwrap ==
-
-   "$myself" unwrap "$tmp_executable"
-   [ -e "$tmp_executable.orig" ]         && test_fail 5
-
-   grep -q "$MARKER" "$tmp_executable"   && test_fail 6
-
-   # == clean up ==
-
-   rm "$tmp_executable"
-   rm "$tmp_executable.log."*
-
-   echo "hooray, it seems like $myself works correctly :-)!"
-}
-
-# =============== main ===============
-
-MARKER="this marker is being used to identify the executable_wrapper script"
-
-if [[ "/$0" =~ /executable_wrapper$ ]]; then
-  # if we are called as "executable_wrapper"...
-
-  executable="$2"
-
-  case "$1" in
-    --help)
-       help # and exit
-       ;;
-    wrap)
-       wrap_executable_with "$executable" "$0" # and exit
-       ;;
-    unwrap)
-       unwrap_executable "$executable" # and exit
-       ;;
-    test)
-       test "$0" # and exit
-       ;;
-    *)
-       help # and exit
-       ;;
-  esac
-else
-  # if we are not called as "executable_wrapper"
-  # but as some wrapped executable
-  execute_original "$0"
 fi
 
