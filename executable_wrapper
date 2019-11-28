@@ -1,85 +1,176 @@
-#!/bin/sh
+#!/bin/bash
 
 help() {
-   echo 'usage: executable_wrapper'
+   echo 'usage: executable_wrapper (unwrap|wrap|test) executable'
    echo
    echo '    This script is used to wrap executables in order to'
    echo '    analyse how they are called by other scripts, daemons etc.'
    echo
+   echo '    The original file will be renamed to `executable.orig`.'
+   echo
    echo '    It will log all parameters and the environment of the'
    echo '    originally called executable to a log file for inspection.'
+   echo '    The log file will be called `/tmp/executable.log.XXXXXX`,'
+   echo "    where 'XXXXX' will be some random string."
    echo
-   echo '    How to use:'
-   echo '    ==========='
+   echo '      wrap   - wrap the given `executable`'
    echo
-   echo "    Let's suppose you want to wrap the executable 'foo':"
+   echo '      unwrap - unwrap the given `executable`'
    echo
-   echo '    First approach'
-   echo '    --------------'
-   echo
-   echo '    1. rename the original executable'
-   echo
-   echo '       # cd /where/the/original/lives'
-   echo '       # mv foo foo.orig'
-   echo
-   echo "    2. copy executable_wrapper where 'foo' was before"
-   echo
-   echo '       # cp executable_wrapper /where/the/original/lives/foo'
-   echo
-   echo '    Second approach'
-   echo '    ---------------'
-   echo
-   echo "    1. make sure that the 'executable_wrapper' script will"
-   echo "       be executed instead of the executable 'foo':"
-   echo
-   echo '       # cd /usr/local/bin'
-   echo '       # ln -s ~/path_to/executable_wrapper foo'
-   echo
-   echo '       Note that by convention /usr/local/bin comes first'
-   echo '       in $PATH on Unix systems'
-   echo
-   echo "    2. make the original executable 'foo' available as"
-   echo "       'foo.orig'"
-   echo
-   echo '       # cd /usr/local/bin'
-   echo '       # ln -s /bin/foo foo.orig'
-   echo
-   echo '    You can also set the name of the original executable in'
-   echo '    the variable original_exec_name inside the'
-   echo "    'executable_wrapper' script if you need to do so."
-   echo
-   echo '    3. output will be logged to /tmp/foo.log.XXXXXX,'
-   echo "       where 'XXXXX' will be some random string."
-   echo '       You can also set the log name in the variable'
-   echo "       'log_name' inside the 'executable_wrapper' script"
+   echo '      test   - test this script'
    echo
    exit 1
 }
 
-exec_name=$( basename "$0" )
-[ "$exec_name" = "executable_wrapper" -a "$1" = "--help" ] && help
+# fail "text" exit_code
+#
+fail() {
+   echo "ERROR: $1" >&2
+   exit "$2"
+}
 
-original_exec_path=$(dirname "$0")/$exec_name.orig
-log_name=$( mktemp "/tmp/$exec_name.log.XXXXXX" )
+wrap_executable_with() {
+   local executable_to_wrap="$1"
+   local wrapper="$2"
+   local new_executable_name="$executable_to_wrap.orig"
+ 
+   # -n do not overwrite existing
+   if ! mv -n "$executable_to_wrap" "$new_executable_name"; then
+      local err = $?
+      if [ -e "$new_executable_name" ]; then
+         fail "can not overwrite existing '$new_executable_name'" 2
+      else
+         fail "I wasn't able to 'mv -n '$executable_to_wrap' '$new_executable_name''" 3
+      fi
+   fi
 
-(
-  cat << EOHERE
-Executed as:   $0
-Num of params: $#
-Param       1: _${1}_
-Param       2: _${2}_
-Param       3: _${3}_
-Param       4: _${4}_
-Param       5: _${5}_
-Param       6: _${6}_
-Param       7: _${7}_
-Param       8: _${8}_
-Param       9: _${9}_
-All params  @: _${@}_
-ID: $( id )
-Environment:
-`set`
-EOHERE
-) >> "$log_name"
+   # replace original executable path with a copy of ourselves
+   if cp "$wrapper" "$executable_to_wrap"; then
+      echo "Successfully wrapped '$executable_to_wrap'"
+      exit 0
+   else
+      fail "something went wrong. Aborted" 4
+   fi
+}
 
-exec "$original_exec_path" "$@"
+unwrap_executable() {
+   local executable_to_unwrap="$1"
+
+   local path_of_executable_orig="$executable_to_unwrap.orig"
+
+   if ! grep -q "$MARKER" "$executable_to_unwrap"; then
+      fail "it does not seem like '$executable_to_unwrap' is wrapped. Aborting" 5
+   else
+      if mv "$path_of_executable_orig" "$executable_to_unwrap"; then 
+         echo "Successfully unwrapped '$executable_to_unwrap'"
+         exit 0
+      else
+         fail "something went wrong. Aborted" 6
+      fi
+   fi
+}
+
+execute_original() {
+   local executable_path="$0"
+
+   local original_exec_path="$executable_path.orig"
+   local executed_as_name=$( basename "$executable_path" )
+
+   log_name=$( mktemp "/tmp/$executed_as_name.log.XXXXXX" )
+   
+   (
+     cat <<- EOHERE
+	Executed as:   $0
+	Num of params: $#
+	Param       1: _${1}_
+	Param       2: _${2}_
+	Param       3: _${3}_
+	Param       4: _${4}_
+	Param       5: _${5}_
+	Param       6: _${6}_
+	Param       7: _${7}_
+	Param       8: _${8}_
+	Param       9: _${9}_
+	All params  @: _${@}_
+	ID: $( id )
+	Environment:
+	`set`
+	EOHERE
+   ) >> "$log_name"
+   
+   exec "$original_exec_path" "$@"
+}
+
+# test_fail test_number
+#
+test_fail() {
+   fail "Test $1 failed" $1
+}
+
+test() {
+   local myself="$1"
+
+   tmp_executable=$( mktemp )
+   echo "true" > "$tmp_executable"
+   chmod +x "$tmp_executable"
+
+   # == wrap ==
+
+   "$myself" wrap "$tmp_executable"
+   [ -e "$tmp_executable.orig" ]         || test_fail 1
+
+   grep -q "$MARKER" "$tmp_executable" ] || test_fail 2
+
+   # == exec ==
+
+   "$tmp_executable"                     || test_fail 3
+   grep -q "Executed as:" "$tmp_executable.log."* \
+                                         || test_fail 4
+
+   # == unwrap ==
+
+   "$myself" unwrap "$tmp_executable"
+   [ -e "$tmp_executable.orig" ]         && test_fail 5
+
+   grep -q "$MARKER" "$tmp_executable"   && test_fail 6
+
+   # == clean up ==
+
+   rm "$tmp_executable"
+   rm "$tmp_executable.log."*
+
+   echo "hooray, it seems like $myself works correctly :-)!"
+}
+
+# =============== main ===============
+
+MARKER="this marker is being used to identify the executable_wrapper script"
+
+if [[ "/$0" =~ /executable_wrapper$ ]]; then
+  # if we are called as "executable_wrapper"...
+
+  executable="$2"
+
+  case "$1" in
+    --help)
+       help # and exit
+       ;;
+    wrap)
+       wrap_executable_with "$executable" "$0" # and exit
+       ;;
+    unwrap)
+       unwrap_executable "$executable" # and exit
+       ;;
+    test)
+       test "$0" # and exit
+       ;;
+    *)
+       help # and exit
+       ;;
+  esac
+else
+  # if we are not called as "executable_wrapper"
+  # but as some wrapped executable
+  execute_original "$0"
+fi
+

@@ -226,57 +226,23 @@ Here's the --help for each shell script:
 	
 ### executable_wrapper
 
-	usage: executable_wrapper
+	usage: executable_wrapper (unwrap|wrap|test) executable
 	
 	    This script is used to wrap executables in order to
 	    analyse how they are called by other scripts, daemons etc.
 	
+	    The original file will be renamed to `executable.orig`.
+	
 	    It will log all parameters and the environment of the
 	    originally called executable to a log file for inspection.
+	    The log file will be called `/tmp/executable.log.XXXXXX`,
+	    where 'XXXXX' will be some random string.
 	
-	    How to use:
-	    ===========
+	      wrap   - wrap the given `executable`
 	
-	    Let's suppose you want to wrap the executable 'foo':
+	      unwrap - unwrap the given `executable`
 	
-	    First approach
-	    --------------
-	
-	    1. rename the original executable
-	
-	       # cd /where/the/original/lives
-	       # mv foo foo.orig
-	
-	    2. copy executable_wrapper where 'foo' was before
-	
-	       # cp executable_wrapper /where/the/original/lives/foo
-	
-	    Second approach
-	    ---------------
-	
-	    1. make sure that the 'executable_wrapper' script will
-	       be executed instead of the executable 'foo':
-	
-	       # cd /usr/local/bin
-	       # ln -s ~/path_to/executable_wrapper foo
-	
-	       Note that by convention /usr/local/bin comes first
-	       in $PATH on Unix systems
-	
-	    2. make the original executable 'foo' available as
-	       'foo.orig'
-	
-	       # cd /usr/local/bin
-	       # ln -s /bin/foo foo.orig
-	
-	    You can also set the name of the original executable in
-	    the variable original_exec_name inside the
-	    'executable_wrapper' script if you need to do so.
-	
-	    3. output will be logged to /tmp/foo.log.XXXXXX,
-	       where 'XXXXX' will be some random string.
-	       You can also set the log name in the variable
-	       'log_name' inside the 'executable_wrapper' script
+	      test   - test this script
 	
 ### exif-del
 
