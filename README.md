@@ -589,6 +589,15 @@ Here's the --help for each shell script:
 	  and displays a list when the machine went to slee and
 	  woke up again
 	
+### whois_ip
+
+	usage: whois_ip IP
+	       whois_ip --help
+	
+	    will to a DNS lookup and a whois lookup on an IP
+	    and filter out the relevant fields. Used for
+	    as a help tool for manually dropping spammer IPs
+	    and networks into a firewall
 ### wping
 
 	usage: wping [URL]

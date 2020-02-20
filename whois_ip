@@ -1,0 +1,17 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: whois_ip IP'
+   echo '       whois_ip --help'
+   echo
+   echo '    will to a DNS lookup and a whois lookup on an IP'
+   echo '    and filter out the relevant fields. Used for'
+   echo '    as a help tool for manually dropping spammer IPs'
+   echo '    and networks into a firewall'
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+host  "$1"
+whois "$1" | grep -i "NetName\|Country\|Inetnum\|NetRange"
