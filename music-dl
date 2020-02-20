@@ -10,6 +10,10 @@ help() {
 
 [ "$1" == "--help" ] && help
 
+# ?
+#ffmpeg -i alt-J\ \(∆\)\ Breezeblocks.m4a -codec:v copy -codec:a libmp3lame -qscale:a 2 alt-J\ \(∆\)\ Breezeblocks.mp3
+## http://superuser.com/questions/704493/ffmpeg-convert-m4a-files-to-mp3-without-significant-loss-of-information-quali
+
 file=$( youtube-dl --title --get-filename "$1" )
 
 youtube-dl --continue --title "$1"
