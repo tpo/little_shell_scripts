@@ -363,12 +363,6 @@ Here's the --help for each shell script:
 	usage: mount_iso iso_image destination
 	       mount_iso --help
 	
-### music-dl
-
-	usage: music-dl URL
-	
-	    download URL from youtube, soundcloud etc. and transform to audio file
-	
 ### mv_ln
 
 	usage: mv_ln src_ln dest_dir
