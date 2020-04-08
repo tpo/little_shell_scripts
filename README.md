@@ -344,6 +344,23 @@ Here's the --help for each shell script:
 	
 	   Open shell in new temporary directory, delete directory after exit
 	
+### meetjitsi
+
+	usage: meetjits [handle]
+	       meetjits --help
+	
+	   Will start bromium on the given Jitsi Meet
+	   channel.
+	
+	   You can configure your channels like this:
+	
+	       $ cat ~/.meetjitsi.yaml
+	       urls:
+	         default:  https://meet.jit.si/example-default
+	         myown:    https://meet.jit.si/example-myown
+	
+	   Jitsi Meet uses 4000 - 6000kbps.
+	
 ### modinfo_all
 
 	./modinfo_all : list information on all currently installed kernel modules

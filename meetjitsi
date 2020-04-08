@@ -1,0 +1,81 @@
+#!/usr/bin/python
+
+import textwrap
+import sys
+import yaml
+import os.path
+import os
+
+def help():
+    help_=textwrap.dedent(
+    """\
+       usage: meetjits [handle]
+              meetjits --help
+       
+          Will start bromium on the given Jitsi Meet
+          channel.
+       
+          You can configure your channels like this:
+
+              $ cat ~/.meetjitsi.yaml
+              urls:
+                default:  https://meet.jit.si/example-default
+                myown:    https://meet.jit.si/example-myown
+
+          Jitsi Meet uses 4000 - 6000kbps.
+    """)
+    print(help_)
+
+def get_handle_from(argv):
+    if len(argv) == 1:
+        return "default"
+    else:
+        return argv[1]
+
+def possibly_output_help(url):
+    if url == "--help":
+        help()
+        exit(1)
+
+def read_urls_from_config():
+    config_file = os.path.join( os.path.expanduser("~"),
+                                ".meetjitsi.yaml")
+    try:
+        with open(config_file, 'r') as yaml_config:
+            try:
+                config = yaml.safe_load(yaml_config)
+            except Exception as err:
+                print(err)
+                exit(1)
+    except IOError as err:
+        print("I need to access my config file, but can't:")
+        print(err)
+        print("Please create that file or make it accessible.")
+        exit(1)
+    
+    try:
+        urls = config["urls"]
+    except KeyError:
+        print("Please create a list named 'urls' in the %s" % config_file)
+        exit(1)
+
+    return urls
+
+def get_url_from(urls, handle):
+    try:
+        url = urls[handle]
+    except KeyError:
+        print("There is no defined URL for handle/key %s in the config file" % handle)
+        exit(1)
+
+    return url
+
+handle = get_handle_from(sys.argv)
+
+possibly_output_help(handle)
+
+urls = read_urls_from_config()
+
+url = get_url_from(urls, handle)
+
+os.execlp("bromium", "meetjitsi", ("--app=%s" % url))
