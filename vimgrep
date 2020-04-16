@@ -26,8 +26,9 @@ echo
 rg --color always "$@" 
 echo
 
-echo "CTRL-C now if you do not want to edit the file(s) above or ENTER to continue."
+echo 'CTRL-C now if you do not want to edit the file(s) above or ENTER to continue.'
 
 read answer
 
-rg -l "$1" | xargs -d '\n' vim $VVV
+vim -q <(rg --vimgrep "$1")
+
