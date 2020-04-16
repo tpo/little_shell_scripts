@@ -30,4 +30,4 @@ echo "CTRL-C now if you do not want to edit the file(s) above or ENTER to contin
 
 read answer
 
-vim $VVV $( rg -l "$1" )
+rg -l "$1" | xargs -d '\n' vim $VVV
