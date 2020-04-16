@@ -27,6 +27,8 @@ rg --color always "$@"
 echo
 
 echo 'CTRL-C now if you do not want to edit the file(s) above or ENTER to continue.'
+echo
+echo 'once editing a file use `:cnext` to jump to the next occurence of the search string'
 
 read answer
 
