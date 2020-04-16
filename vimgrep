@@ -32,5 +32,5 @@ echo 'once editing a file use `:cnext` to jump to the next occurence of the sear
 
 read answer
 
-vim -q <(rg --vimgrep "$1")
+vim $VVV -q <(rg --vimgrep "$1")
 
