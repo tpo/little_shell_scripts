@@ -153,7 +153,7 @@ Here's the --help for each shell script:
 	
 ### cert-show
 
-	usage: cert-show (--help|certificate|--host host:port)
+	usage: cert-show (--help|certificate|--host host:port [--smtp])
 	
 	    print all kinds of certificates
 	

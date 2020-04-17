@@ -1,7 +1,7 @@
 #!/bin/bash
 
 help() {
-   echo 'usage: cert-show (--help|certificate|--host host:port)'
+   echo 'usage: cert-show (--help|certificate|--host host:port [--smtp])'
    echo
    echo '    print all kinds of certificates'
    echo
@@ -14,8 +14,13 @@ if [ "$1" == "--host" ]; then
    [ "$2" == "" ] && help
 
    connection="$2"
+
+   if [ "$3" == "--smtp" ]; then
+      start_tls="-starttls smtp"
+   fi
+
    echo exit | \
-   openssl s_client -showcerts -connect $connection | \
+   openssl s_client -showcerts -connect $connection $start_tls | \
    openssl x509 -inform pem -noout -text
 
 else
