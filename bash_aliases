@@ -27,10 +27,10 @@ help_bash_aliases() {
   echo '    apt-find file - say which Debian package contains "file"'
   echo '                    needs apt-file'
   echo
-  echo 'Shortcuts to put firefox or thunderbird to rest.'
-  echo 'Requires firefox-sleep/wake and thunderbird-sleep/wake'
+  echo 'Shortcuts to put firefox, chrom(e|ium) or thunderbird to rest.'
+  echo 'Requires {firefox,thunderbirf,chrome}-sleep/wake'
   echo
-  echo '    ffs, ffw, ths, thw'
+  echo '    chs, chw, ffs, ffw, ths, thw'
   echo 
   echo 'git shortcuts'
   echo
@@ -95,7 +95,9 @@ alias du="du -h"
 # bc: scale=20
 alias bc="bc -l"
 
-# firefox/thunderbird
+# chrome/firefox/thunderbird
+alias chs=chrome-sleep
+alias chw=chrome-wake
 alias ffs=firefox-sleep
 alias ffw=firefox-wake
 alias ths=thunderbird-sleep

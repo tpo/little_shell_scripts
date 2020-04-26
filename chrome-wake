@@ -1,0 +1,19 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: chrome-wake'
+   echo
+   echo '    wake up all chrome/chromium processes'
+   echo
+   echo "    Note: it's advisable to add an 'alias chw=chrome-wake'"
+   echo
+   echo '    See also: chrome-sleep'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+pkill -CONT ^chrome$
+pkill -CONT ^chromium$
+pkill -CONT ^chrome-sandbox$

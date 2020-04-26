@@ -1,0 +1,19 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: chrome-sleep'
+   echo
+   echo '    suspend all chrome/chromium processes'
+   echo
+   echo "    Note: it's advisable to add an 'alias chs=chrome-sleep'"
+   echo
+   echo '    See also: chrome-wake'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+pkill -STOP ^chrome-sandbox$
+pkill -STOP ^chromium$
+pkill -STOP ^chrome$

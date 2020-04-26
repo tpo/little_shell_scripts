@@ -42,10 +42,10 @@ Here's the --help for each shell script:
 	    apt-find file - say which Debian package contains "file"
 	                    needs apt-file
 	
-	Shortcuts to put firefox or thunderbird to rest.
-	Requires firefox-sleep/wake and thunderbird-sleep/wake
+	Shortcuts to put firefox, chrom(e|ium) or thunderbird to rest.
+	Requires {firefox,thunderbirf,chrome}-sleep/wake
 	
-	    ffs, ffw, ths, thw
+	    chs, chw, ffs, ffw, ths, thw
 	
 	git shortcuts
 	
@@ -171,6 +171,26 @@ Here's the --help for each shell script:
 	usage: changelog
 	
 	    edit the user's system changelog
+	
+### chrome-sleep
+
+	usage: chrome-sleep
+	
+	    suspend all chrome/chromium processes
+	
+	    Note: it's advisable to add an 'alias chs=chrome-sleep'
+	
+	    See also: chrome-wake
+	
+### chrome-wake
+
+	usage: chrome-wake
+	
+	    wake up all chrome/chromium processes
+	
+	    Note: it's advisable to add an 'alias chw=chrome-wake'
+	
+	    See also: chrome-sleep
 	
 ### copy_args_to_clip
 
