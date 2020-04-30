@@ -1,0 +1,28 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: ansible-vault-rgrep directory [GREP_PARAMS]'
+   echo '       ansible-vault-rgrep --help'
+   echo
+   echo '   Recursively grep ansible vault files.'
+   echo
+   echo '   You should either set `DEFAULT_VAULT_PASSWORD_FILE`'
+   echo '   or set `vault_password_file` in your ansible'
+   echo '   config file, otherwise ansible-vault-rgrep will'
+   echo '   be hardly useful.'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" -o "$1" == "" ] && help
+
+dir="$1"; shift
+
+find "$dir" -type f \
+| while read file; do
+     # length of "$ANSIBLE_VAULT;" = 15
+     header=$( dd if="$file" bs=15 count=1 status=none )
+     if [ "$header" == '$ANSIBLE_VAULT;' ]; then
+        ansible-vault view "$file" | grep "$@"
+     fi
+  done

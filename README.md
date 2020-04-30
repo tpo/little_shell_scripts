@@ -14,6 +14,18 @@ Here's the --help for each shell script:
 	    be compatible with windows.
 	
 	    7ze will ask for the password.
+### ansible-vault-rgrep
+
+	usage: ansible-vault-rgrep directory [GREP_PARAMS]
+	       ansible-vault-rgrep --help
+	
+	   Recursively grep ansible vault files.
+	
+	   You should either set `DEFAULT_VAULT_PASSWORD_FILE`
+	   or set `vault_password_file` in your ansible
+	   config file, otherwise ansible-vault-rgrep will
+	   be hardly useful.
+	
 ### bash_aliases
 
 	These bash_aliases need to be called from ~/.bashrc or similar like this:
