@@ -1,10 +1,12 @@
 #!/bin/bash
 
 help() {
-   echo 'usage: ansible-vault-rgrep directory [GREP_PARAMS]'
+   echo 'usage: ansible-vault-rgrep [-H] directory [GREP_PARAMS]'
    echo '       ansible-vault-rgrep --help'
    echo
    echo '   Recursively grep ansible vault files.'
+   echo
+   echo '   -H    prefix each match with the filename'
    echo
    echo '   You should either set `DEFAULT_VAULT_PASSWORD_FILE`'
    echo '   or set `vault_password_file` in your ansible'
@@ -16,6 +18,8 @@ help() {
 
 [ "$1" == "--help" -o "$1" == "" ] && help
 
+[ "$1" == "-H" ] && PREFIX_WITH_FILE_NAME=true && shift
+
 dir="$1"; shift
 
 find "$dir" -type f \
@@ -23,6 +27,15 @@ find "$dir" -type f \
      # length of "$ANSIBLE_VAULT;" = 15
      header=$( dd if="$file" bs=15 count=1 status=none )
      if [ "$header" == '$ANSIBLE_VAULT;' ]; then
-        ansible-vault view "$file" | grep "$@"
+        ansible-vault view "$file" \
+        | grep "$@" \
+        | if [ "$PREFIX_WITH_FILE_NAME" ]; then
+             # escape filename for sed
+             # https://stackoverflow.com/a/2705678/4640820
+             file_escaped=$( echo "$file" | sed -e 's/[]\/$*.^[]/\\&/g' )
+             sed "s/^/$file_escaped:/"
+          else
+             cat
+          fi
      fi
   done

@@ -16,10 +16,12 @@ Here's the --help for each shell script:
 	    7ze will ask for the password.
 ### ansible-vault-rgrep
 
-	usage: ansible-vault-rgrep directory [GREP_PARAMS]
+	usage: ansible-vault-rgrep [-H] directory [GREP_PARAMS]
 	       ansible-vault-rgrep --help
 	
 	   Recursively grep ansible vault files.
+	
+	   -H    prefix each match with the filename
 	
 	   You should either set `DEFAULT_VAULT_PASSWORD_FILE`
 	   or set `vault_password_file` in your ansible
