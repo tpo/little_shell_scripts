@@ -99,10 +99,11 @@ Here's the --help for each shell script:
 	
 ### bromium
 
-	usage: bromium [--enable-cookies] [URL]
+	usage: bromium [--enable-cookies] [--userdir /path/to/userdir] [URL]
 	       bromium --help
 	
-	    Run chromium with an empty temporary profile.
+	    Run chromium with an empty temporary profile
+	    or with a given directory.
 	
 	    By default bromium will run in "incognito"
 	    mode. If you want to allow cookies then
@@ -112,6 +113,31 @@ Here's the --help for each shell script:
 	    then you may want to consider changing your
 	    default search provider. See
 	    https://stackoverflow.com/a/50888866
+	
+	    --enable-cookies  - do not run in incognito mode
+	
+	    --userdir $DIR    - run from a given user directory. This
+	                        can be used to prepare a specific
+	                        configuration for a specific application
+	                        and then use that directory only for that
+	                        application.
+	                        When run with --userdir, cookies will
+	                        be *enabled*.
+	
+	    How to prepara a special userdir:
+	
+	    1. terminate all chromium browser
+	    2. move your original chromium configuration to the side
+	       `mv ~/.config/chromium ~/.config/chromium.your-original-config`
+	    3. start chromium
+	    4. configure whatever you need
+	    5. terminate chromium
+	    6. move the config to the side
+	       `mv ~/.config/chromium ~/.config/chromium.my-special-config`
+	    7. restore your original config
+	       `mv ~/.config/chromium.your-original-config ~/.config/chromium`
+	    8. now you can use your special config with bromium
+	       `bromium --userdir ~/.config/chromium.my-special-config $SOME_APPLICATION_URL`
 	
 ### catnamed
 

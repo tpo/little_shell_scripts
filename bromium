@@ -1,10 +1,11 @@
 #!/bin/bash
 
 help() {
-   echo 'usage: bromium [--enable-cookies] [URL]'
+   echo 'usage: bromium [--enable-cookies] [--userdir /path/to/userdir] [URL]'
    echo '       bromium --help'
    echo
-   echo '    Run chromium with an empty temporary profile.'
+   echo '    Run chromium with an empty temporary profile'
+   echo '    or with a given directory.'
    echo
    echo '    By default bromium will run in "incognito"'
    echo '    mode. If you want to allow cookies then'
@@ -15,33 +16,83 @@ help() {
    echo '    default search provider. See'
    echo '    https://stackoverflow.com/a/50888866'
    echo
+   echo '    --enable-cookies  - do not run in incognito mode'
+   echo
+   echo '    --userdir $DIR    - run from a given user directory. This'
+   echo '                        can be used to prepare a specific'
+   echo '                        configuration for a specific application'
+   echo '                        and then use that directory only for that'
+   echo '                        application.'
+   echo '                        When run with --userdir, cookies will'
+   echo '                        be *enabled*.'
+   echo
+   echo '    How to prepara a special userdir:'
+   echo
+   echo '    1. terminate all chromium browser'
+   echo '    2. move your original chromium configuration to the side'
+   echo '       `mv ~/.config/chromium ~/.config/chromium.your-original-config`'
+   echo '    3. start chromium'
+   echo '    4. configure whatever you need'
+   echo '    5. terminate chromium'
+   echo '    6. move the config to the side'
+   echo '       `mv ~/.config/chromium ~/.config/chromium.my-special-config`'
+   echo '    7. restore your original config'
+   echo '       `mv ~/.config/chromium.your-original-config ~/.config/chromium`'
+   echo '    8. now you can use your special config with bromium'
+   echo '       `bromium --userdir ~/.config/chromium.my-special-config $SOME_APPLICATION_URL`'
+   echo
    exit 1
 }
 
-[ "$1" == "--help" ] && help
+# TODO: change theme: https://unix.stackexchange.com/questions/14129/gtk-enable-set-dark-theme-on-a-per-application-basis
 
-tmp_user_dir=$( mktemp -d /tmp/bromium.XXXX )
+# defaults
+incognito_option="--incognito"
+temp_profile_option="--temp-profile"
+
+while true; do
+  case "$1" in
+    --help)   help ;;
+    --enable-cookies)  incognito_option="" ;;
+    --userdir) shift; userdir="$1" ;;
+    *)   break ;;
+  esac
+  shift
+done
+
+if [ "$userdir" ]; then
+  user_or_tmp_dir="$userdir"
+  temp_profile_option=""
+else
+  tmp_user_dir=$( mktemp -d /tmp/bromium.XXXX )
+  user_or_tmp_dir="$tmp_user_dir"
+  temp_profile_option="--temp-profile"
+fi
 
 # see http://peter.sh/experiments/chromium-command-line-switches/ for options
 
-if [ "$1" == "--enable-cookies" ]; then
-  incognito=""
-  shift
-else
-  incognito="--incognito"
-fi
-
+# $1 = URL and/or furher options
 if [ "$1" ]; then
-  chromium --user-data-dir="$tmp_user_dir" --temp-profile --password-store=basic --disable-notifications $incognito "$@"
+  chromium --user-data-dir="$user_or_tmp_dir" \
+             $temp_profile_option             \
+           --password-store=basic             \
+           --disable-notifications            \
+             $incognito_option                \
+           "$@"
 else
-  chromium --user-data-dir="$tmp_user_dir" --temp-profile --password-store=basic --disable-notifications $incognito "about:blank"
+  chromium --user-data-dir="$user_or_tmp_dir" \
+             $temp_profile_option             \
+           --password-store=basic             \
+           --disable-notifications            \
+             $incognito_option                \
+           "about:blank"
 fi
 
-# be really sure that "$tmp_user_dir" contains a correct tmpdir
+# be really sure that "$tmp_user_or_tmp_dir" contains a correct tmpdir
 # before rm -rf /* or such
 #
-if [[ "$tmp_user_dir" =~ /tmp/bromium ]]; then
-  rm -r "$tmp_user_dir"
+if [[ "$tmp_user_or_tmp_dir" =~ /tmp/bromium ]]; then
+  rm -r "$tmp_user_or_tmp_dir"
 else
-  echo "hae? $tmp_user_dir"
+  echo "hae? $tmp_user_or_tmp_dir"
 fi
