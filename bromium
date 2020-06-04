@@ -88,14 +88,14 @@ else
            "about:blank"
 fi
 
-# be really sure that "$tmp_user_or_tmp_dir" contains a correct tmpdir
+# be really sure that "$tmp_user_dir" contains a correct tmpdir
 # before rm -rf /* or such
 #
-if [[ "$tmp_user_or_tmp_dir" =~ /tmp/bromium ]]; then
-  rm -r "$tmp_user_or_tmp_dir"
+if [[ "$tmp_user_dir" =~ /tmp/bromium ]]; then
+  rm -r "$tmp_user_dir"
 elif [ "$userdir" ]; then
   # if userdir was set then do nothing
   true
 else
-  echo "hae? $tmp_user_or_tmp_dir"
+  echo "hae? $tmp_user_dir"
 fi
