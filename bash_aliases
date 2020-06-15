@@ -74,8 +74,9 @@ alias ackp="ack --pager='less -R'"
 rgp() {
   rg --color=ansi "$@" | less -R
 }
-rgpc() { rgp -C 25 "$@" }
-
+rgpc() {
+  rgp -C 25 "$@"
+}
 alias apt-find="apt-file find"
 alias aps="ansible-playbook setup.yml"
 apst()   {
