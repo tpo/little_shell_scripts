@@ -45,6 +45,7 @@ Here's the --help for each shell script:
 	    pg        - grep processes
 	    rgl       - rgrep regex | less
 	    rgp       - execute "rg --color=ansi | less -R"
+	    rgpc      - execute "rg --color=ansi -C 25 | less -R"
 	    aps       - execute 'ansible-playbook setup.yml'
 	    apst      - execute 'ansible-playbook setup.yml --tags='
 	    apsv      - execute 'ansible-playbook setup.yml \
