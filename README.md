@@ -194,7 +194,7 @@ Here's the --help for each shell script:
 	
 ### cert-show
 
-	usage: cert-show (--help|certificate|--host host:port [--smtp])
+	usage: cert-show (--help|certificate|--host host:port [--smtp|--postgres])
 	
 	    print all kinds of certificates
 	

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 help() {
-   echo 'usage: cert-show (--help|certificate|--host host:port [--smtp])'
+   echo 'usage: cert-show (--help|certificate|--host host:port [--smtp|--postgres])'
    echo
    echo '    print all kinds of certificates'
    echo
@@ -15,11 +15,12 @@ if [ "$1" == "--host" ]; then
 
    connection="$2"
 
-   if [ "$3" == "--smtp" ]; then
-      start_tls="-starttls smtp"
-   fi
+   case "$3" in
+      --smtp)     start_tls="-starttls smtp" ;;
+      --postgres) start_tls="-starttls postgres" ;;
+   esac
 
-   echo exit | \
+   echo "" | \
    openssl s_client -showcerts -connect $connection $start_tls | \
    openssl x509 -inform pem -noout -text
 
