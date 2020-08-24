@@ -11,10 +11,10 @@ def help():
     """\
        usage: meetjits [handle]
               meetjits --help
-       
+
           Will start bromium on the given Jitsi Meet
           channel.
-       
+
           You can configure your channels like this:
 
               $ cat ~/.meetjitsi.yaml
