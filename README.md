@@ -233,6 +233,48 @@ Here's the --help for each shell script:
 	
 	    See also: chrome-sleep
 	
+### chromium-create-private-profile
+
+	usage: chromium-create-private-profile SHORTCUT URL
+	       chromium-create-private-profile --help
+	
+	   PURPOSE:
+	
+	   Will create a clean, private, dedicated profile for
+	   a web site that you can call from the command line
+	   via shortcut.
+	
+	   DETAILS:
+	
+	   Will create an executable under ~/bin/SHORTCUT that
+	   will use a clean, private chromium config and data
+	   directory under ~/.local/chrome-SHORTCUT.
+	
+	   You can customize ~/bin/SHORTCUT as you wish.
+	   By default it will use `bromium --enable-cookies`
+	   to access the given URL.
+	
+	   The ~/.local/chrome-SHORTCUT directory will
+	   be created (copied) from the
+	   ~/.config/chromium.fresh-after-start.with_titlebar
+	   template.
+	
+	   You will need to create the
+	   template ~/.config/chromium.fresh-after-start.with_titlebar
+	   once and can use it after with
+	   chromium-create-private-profile. Create the template
+	   as follows:
+	
+	     * `mv ~/.chromium ~/.chromium.original`
+	       (do not overwrite a previously existing
+	        ~/.chromium.original !)
+	     * `chromium` # will create a fresh ~/.chromium
+	     * configure chromium as you wish
+	     * terminate chromium
+	     * `mv ~/.chromium ~/.config/chromium.fresh-after-start.with_titlebar`
+	     * `mv ~/.chromium.original ~/.config/chromium`
+	       (restore original chromium config)
+	
 ### copy_args_to_clip
 
 	usage: copy_args_to_clip arg1 arg2 ...

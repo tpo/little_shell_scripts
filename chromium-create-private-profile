@@ -1,0 +1,87 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: chromium-create-private-profile SHORTCUT URL'
+   echo '       chromium-create-private-profile --help'
+   echo
+   echo '   PURPOSE:'
+   echo
+   echo '   Will create a clean, private, dedicated profile for'
+   echo '   a web site that you can call from the command line'
+   echo '   via shortcut.'
+   echo
+   echo '   DETAILS:'
+   echo
+   echo '   Will create an executable under ~/bin/SHORTCUT that'
+   echo '   will use a clean, private chromium config and data'
+   echo '   directory under ~/.local/chrome-SHORTCUT.'
+   echo
+   echo '   You can customize ~/bin/SHORTCUT as you wish.'
+   echo '   By default it will use `bromium --enable-cookies`'
+   echo '   to access the given URL.'
+   echo
+   echo '   The ~/.local/chrome-SHORTCUT directory will'
+   echo '   be created (copied) from the'
+   echo '   ~/.config/chromium.fresh-after-start.with_titlebar'
+   echo '   template.'
+   echo
+   echo '   You will need to create the' 
+   echo '   template ~/.config/chromium.fresh-after-start.with_titlebar'
+   echo '   once and can use it after with'
+   echo '   chromium-create-private-profile. Create the template'
+   echo '   as follows:'
+   echo
+   echo '     * `mv ~/.chromium ~/.chromium.original`'
+   echo '       (do not overwrite a previously existing'
+   echo '        ~/.chromium.original !)'
+   echo '     * `chromium` # will create a fresh ~/.chromium'
+   echo '     * configure chromium as you wish'
+   echo '     * terminate chromium'
+   echo '     * `mv ~/.chromium ~/.config/chromium.fresh-after-start.with_titlebar`'
+   echo '     * `mv ~/.chromium.original ~/.config/chromium`'
+   echo '       (restore original chromium config)'
+   echo
+   exit 1
+}
+
+set -e # exit on error
+
+[ "$1" == "--help" -o "$1" == "" -o "$2" == "" ] && help
+
+SHORTCUT="$1"
+CONF_DIR="$HOME/.local/chrome-$SHORTCUT"
+EXEC="$HOME/bin/$SHORTCUT"
+URL="$2"
+
+if [ -e "$CONF_DIR" ]; then
+  echo "Error: $CONF_DIR already exists. Aborting"
+  exit 2
+fi
+
+if [ -e "$EXEC" ]; then
+  echo "Error: $EXEC already exists. Aborting"
+  exit 3
+fi
+
+cp -a "$HOME/.config/chromium.fresh-after-start.with_titlebar" \
+      "$CONF_DIR"
+
+cat << EO_SCRIPT > "$EXEC"
+#!/bin/bash
+
+help() {
+   echo 'usage: $SHORTCUT'
+   echo '       $SHORTCUT --help'
+   echo
+   echo '    Run chrome with profile in $CONF_DIR'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+#GTK_THEME=Adwaita:dark bromium --enable-cookies --userdir="$CONF_DIR" $URL
+bromium --enable-cookies --userdir "$CONF_DIR" $URL
+EO_SCRIPT
+
+chmod +x "$EXEC"
