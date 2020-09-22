@@ -1,0 +1,165 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: psql_access_priv_decoder'
+   echo '       psql_access_priv_decoder --help'
+   echo
+   echo '   Will decode access privileges displayed by psql'
+   echo
+   echo '   How to use:'
+   echo
+   echo '     1. in `psql` do `\l accounting` or such to list the database "accounting".'
+   echo '     2. copy the output including the header'
+   echo '     3. start psql_access_priv_decoder'
+   echo '     4. paste'
+   echo '     5. you will see the decoded access privileges'
+   echo
+   echo '   Example:'
+   echo
+   echo '     $ psql'
+   echo '     postgres=# \l accounting'
+   echo '                                                List of databases'
+   echo '          Name     |   Owner    | Encoding |   Collate   |    Ctype    |     Access privileges    '
+   echo '     --------------+------------+----------+-------------+-------------+--------------------------'
+   echo '      accounting   | henry      | UTF8     | en_US.UTF-8 | en_US.UTF-8 | =T/accounting           +'
+   echo '                   |            |          |             |             | henry=CTc/accounting    +'
+   echo '                   |            |          |             |             | alice=c/accounting'
+   echo
+   echo '     $ psql -c "\l accounting" | psql_access_priv_decoder'
+   echo '     "=T/accounting" means:'
+   echo '       PUBLIC can on DB accounting:'
+   echo '         T -- create TEMPORARAY tables while using the DB'
+   echo
+   echo '     "henry=CTc/accounting" means:'
+   echo '       henry can on DB accounting:'
+   echo '         C -- CREATE new tables/schemas'
+   echo '         c -- CONNECT to DB'
+   echo '         T -- create TEMPORARAY tables while using the DB'
+   echo
+   echo '     "alice=c/accounting" means:'
+   echo '       alice can on DB accounting:'
+   echo '         c -- CONNECT to DB'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+# Example input and for testing:
+#
+#example_input=$(
+#cat << EOT
+#                                           List of databases
+#     Name     |   Owner    | Encoding |   Collate   |    Ctype    |     Access privileges    
+#--------------+------------+----------+-------------+-------------+--------------------------
+# accounting   | henry      | UTF8     | en_US.UTF-8 | en_US.UTF-8 | =T/accounting           +
+#              |            |          |             |             | henry=CTc/accounting    +
+#              |            |          |             |             | alice=c/accounting
+#EOT
+#)
+#input="$example_input"
+
+# slurp STDIN into `input` variable
+input=$( cat )
+
+# find line number of line that separates header from data
+header_separator_ln=$(
+  echo "$input" | grep -n -E -- '^-+(\+--+)+$' | sed -E 's/([0-9]+):.*/\1/' )
+
+# * output header only without separator
+# * grep line with "Access privileges"
+# * count number of field separators '|'
+access_priv_field_no=$(
+  echo "$input" | head -n $(( $header_separator_ln - 1 )) \
+  | grep "Access privileges" \
+  | sed 's/[^|]//g' | awk '{ print length }'
+)
+
+
+# * output all lines after header separator line
+# * remove everything until the last '|' separator
+access_privileges=$(
+  echo "$input" \
+    | tail -n +$(( $header_separator_ln + 1 )) \
+    | sed 's/.*|//'
+)
+
+echo "$access_privileges" \
+| while read line; do
+
+  # remove trailing '+'
+  line=$( echo "$line" | sed -E 's/ *\+$//' )
+
+  echo "\"$line\" means:"
+
+  role=$(        echo "$line"       | sed 's/=.*//'  )
+  right_hand=$(  echo "$line"       | sed 's/.*=//'  )
+  permissions=$( echo "$right_hand" | sed 's/\/.*//' )
+  db=$(          echo "$right_hand" | sed 's/.*\///' )
+
+  if [ "$role" = "" ]; then role=PUBLIC; fi
+
+  echo "  $role can on DB $db:"
+
+  # https://stackoverflow.com/a/25691587
+  #
+  #       r -- SELECT ("read")
+  #       w -- UPDATE ("write")
+  #       a -- INSERT ("append")
+  #       d -- DELETE
+  #       D -- TRUNCATE
+  #       x -- REFERENCES
+  #       t -- TRIGGER
+  #       X -- EXECUTE
+  #       U -- USAGE
+  #       C -- CREATE
+  #       c -- CONNECT
+  #       T -- TEMPORARY
+  # arwdDxt -- ALL PRIVILEGES (for tables, varies for other objects)
+  #       * -- grant option for preceding privilege
+  #
+  if   [[ "$permissions" =~ r ]]; then
+     echo '    r -- SELECT ("read")'
+  fi
+  if [[ "$permissions" =~ w ]]; then
+     echo '    w -- UPDATE ("write")'
+  fi
+  if [[ "$permissions" =~ a ]]; then
+     echo '    a -- INSERT ("append")'
+  fi
+  if [[ "$permissions" =~ d ]]; then
+     echo '    d -- DELETE'
+  fi
+  if [[ "$permissions" =~ D ]]; then
+     echo '    D -- TRUNCATE'
+  fi
+  if [[ "$permissions" =~ x ]]; then
+     echo '    x -- REFERENCES'
+  fi
+  if [[ "$permissions" =~ t ]]; then
+     echo '    t -- TRIGGER'
+  fi
+  if [[ "$permissions" =~ X ]]; then
+     echo '    X -- EXECUTE'
+  fi
+  if [[ "$permissions" =~ U ]]; then
+     echo '    U -- USAGE'
+  fi
+  if [[ "$permissions" =~ C ]]; then
+     echo '    C -- CREATE new tables/schemas'
+  fi
+  if [[ "$permissions" =~ c ]]; then
+     echo '    c -- CONNECT to DB'
+  fi
+  if [[ "$permissions" =~ T ]]; then
+     echo '    T -- create TEMPORARAY tables while using the DB'
+  fi
+  if [[ "$permissions" =~ arwdDxt ]]; then
+     echo '    arwdDxt -- ALL PRIVILEGES (for tables, varies for other objects)'
+  fi
+  if [[ "$permissions" =~ \* ]]; then
+     echo '    * -- grant option for preceding privilege'
+  fi
+
+  echo # separate from next premission line
+done

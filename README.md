@@ -503,6 +503,47 @@ Here's the --help for each shell script:
 	    -w    wrap lines instead of chopping them off
 	
 	    psa depends on the linechop tool.
+### psql_access_priv_decoder
+
+	usage: psql_access_priv_decoder
+	       psql_access_priv_decoder --help
+	
+	   Will decode access privileges displayed by psql
+	
+	   How to use:
+	
+	     1. in `psql` do `\l accounting` or such to list the database "accounting".
+	     2. copy the output including the header
+	     3. start psql_access_priv_decoder
+	     4. paste
+	     5. you will see the decoded access privileges
+	
+	   Example:
+	
+	     $ psql
+	     postgres=# \l accounting
+	                                                List of databases
+	          Name     |   Owner    | Encoding |   Collate   |    Ctype    |     Access privileges    
+	     --------------+------------+----------+-------------+-------------+--------------------------
+	      accounting   | henry      | UTF8     | en_US.UTF-8 | en_US.UTF-8 | =T/accounting           +
+	                   |            |          |             |             | henry=CTc/accounting    +
+	                   |            |          |             |             | alice=c/accounting
+	
+	     $ psql -c "\l accounting" | psql_access_priv_decoder
+	     "=T/accounting" means:
+	       PUBLIC can on DB accounting:
+	         T -- create TEMPORARAY tables while using the DB
+	
+	     "henry=CTc/accounting" means:
+	       henry can on DB accounting:
+	         C -- CREATE new tables/schemas
+	         c -- CONNECT to DB
+	         T -- create TEMPORARAY tables while using the DB
+	
+	     "alice=c/accounting" means:
+	       alice can on DB accounting:
+	         c -- CONNECT to DB
+	
 ### reset_usb_devices
 
 	usage: reset_usb_devices
