@@ -526,23 +526,23 @@ Here's the --help for each shell script:
 	                                                List of databases
 	          Name     |   Owner    | Encoding |   Collate   |    Ctype    |     Access privileges    
 	     --------------+------------+----------+-------------+-------------+--------------------------
-	      accounting   | henry      | UTF8     | en_US.UTF-8 | en_US.UTF-8 | =T/accounting           +
-	                   |            |          |             |             | henry=CTc/accounting    +
-	                   |            |          |             |             | alice=c/accounting
+	      accounting   | henry      | UTF8     | en_US.UTF-8 | en_US.UTF-8 | =T/postgres             +
+	                   |            |          |             |             | henry=CTc/postgres      +
+	                   |            |          |             |             | alice=c/postgres
 	
 	     $ psql -c "\l accounting" | psql_access_priv_decoder
 	     "=T/accounting" means:
-	       PUBLIC can on DB accounting:
+	       role "postgres" allowed "PUBLIC" to:
 	         T -- create TEMPORARAY tables while using the DB
 	
 	     "henry=CTc/accounting" means:
-	       henry can on DB accounting:
+	       role "postgres" allowed "henry" to:
 	         C -- CREATE new tables/schemas
 	         c -- CONNECT to DB
 	         T -- create TEMPORARAY tables while using the DB
 	
 	     "alice=c/accounting" means:
-	       alice can on DB accounting:
+	       role "postgres" allowed "alice" to:
 	         c -- CONNECT to DB
 	
 ### reset_usb_devices

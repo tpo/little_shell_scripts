@@ -22,23 +22,23 @@ help() {
    echo '                                                List of databases'
    echo '          Name     |   Owner    | Encoding |   Collate   |    Ctype    |     Access privileges    '
    echo '     --------------+------------+----------+-------------+-------------+--------------------------'
-   echo '      accounting   | henry      | UTF8     | en_US.UTF-8 | en_US.UTF-8 | =T/accounting           +'
-   echo '                   |            |          |             |             | henry=CTc/accounting    +'
-   echo '                   |            |          |             |             | alice=c/accounting'
+   echo '      accounting   | henry      | UTF8     | en_US.UTF-8 | en_US.UTF-8 | =T/postgres             +'
+   echo '                   |            |          |             |             | henry=CTc/postgres      +'
+   echo '                   |            |          |             |             | alice=c/postgres'
    echo
    echo '     $ psql -c "\l accounting" | psql_access_priv_decoder'
    echo '     "=T/accounting" means:'
-   echo '       PUBLIC can on DB accounting:'
+   echo '       role "postgres" allowed "PUBLIC" to:'
    echo '         T -- create TEMPORARAY tables while using the DB'
    echo
    echo '     "henry=CTc/accounting" means:'
-   echo '       henry can on DB accounting:'
+   echo '       role "postgres" allowed "henry" to:'
    echo '         C -- CREATE new tables/schemas'
    echo '         c -- CONNECT to DB'
    echo '         T -- create TEMPORARAY tables while using the DB'
    echo
    echo '     "alice=c/accounting" means:'
-   echo '       alice can on DB accounting:'
+   echo '       role "postgres" allowed "alice" to:'
    echo '         c -- CONNECT to DB'
    echo
    exit 1
@@ -93,14 +93,14 @@ echo "$access_privileges" \
 
   echo "\"$line\" means:"
 
-  role=$(        echo "$line"       | sed 's/=.*//'  )
+  who_can=$(     echo "$line"       | sed 's/=.*//'  )
   right_hand=$(  echo "$line"       | sed 's/.*=//'  )
   permissions=$( echo "$right_hand" | sed 's/\/.*//' )
-  db=$(          echo "$right_hand" | sed 's/.*\///' )
+  who_allowed=$( echo "$right_hand" | sed 's/.*\///' )
 
-  if [ "$role" = "" ]; then role=PUBLIC; fi
+  if [ "$who_can" = "" ]; then who_can=PUBLIC; fi
 
-  echo "  $role can on DB $db:"
+  echo "  role \"$who_allowed\" allowed \"$who_can\" to:"
 
   # https://stackoverflow.com/a/25691587
   #
