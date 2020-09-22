@@ -516,7 +516,8 @@ Here's the --help for each shell script:
 	     2. copy the output including the header
 	     3. start psql_access_priv_decoder
 	     4. paste
-	     5. you will see the decoded access privileges
+	     5. CTRL-D
+	     6. you will get the access privileges in human readable form displayed
 	
 	   Example:
 	
