@@ -11,6 +11,8 @@ help() {
    echo '   (The script will create sorted temporary copies'
    echo '    of both files...)'
    echo
+   echo '    Thanks to mr.spuratic in https://stackoverflow.com/a/18205289'
+   echo
    exit 1
 }
 

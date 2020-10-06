@@ -563,6 +563,8 @@ Here's the --help for each shell script:
 	   (The script will create sorted temporary copies
 	    of both files...)
 	
+	    Thanks to mr.spuratic in https://stackoverflow.com/a/18205289
+	
 ### show_csv
 
 	usage: show_csv [file.csv] [separator]
