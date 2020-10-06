@@ -1,0 +1,54 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: select_lines (only-left|only-right|in-both) left_file right_file'
+   echo '       select_lines --help'
+   echo
+   echo '   Depending on first argument will emit a list of'
+   echo '   lines that are either only in the left, the right'
+   echo '   or in both files.'
+   echo
+   echo '   (The script will create sorted temporary copies'
+   echo '    of both files...)'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+[ "$3" == "" ] && echo "ERROR: missing parameters" && echo && help
+
+left_sorted=$( mktemp )
+right_sorted=$( mktemp )
+
+sort "$2" > "$left_sorted"
+sort "$3" > "$right_sorted"
+
+case "$1" in
+   only-left)
+     diff --old-group-format="%<"       \
+          --new-group-format=""         \
+          --unchanged-group-format=""   \
+        "$left_sorted" \
+        "$right_sorted"
+     ;;
+   only-right)
+     diff --old-group-format=""         \
+          --new-group-format="%>"       \
+          --unchanged-group-format=""   \
+        "$left_sorted" \
+        "$right_sorted"
+     ;;
+   in-both)
+     diff --old-group-format=""         \
+          --new-group-format=""         \
+          --unchanged-group-format="%=" \
+        "$left_sorted" \
+        "$right_sorted"
+     ;;
+   *)
+     echo "ERROR: unkown first parameters" && echo && help
+     ;;
+esac
+
+rm "$left_sorted"
+rm "$right_sorted"

@@ -551,6 +551,18 @@ Here's the --help for each shell script:
 	
 	    resets all USB devices that the script finds
 	
+### select_lines
+
+	usage: select_lines (only-left|only-right|in-both) left_file right_file
+	       select_lines --help
+	
+	   Depending on first argument will emit a list of
+	   lines that are either only in the left, the right
+	   or in both files.
+	
+	   (The script will create sorted temporary copies
+	    of both files...)
+	
 ### show_csv
 
 	usage: show_csv [file.csv] [separator]
