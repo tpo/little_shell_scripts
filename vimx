@@ -29,6 +29,10 @@ help() {
 }
 
 [ \"\$1\" == \"--help\" ] && help
+
+set -e          # stop on error
+set -u          # stop on undefined variable
+set -o pipefail # stop part of pipeline failing
 " "$@"
   chmod +x $thefile
 else
