@@ -1,7 +1,7 @@
 #!/bin/bash
 
 help() {
-   echo 'usage: window kill'
+   echo 'usage: window (kill|sleep)'
    echo '       window --help'
    echo
    echo '    lets you visually select a window and then'
@@ -9,6 +9,8 @@ help() {
    echo
    echo '    kill: will send SIGTERM and then SIGKILL to'
    echo '          the process'
+   echo
+   echo '    sleep: will send SIGSTOP to the process'
    echo
    echo '    pressing ESC while in selection mode will'
    echo '    abort the action'
@@ -22,7 +24,7 @@ set -e          # stop on error
 set -u          # stop on undefined variable
 set -o pipefail # stop part of pipeline failing
 
-if [ "$1" != "kill" ]; then
+if [ "$1" != "kill" -a "$1" != "sleep" ]; then
   echo "ERROR: unknown command" && help
 fi
 
@@ -32,6 +34,9 @@ if [ "$1" == "kill" ]; then
   kill -TERM "$PID"
   sleep 5
   kill -KILL "$PID"
+
+elif [ "$1" == "sleep" ]; then
+  kill -STOP "$PID"
 fi
 
 

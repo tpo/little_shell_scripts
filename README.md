@@ -754,7 +754,7 @@ Here's the --help for each shell script:
 	    and networks into a firewall
 ### window
 
-	usage: window kill
+	usage: window (kill|sleep)
 	       window --help
 	
 	    lets you visually select a window and then
@@ -762,6 +762,8 @@ Here's the --help for each shell script:
 	
 	    kill: will send SIGTERM and then SIGKILL to
 	          the process
+	
+	    sleep: will send SIGSTOP to the process
 	
 	    pressing ESC while in selection mode will
 	    abort the action
