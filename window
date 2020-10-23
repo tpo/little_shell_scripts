@@ -1,0 +1,37 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: window kill'
+   echo '       window --help'
+   echo
+   echo '    lets you visually select a window and then'
+   echo '    depending on the command given:'
+   echo
+   echo '    kill: will send SIGTERM and then SIGKILL to'
+   echo '          the process'
+   echo
+   echo '    pressing ESC while in selection mode will'
+   echo '    abort the action'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+set -e          # stop on error
+set -u          # stop on undefined variable
+set -o pipefail # stop part of pipeline failing
+
+if [ "$1" != "kill" ]; then
+  echo "ERROR: unknown command" && help
+fi
+
+PID=$( xdotool selectwindow getwindowpid )
+
+if [ "$1" == "kill" ]; then
+  kill -TERM "$PID"
+  sleep 5
+  kill -KILL "$PID"
+fi
+
+

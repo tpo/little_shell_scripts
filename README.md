@@ -752,6 +752,20 @@ Here's the --help for each shell script:
 	    and filter out the relevant fields. Used for
 	    as a help tool for manually dropping spammer IPs
 	    and networks into a firewall
+### window
+
+	usage: window kill
+	       window --help
+	
+	    lets you visually select a window and then
+	    depending on the command given:
+	
+	    kill: will send SIGTERM and then SIGKILL to
+	          the process
+	
+	    pressing ESC while in selection mode will
+	    abort the action
+	
 ### wping
 
 	usage: wping [URL]
