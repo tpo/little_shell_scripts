@@ -1,18 +1,22 @@
 #!/bin/bash
 
 help() {
-   echo 'usage: window (kill|sleep|wake)'
+   echo 'usage: window (kill|sleep|wake|pid)'
    echo '       window --help'
    echo
    echo '    lets you visually select a window and then'
    echo '    depending on the command given:'
    echo
    echo '    kill: will send SIGTERM and then SIGKILL to'
-   echo '          the process'
+   echo '          the process group'
    echo
-   echo '    sleep: will send SIGSTOP to the process'
+   echo '    sleep: will send SIGSTOP to the process group'
    echo
-   echo '    wake: will send SIGCONT to the process'
+   echo '    wake: will send SIGCONT to the process group'
+   echo
+   echo '    pid: will list the PID of the process'
+   echo
+   echo '    pgid: will list the group ID of the process'
    echo
    echo '    pressing ESC while in selection mode will'
    echo '    abort the action'
@@ -26,22 +30,33 @@ set -e          # stop on error
 set -u          # stop on undefined variable
 set -o pipefail # stop part of pipeline failing
 
-if [ "$1" != "kill" -a "$1" != "sleep" -a "$1" != "wake" ]; then
+if [ "$1" != "kill"  -a \
+     "$1" != "sleep" -a \
+     "$1" != "wake"  -a \
+     "$1" != "pgid"  -a \
+     "$1" != "pid" ]; then
   echo "ERROR: unknown command" && help
 fi
 
 PID=$( xdotool selectwindow getwindowpid )
+PGID=$( ps --no-headers -q "$PID" -o pgid | tr -d ' ' )
 
 if [ "$1" == "kill" ]; then
-  kill -TERM "$PID"
+  kill -TERM -"$PGID"
   sleep 5
-  kill -KILL "$PID"
+  kill -KILL -"$PGID"
 
 elif [ "$1" == "sleep" ]; then
-  kill -STOP "$PID"
+  kill -STOP -"$PGID"
 
 elif [ "$1" == "wake" ]; then
-  kill -CONT "$PID"
+  kill -CONT -"$PGID"
+
+elif [ "$1" == "pid" ]; then
+  echo "$PID"
+
+elif [ "$1" == "pgid" ]; then
+  echo "$PGID"
 fi
 
 
