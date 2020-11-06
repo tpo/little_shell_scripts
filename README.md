@@ -464,6 +464,26 @@ Here's the --help for each shell script:
 	
 	   Jitsi Meet uses 4000 - 6000kbps.
 	
+### mkdir-now
+
+	mkdir-now [--full] [--no-create] [--script|-s] [--name TEXT]
+	
+	    creates a directory named by the current date. F.ex.
+	
+	      $ mkdir-now
+	      Created "2010-01-22/"
+	
+	      --script     will only return name of created dir on stdout
+	      -s           same as --script
+	      --no-create  don't create dir, only return name of dir that would be
+	      --full       create directory with full date, such as
+	                   2010-01-22_20:26/
+	      --name TEXT  will allow you to add so string to the name
+	                   of the created directory. F.ex.
+	
+	                       $ mkdir-now -name "researching segfault"
+	                       Created "2010-01-22 researching segfault/"
+	
 ### modinfo_all
 
 	./modinfo_all : list information on all currently installed kernel modules

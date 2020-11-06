@@ -1,0 +1,64 @@
+#!/bin/bash
+
+help() {
+  echo "mkdir-now [--full] [--no-create] [--script|-s] [--name TEXT]"
+  echo
+  echo "    creates a directory named by the current date. F.ex."
+  echo
+  echo "      $ mkdir-now"
+  echo '      Created "2010-01-22/"'
+  echo
+  echo "      --script     will only return name of created dir on stdout"
+  echo "      -s           same as --script"
+  echo "      --no-create  don't create dir, only return name of dir that would be"
+  echo "      --full       create directory with full date, such as"
+  echo "                   2010-01-22_20:26/"
+  echo "      --name TEXT  will allow you to add so string to the name"
+  echo "                   of the created directory. F.ex."
+  echo
+  echo '                       $ mkdir-now -name "researching segfault"'
+  echo '                       Created "2010-01-22 researching segfault/"'
+  echo
+  exit -1
+}
+
+[ "$1" == "--help" ] && help
+
+while [ "$1" != "" ]; do
+  case "$1" in
+    --full)      FULL="true";      shift                       ;;
+    --no-create) NO_CREATE="true"; shift                       ;;
+    --script)    SCRIPT="true";    shift                       ;;
+    -s)          SCRIPT="true";    shift                       ;;
+    --name)      NAME="true";      shift; NAME_ADD="$1"; shift ;;
+    *)           help                                          ;;
+  esac
+done
+
+if [ "$FULL" == "true" ]; then
+  dir="`date +%F_%R`"
+else
+  # default
+  dir="`date +%F`"
+fi
+
+if [ "$NAME" == "true" ]; then
+  dir="$dir $NAME_ADD"
+fi
+
+if [ "$NO_CREATE" == "true" ]; then
+  echo "$dir"
+  exit 0
+elif [ -e "$dir" ]; then
+  echo "\"$dir\" already exists" >&2
+  exit -2
+else
+  # default
+  mkdir "$dir"
+fi
+
+if [ "$SCRIPT" == "true" ]; then
+  echo "$dir"
+else
+  echo "Created \"$dir/\"" >&2
+fi
