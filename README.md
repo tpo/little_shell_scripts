@@ -84,13 +84,15 @@ Here's the --help for each shell script:
 	
 	change directory
 	
-	    cdreal  file - chdir to wherever the file is located
-	    cdwhich file - chdir to wherever the executable is located
-	    mcd     name - make directory and cd into it
-	    mcdt         - make temporary directory and cd into it
-	    mcptmp  file - make temporary directory, cp given file into it
-	                   and cd into the tmp dir. Supports the same
-	                   options as cptmp.
+	    cdreal  file   - chdir to wherever the file is located
+	    cdwhich file   - chdir to wherever the executable is located
+	    mcd     name   - make directory and cd into it
+	    mcdt           - make temporary directory and cd into it
+	    mcptmp  file   - make temporary directory, cp given file into it
+	                     and cd into the tmp dir. Supports the same
+	                     options as cptmp.
+	    mcdnow  [text] - create directory whose name is the current date
+	                     plus optionally the text and cd into it
 	
 ### brightness
 

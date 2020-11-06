@@ -55,13 +55,15 @@ help_bash_aliases() {
   echo
   echo 'change directory'
   echo
-  echo '    cdreal  file - chdir to wherever the file is located'
-  echo '    cdwhich file - chdir to wherever the executable is located'
-  echo '    mcd     name - make directory and cd into it'
-  echo '    mcdt         - make temporary directory and cd into it'
-  echo '    mcptmp  file - make temporary directory, cp given file into it'
-  echo '                   and cd into the tmp dir. Supports the same'
-  echo '                   options as cptmp.'
+  echo '    cdreal  file   - chdir to wherever the file is located'
+  echo '    cdwhich file   - chdir to wherever the executable is located'
+  echo '    mcd     name   - make directory and cd into it'
+  echo '    mcdt           - make temporary directory and cd into it'
+  echo '    mcptmp  file   - make temporary directory, cp given file into it'
+  echo '                     and cd into the tmp dir. Supports the same'
+  echo '                     options as cptmp.'
+  echo '    mcdnow  [text] - create directory whose name is the current date'
+  echo '                     plus optionally the text and cd into it'
   echo
   exit
 }
@@ -118,6 +120,14 @@ mcptmp() { tmpdir=$( cptmp --dir "$@" | grep 'copying to /tmp/foo.' | awk '{ pri
 	   echo "jumping into cd $tmpdir"
 	   cd $tmpdir
 }
+mcdnow() { if [ "$1" == "" ]; then
+	     cd "$( mkdir-now --script )"
+           else
+	     cd "$( mkdir-now --script --name "$1" )"
+	   fi
+}
+
+
 rgl() { rgrep "$1" | less; }
 
 # chmod
