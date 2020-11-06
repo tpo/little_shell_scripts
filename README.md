@@ -774,18 +774,22 @@ Here's the --help for each shell script:
 	    and networks into a firewall
 ### window
 
-	usage: window (kill|sleep|wake)
+	usage: window (kill|sleep|wake|pid|pgid)
 	       window --help
 	
 	    lets you visually select a window and then
 	    depending on the command given:
 	
 	    kill: will send SIGTERM and then SIGKILL to
-	          the process
+	          the process group
 	
-	    sleep: will send SIGSTOP to the process
+	    sleep: will send SIGSTOP to the process group
 	
-	    wake: will send SIGCONT to the process
+	    wake: will send SIGCONT to the process group
+	
+	    pid: will list the PID of the process
+	
+	    pgid: will list the group ID of the process
 	
 	    pressing ESC while in selection mode will
 	    abort the action

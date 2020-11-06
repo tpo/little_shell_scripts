@@ -1,7 +1,7 @@
 #!/bin/bash
 
 help() {
-   echo 'usage: window (kill|sleep|wake|pid)'
+   echo 'usage: window (kill|sleep|wake|pid|pgid)'
    echo '       window --help'
    echo
    echo '    lets you visually select a window and then'
