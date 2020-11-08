@@ -664,6 +664,15 @@ Here's the --help for each shell script:
 	
 	    See also: thunderbird-sleep
 	
+### timeout
+
+	usage: timeout seconds [--pg] command [parameters]*
+	
+	    Run command and send SIGTERM to it after given seconds.
+	
+	    --pg - send kill to the command's process group and
+	           thus kill the command and all of its children
+	
 ### to_jpg
 
 	usage: to_jpg image.png [image.jpg]

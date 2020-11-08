@@ -1,0 +1,35 @@
+#!/bin/bash
+#
+
+help() {
+  echo "usage: timeout seconds [--pg] command [parameters]*"
+  echo
+  echo "    Run command and send SIGTERM to it after given seconds."
+  echo
+  echo "    --pg - send kill to the command's process group and"
+  echo "           thus kill the command and all of its children"
+  echo
+  exit 0
+}
+
+[ "$1" == "--help" ] && help
+
+SLEEP=$1; shift
+[ "$1" == "--pg" ] && KILL_PGID=true && shift
+
+# https://stackoverflow.com/questions/4339756/inside-a-bash-script-how-to-get-pid-from-a-program-executed-when-using-the-eval
+# https://unix.stackexchange.com/questions/14815/process-descendants
+
+set -m # enable monitoring mode for subshells -> procs get new PGID!
+eval "$@ &"
+set +m
+PID="$!"
+sleep $SLEEP
+
+if [ "$KILL_PGID" == "true" ]; then
+  PGID=$( ps --no-headers -q "$PID" -o pgid | tr -d ' ' )
+  kill -TERM -$PGID &>/dev/null
+else
+  kill -TERM   $PID &>/dev/null
+fi
+
