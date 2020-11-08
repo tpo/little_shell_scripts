@@ -29,11 +29,12 @@ help() {
    exit 1
 }
 
-[ "$1" == "--help" ] && help
-
 set -e          # stop on error
 set -u          # stop on undefined variable
 set -o pipefail # stop part of pipeline failing
+
+[ "${1:-}" == "" ]   && echo "ERROR: command needed" && echo && help
+[ "$1" == "--help" ] && help
 
 if [ "$1" != "kill"     -a \
      "$1" != "sleep"    -a \
