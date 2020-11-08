@@ -785,7 +785,7 @@ Here's the --help for each shell script:
 	    and networks into a firewall
 ### window
 
-	usage: window (kill|sleep|wake|pid|pgid)
+	usage: window (kill|sleep|wake|minimize|pid|pgid)
 	       window --help
 	
 	    lets you visually select a window and then
@@ -798,12 +798,17 @@ Here's the --help for each shell script:
 	
 	    wake: will send SIGCONT to the process group
 	
+	    minimize: will minimize the window (into the
+	              dock or toolbar or such)
+	
 	    pid: will list the PID of the process
 	
 	    pgid: will list the group ID of the process
 	
 	    pressing ESC while in selection mode will
 	    abort the action
+	
+	    This tool depends on `xdotool`
 	
 ### wping
 
