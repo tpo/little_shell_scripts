@@ -785,11 +785,11 @@ Here's the --help for each shell script:
 	    and networks into a firewall
 ### window
 
-	usage: window (kill|sleep|wake|minimize|pid|pgid)
+	usage: window (kill|sleep|wake|minimize|pid|pgid) ...
 	       window --help
 	
 	    lets you visually select a window and then
-	    depending on the command given:
+	    depending on the commands given:
 	
 	    kill: will send SIGTERM and then SIGKILL to
 	          the process group

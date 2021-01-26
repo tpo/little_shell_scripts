@@ -1,11 +1,11 @@
 #!/bin/bash
 
 help() {
-   echo 'usage: window (kill|sleep|wake|minimize|pid|pgid)'
+   echo 'usage: window (kill|sleep|wake|minimize|pid|pgid) ...'
    echo '       window --help'
    echo
    echo '    lets you visually select a window and then'
-   echo '    depending on the command given:'
+   echo '    depending on the commands given:'
    echo
    echo '    kill: will send SIGTERM and then SIGKILL to'
    echo '          the process group'
@@ -36,41 +36,47 @@ set -o pipefail # stop part of pipeline failing
 [ "${1:-}" == "" ]   && echo "ERROR: command needed" && echo && help
 [ "$1" == "--help" ] && help
 
-if [ "$1" != "kill"     -a \
-     "$1" != "sleep"    -a \
-     "$1" != "wake"     -a \
-     "$1" != "minimize" -a \
-     "$1" != "pgid"     -a \
-     "$1" != "pid" ]; then
-  echo "ERROR: unknown command" && help
-fi
+WINDOWID=$( xdotool selectwindow )
 
-if [ "$1" == "minimize" ]; then
+# while $1 is set
+while [ ! -z  ${1+x} ]; do
+  if [ "$1" != "kill"     -a \
+       "$1" != "sleep"    -a \
+       "$1" != "wake"     -a \
+       "$1" != "minimize" -a \
+       "$1" != "pgid"     -a \
+       "$1" != "pid" ]; then
+    echo "ERROR: unknown command" && help
+  fi
+  
+  if [ "$1" == "minimize" ]; then
+  
+    xdotool windowminimize $WINDOWID
+  
+  else
+  
+    PID=$( xdotool getwindowpid $WINDOWID )
+    PGID=$( ps --no-headers -q "$PID" -o pgid | tr -d ' ' )
 
-  xdotool selectwindow windowminimize
+    if [ "$1" == "kill" ]; then
+      kill -TERM -"$PGID"
+      sleep 5
+      kill -KILL -"$PGID"
 
-else
+    elif [ "$1" == "sleep" ]; then
+      kill -STOP -"$PGID"
 
-  PID=$( xdotool selectwindow getwindowpid )
-  PGID=$( ps --no-headers -q "$PID" -o pgid | tr -d ' ' )
-  
-  if [ "$1" == "kill" ]; then
-    kill -TERM -"$PGID"
-    sleep 5
-    kill -KILL -"$PGID"
-  
-  elif [ "$1" == "sleep" ]; then
-    kill -STOP -"$PGID"
-  
-  elif [ "$1" == "wake" ]; then
-    kill -CONT -"$PGID"
-  
-  elif [ "$1" == "pid" ]; then
-    echo "$PID"
-  
-  elif [ "$1" == "pgid" ]; then
-    echo "$PGID"
+    elif [ "$1" == "wake" ]; then
+      kill -CONT -"$PGID"
+
+    elif [ "$1" == "pid" ]; then
+      echo "$PID"
+
+    elif [ "$1" == "pgid" ]; then
+      echo "$PGID"
+    fi
+
   fi
 
-fi
-
+  shift
+done
