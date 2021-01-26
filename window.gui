@@ -1,0 +1,96 @@
+#!/usr/bin/python3
+#
+def help():
+   help_=textwrap.dedent(
+   """\
+      usage: window.gui [--help]
+      
+         `window.gui` is a graphical UI for the `window` command.
+         It will allow you to to minimize a window, suspend it etc.
+         
+         It's useful for inclusion in a desktop menu, where it lets
+         you manipulate other windows, in particular suspend
+         CPU hungry applications, such as browsers.
+   """)
+   print(help_)
+   exit(1)
+
+
+# https://www.geeksforgeeks.org/minsize-method-in-tkinter-python/
+# https://rawpython.com/tkinter-label/
+
+from tkinter import * 
+from tkinter import messagebox
+from tkinter.ttk import *
+import os # popen
+import sys # argv
+import time
+import textwrap
+
+def get_window_info(window_command):
+    info = os.popen("window " + window_command).read()
+    global status_text
+    status_text.set(window_command + " = " + info)
+
+def set_up_window_commands(window_commands):
+    global status_text
+    status_text.set("wait 10 seconds for the following command/s to be aborted: " + ", ".join(window_commands))
+    # the problem we're solving in the next line is that Tk has a
+    # main loop and we need to return to it in order to have the
+    # GUI refreshed 100 seems to be just enough time to refresh
+    # the GUI before it gets blocked again by the synchronous
+    # os.system call...
+    root.after(100, exec_window_commands_and_refresh_status, window_commands)
+
+def exec_window_commands_and_refresh_status(window_commands):
+    os.system('timeout 10 --pg window ' + " ".join(window_commands))
+    global status_text
+    status_text.set("")
+
+def call_kill():
+    set_up_window_commands(["kill"])
+
+def call_sleep():
+    set_up_window_commands(["sleep"])
+
+def call_wake():
+    set_up_window_commands(["wake"])
+
+def call_minimize():
+    set_up_window_commands(["minimize"])
+
+def call_sleep_and_minimize():
+    set_up_window_commands([ "sleep", "minimize"])
+
+def call_pgid():
+    get_window_info("pgid")
+
+def call_pid():
+    get_window_info("pid")
+
+def call_debug():
+    info = os.popen("echo $PATH").read()
+    global status_text
+    status_text.set(info)
+
+def create_dialog():
+    status_text.set("                  ")
+    
+    Label(root, textvariable = status_text).pack(sid = TOP)
+    
+    for cmd in [ "sleep_and_minimize", "kill", "sleep", "wake",
+                 "minimize", "pgid", "pid", "debug" ]:
+        Button(root,
+               text = cmd,
+               command = globals()["call_" + cmd]
+               ).pack(side = TOP) 
+    mainloop() 
+
+if len(sys.argv) > 1 and sys.argv[1] == "--help":
+    help()
+
+# creating tkinter window 
+root = Tk() 
+status_text = StringVar()
+
+create_dialog()
