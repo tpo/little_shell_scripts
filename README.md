@@ -779,10 +779,10 @@ Here's the --help for each shell script:
 	usage: whois_ip IP
 	       whois_ip --help
 	
-	    will to a DNS lookup and a whois lookup on an IP
-	    and filter out the relevant fields. Used for
-	    as a help tool for manually dropping spammer IPs
-	    and networks into a firewall
+	    will do a DNS lookup and a whois lookup on an IP
+	    and filter out the relevant fields. Used as a
+	    help tool to manually drop spammer IPs and
+	    networks into a firewall
 ### window
 
 	usage: window (kill|sleep|wake|minimize|pid|pgid) ...
