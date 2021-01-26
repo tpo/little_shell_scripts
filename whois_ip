@@ -4,10 +4,10 @@ help() {
    echo 'usage: whois_ip IP'
    echo '       whois_ip --help'
    echo
-   echo '    will to a DNS lookup and a whois lookup on an IP'
-   echo '    and filter out the relevant fields. Used for'
-   echo '    as a help tool for manually dropping spammer IPs'
-   echo '    and networks into a firewall'
+   echo '    will do a DNS lookup and a whois lookup on an IP'
+   echo '    and filter out the relevant fields. Used as a'
+   echo '    help tool to manually drop spammer IPs and'
+   echo '    networks into a firewall'
    exit 1
 }
 
