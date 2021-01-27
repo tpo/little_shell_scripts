@@ -34,7 +34,10 @@ def get_window_info(window_command):
 
 def set_up_window_commands(window_commands):
     global status_text
-    status_text.set("wait 10 seconds for the following command/s to be aborted: " + ", ".join(window_commands))
+    status_text.set("wait 10 seconds for the following command/s to be aborted:\n"
+                    + ", ".join(window_commands)
+                    + "\n"
+                    + "This app will exit after execution of the command.")
     # the problem we're solving in the next line is that Tk has a
     # main loop and we need to return to it in order to have the
     # GUI refreshed 100 seems to be just enough time to refresh
@@ -44,8 +47,15 @@ def set_up_window_commands(window_commands):
 
 def exec_window_commands_and_refresh_status(window_commands):
     os.system('timeout 10 --pg window ' + " ".join(window_commands))
-    global status_text
-    status_text.set("")
+    if True:
+        # for the time being exit after command
+        global root
+        root.quit()
+    else:
+        # maybe in the future we'll want to do multiple things
+        # in the interface
+        global status_text
+        status_text.set("")
 
 def call_kill():
     set_up_window_commands(["kill"])
