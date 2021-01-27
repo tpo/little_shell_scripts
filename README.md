@@ -810,6 +810,19 @@ Here's the --help for each shell script:
 	
 	    This tool depends on `xdotool`
 	
+### window.gui
+
+	usage: window.gui [--help]
+	
+	   `window.gui` is a graphical UI for the `window` command.
+	   It will allow you to to minimize a window, suspend it etc.
+	
+	   It's useful for inclusion in a desktop menu, where it lets
+	   you manipulate other windows, in particular suspend
+	   CPU hungry applications, such as browsers.
+	
+	   This application requires the `timeout` command.
+	
 ### wping
 
 	usage: wping [URL]
