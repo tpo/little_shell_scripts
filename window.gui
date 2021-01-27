@@ -11,6 +11,8 @@ def help():
          It's useful for inclusion in a desktop menu, where it lets
          you manipulate other windows, in particular suspend
          CPU hungry applications, such as browsers.
+         
+         This application requires the `timeout` command.
    """)
    print(help_)
    exit(1)
