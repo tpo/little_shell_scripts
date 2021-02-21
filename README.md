@@ -329,6 +329,13 @@ Here's the --help for each shell script:
 	
 	    --dir   /tmp/foo.XXXXX will be a directory
 	
+### dmesgt
+
+	usage: dmesgt
+	       dmesgt --help
+	
+	    Output dmesg with not broken timestamps.
+	
 ### executable_wrapper
 
 	usage: executable_wrapper (unwrap|wrap|test) executable
