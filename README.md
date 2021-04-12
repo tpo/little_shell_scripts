@@ -481,12 +481,12 @@ Here's the --help for each shell script:
 	
 ### meetjitsi
 
-	usage: meetjits [handle|--list|--help]
+	usage: meetjits [handle|--list|--help|URL]
 	
 	   --list will dump your config
 	
 	   Otherwise will start bromium on the
-	   given Jitsi Meet channel.
+	   given Jitsi Meet channel or on the give URL.
 	
 	   You can configure your channels like this:
 	

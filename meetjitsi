@@ -9,12 +9,12 @@ import os
 def help():
     help_=textwrap.dedent(
     """\
-       usage: meetjits [handle|--list|--help]
+       usage: meetjits [handle|--list|--help|URL]
 
           --list will dump your config
 
           Otherwise will start bromium on the
-          given Jitsi Meet channel.
+          given Jitsi Meet channel or on the give URL.
 
           You can configure your channels like this:
 
@@ -78,9 +78,10 @@ if handle == "--help":
 elif handle == "--list":
     read_urls_from_config(dump = True)
     exit(1)
+elif handle[0:7] == "http://" or handle[0:8] == "https://" :
+    url=handle
 else:
     urls = read_urls_from_config()
-
-url = get_url_from(urls, handle)
+    url = get_url_from(urls, handle)
 
 os.execlp("bromium", "meetjitsi", ("--app=%s" % url))
