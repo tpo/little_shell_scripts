@@ -481,11 +481,12 @@ Here's the --help for each shell script:
 	
 ### meetjitsi
 
-	usage: meetjits [handle]
-	       meetjits --help
+	usage: meetjits [handle|--list|--help]
 	
-	   Will start bromium on the given Jitsi Meet
-	   channel.
+	   --list will dump your config
+	
+	   Otherwise will start bromium on the
+	   given Jitsi Meet channel.
 	
 	   You can configure your channels like this:
 	
@@ -495,6 +496,7 @@ Here's the --help for each shell script:
 	         myown:    https://meet.jit.si/example-myown
 	
 	   Jitsi Meet uses 4000 - 6000kbps.
+	
 	
 ### mkdir-now
 
