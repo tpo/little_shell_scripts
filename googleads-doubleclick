@@ -1,0 +1,45 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: googleads-doubleclick allow|block'
+   echo '       googleads-doubleclick --help'
+   echo
+   echo '   Will un/comment the `127.0.0.2 googleads.g.doubleclick.net`'
+   echo '   entry in `/etc/hosts`.'
+   echo
+   echo '   This serves to black/whitelist that'
+   echo '   host as needed in order to access google services which'
+   echo '   redirect via that host if the respective cookie is not set'
+   echo
+   echo '   ATTENTION:'
+   echo
+   echo '   When doing a `googleads-doubleclick allow` you should check'
+   echo '   whether is exited with exit code 0 before restoring the block'
+   echo '   with `googleads-doubleclick block`. `googleads-doubleclick allow`'
+   echo '   will check whether the `127.0.0.2 googleads.g.doubleclick.net` is'
+   echo '   already commented, potentially meaning that *another* process has'
+   echo '   already called `googleads-doubleclick allow` and so that process'
+   echo '   will do the `googleads-doubleclick block`.'
+   echo
+   echo '   TODO: That procedure is broken and should be done differently'
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+set -e          # stop on error
+set -u          # stop on undefined variable
+set -o pipefail # stop part of pipeline failing
+
+if [ "$1" == "allow" ]; then
+  if grep -q ^127.0.0.2 googleads.g.doubleclick.net /etc/hosts &>/dev/null; then
+    sudo -- sed --in-place 's/^127.0.0.2 googleads.g.doubleclick.net/#127.0.0.2 googleads.g.doubleclick.net/' /etc/hosts
+  else
+    exit 3
+  fi
+elif [ "$1" == "block" ]; then
+  sudo -- sed --in-place 's/#127.0.0.2 googleads.g.doubleclick.net/127.0.0.2 googleads.g.doubleclick.net/' /etc/hosts
+else
+  help
+fi
+
