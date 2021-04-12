@@ -9,10 +9,9 @@ import os
 def help():
     help_=textwrap.dedent(
     """\
-       usage: meetjits [handle]
-              meetjits --help
+       usage: meetjits [handle|--list|--help]
 
-          --help will also dump your config
+          --list will dump your config
 
           Otherwise will start bromium on the
           given Jitsi Meet channel.
@@ -75,6 +74,8 @@ handle = get_handle_from(sys.argv)
 
 if handle == "--help":
     help()
+    exit(1)
+elif handle == "--list":
     read_urls_from_config(dump = True)
     exit(1)
 else:
