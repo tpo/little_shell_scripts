@@ -25,26 +25,30 @@ set -e          # stop on error
 set -u          # stop on undefined variable
 set -o pipefail # stop part of pipeline failing
 
+state_file=/tmp/googleads-doubleclick.state.lock
+
 allow_googleads() {
   sed --in-place \
       's/^127.0.0.2 googleads.g.doubleclick.net/#127.0.0.2 googleads.g.doubleclick.net/' \
       /etc/hosts
 
   # note that parent is accessing googleads
-  echo $PPID >> /tmp/googleads-doubleclick.lock
+  echo $PPID >> $state_file
 }
 
 block_googleads() {
   # note that parent doesn't need googleads-doubleclick access any more
-  sed --in-place "/^$PPID$/d" /tmp/googleads-doubleclick.lock
-  for i in `cat /tmp/googleads-doubleclick.lock`; do
+  sed --in-place "/^$PPID$/d" $state_file
+  for i in `cat $state_file`; do
     if ps --pid $i > /dev/null; then
       # there is another process using googleads
       return
     fi
   done
+  # else
+  # no other process is using googleads
+  > $state_file # empty the file
 
-  # else -> no one else still needs googleads
   sed --in-place \
       's/#127.0.0.2 googleads.g.doubleclick.net/127.0.0.2 googleads.g.doubleclick.net/' \
       /etc/hosts
@@ -54,18 +58,18 @@ block_googleads() {
 #
 # see https://stackoverflow.com/a/50419392 on how this works
 #
-: >> /tmp/googleads-doubleclick.lock # create a file if it doesn't exist
+: >> $state_file # create a file if it doesn't exist
 {
   flock $lock_fd # lock file by filedescriptor
 
   if [ "$1" == "allow" ]; then
     allow_googleads
   elif [ "$1" == "block" ]; then
-    decr_semaphor
+    block_googleads
   else
     help
   fi
   
-} {lock_fd}</tmp/googleads-doubleclick.lock
+} {lock_fd}<$state_file
 
 
