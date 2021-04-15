@@ -402,7 +402,7 @@ Here's the --help for each shell script:
 	
 ### googleads-doubleclick
 
-	usage: googleads-doubleclick allow|block
+	usage: sudo googleads-doubleclick allow|block
 	       googleads-doubleclick --help
 	
 	   Will un/comment the `127.0.0.2 googleads.g.doubleclick.net`
@@ -412,17 +412,11 @@ Here's the --help for each shell script:
 	   host as needed in order to access google services which
 	   redirect via that host if the respective cookie is not set
 	
-	   ATTENTION:
+	   You probably want something like this:
 	
-	   When doing a `googleads-doubleclick allow` you should check
-	   whether is exited with exit code 0 before restoring the block
-	   with `googleads-doubleclick block`. `googleads-doubleclick allow`
-	   will check whether the `127.0.0.2 googleads.g.doubleclick.net` is
-	   already commented, potentially meaning that *another* process has
-	   already called `googleads-doubleclick allow` and so that process
-	   will do the `googleads-doubleclick block`.
+	   user ALL=NOPASSWD: /path/to/googleads-doubleclick allow
+	   user ALL=NOPASSWD: /path/to/googleads-doubleclick block
 	
-	   TODO: That procedure is broken and should be done differently
 ### heat.sh
 
 	usage: heat.sh

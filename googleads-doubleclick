@@ -1,7 +1,7 @@
 #!/bin/bash
 
 help() {
-   echo 'usage: googleads-doubleclick allow|block'
+   echo 'usage: sudo googleads-doubleclick allow|block'
    echo '       googleads-doubleclick --help'
    echo
    echo '   Will un/comment the `127.0.0.2 googleads.g.doubleclick.net`'
@@ -11,17 +11,11 @@ help() {
    echo '   host as needed in order to access google services which'
    echo '   redirect via that host if the respective cookie is not set'
    echo
-   echo '   ATTENTION:'
+   echo '   You probably want something like this:'
    echo
-   echo '   When doing a `googleads-doubleclick allow` you should check'
-   echo '   whether is exited with exit code 0 before restoring the block'
-   echo '   with `googleads-doubleclick block`. `googleads-doubleclick allow`'
-   echo '   will check whether the `127.0.0.2 googleads.g.doubleclick.net` is'
-   echo '   already commented, potentially meaning that *another* process has'
-   echo '   already called `googleads-doubleclick allow` and so that process'
-   echo '   will do the `googleads-doubleclick block`.'
+   echo '   user ALL=NOPASSWD: /path/to/googleads-doubleclick allow'
+   echo '   user ALL=NOPASSWD: /path/to/googleads-doubleclick block'
    echo
-   echo '   TODO: That procedure is broken and should be done differently'
    exit 1
 }
 
@@ -31,15 +25,47 @@ set -e          # stop on error
 set -u          # stop on undefined variable
 set -o pipefail # stop part of pipeline failing
 
-if [ "$1" == "allow" ]; then
-  if grep -q ^127.0.0.2 googleads.g.doubleclick.net /etc/hosts &>/dev/null; then
-    sudo -- sed --in-place 's/^127.0.0.2 googleads.g.doubleclick.net/#127.0.0.2 googleads.g.doubleclick.net/' /etc/hosts
+allow_googleads() {
+  sed --in-place \
+      's/^127.0.0.2 googleads.g.doubleclick.net/#127.0.0.2 googleads.g.doubleclick.net/' \
+      /etc/hosts
+
+  # note that parent is accessing googleads
+  echo $PPID >> /tmp/googleads-doubleclick.lock
+}
+
+block_googleads() {
+  # note that parent doesn't need googleads-doubleclick access any more
+  sed --in-place "/^$PPID$/d" /tmp/googleads-doubleclick.lock
+  for i in `cat /tmp/googleads-doubleclick.lock`; do
+    if ps --pid $i > /dev/null; then
+      # there is another process using googleads
+      return
+    fi
+  done
+
+  # else -> no one else still needs googleads
+  sed --in-place \
+      's/#127.0.0.2 googleads.g.doubleclick.net/127.0.0.2 googleads.g.doubleclick.net/' \
+      /etc/hosts
+}
+
+# use mutext
+#
+# see https://stackoverflow.com/a/50419392 on how this works
+#
+: >> /tmp/googleads-doubleclick.lock # create a file if it doesn't exist
+{
+  flock $lock_fd # lock file by filedescriptor
+
+  if [ "$1" == "allow" ]; then
+    allow_googleads
+  elif [ "$1" == "block" ]; then
+    decr_semaphor
   else
-    exit 3
+    help
   fi
-elif [ "$1" == "block" ]; then
-  sudo -- sed --in-place 's/#127.0.0.2 googleads.g.doubleclick.net/127.0.0.2 googleads.g.doubleclick.net/' /etc/hosts
-else
-  help
-fi
+  
+} {lock_fd}</tmp/googleads-doubleclick.lock
+
 
