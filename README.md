@@ -861,6 +861,11 @@ Here's the --help for each shell script:
 	    retrieves website via HTTP in order to see whether the web/internet
 	    works. Default site is http://sourcepole.ch
 	
+### youtube
+
+	usage: youtube "youtube query"
+	       youtube --help
+	
 ### zuletzt
 
 	usage: zuletzt

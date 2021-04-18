@@ -1,0 +1,18 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: youtube "youtube query"'
+   echo '       youtube --help'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+
+sudo -- /home/tpo/bin/googleads-doubleclick allow
+
+bromium https://www.youtube.com/results?search_query="$@"
+
+sudo -- /home/tpo/bin/googleads-doubleclick block
+
