@@ -10,15 +10,9 @@ help() {
 [ "$1" == "--help" ] && help
 
 
-if googleads-doubleclick allow; then
-  block=true
-else
-  block=false
-fi
+sudo -- /home/tpo/bin/googleads-doubleclick allow
 
 bromium "https://google.com/?q=$1"
 
-if [ "$block" == "true" ]; then
-  googleads-doubleclick block
-fi
+sudo -- /home/tpo/bin/googleads-doubleclick block
 
