@@ -400,6 +400,11 @@ Here's the --help for each shell script:
 	
 	    See also: firefox-sleep
 	
+### google
+
+	usage: google query
+	       google --help
+	
 ### googleads-doubleclick
 
 	usage: sudo googleads-doubleclick allow|block
