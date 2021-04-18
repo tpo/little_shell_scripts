@@ -400,6 +400,13 @@ Here's the --help for each shell script:
 	
 	    See also: firefox-sleep
 	
+### gmaps
+
+	usage: gmaps
+	       gmaps --help
+	
+	   Access Google maps
+	
 ### google
 
 	usage: google query

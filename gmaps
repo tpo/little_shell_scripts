@@ -1,0 +1,15 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: gmaps'
+   echo '       gmaps --help'
+   echo
+   echo '   Access Google maps'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+google-wrapper "https://www.google.ch/maps"
+
