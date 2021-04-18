@@ -9,10 +9,5 @@ help() {
 
 [ "$1" == "--help" ] && help
 
-
-sudo -- /home/tpo/bin/googleads-doubleclick allow
-
-bromium https://www.youtube.com/results?search_query="$@"
-
-sudo -- /home/tpo/bin/googleads-doubleclick block
+google-wrapper "https://www.youtube.com/results?search_query=$@"
 
