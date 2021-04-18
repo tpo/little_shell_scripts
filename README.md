@@ -422,6 +422,17 @@ Here's the --help for each shell script:
 	   user ALL=NOPASSWD: /path/to/googleads-doubleclick allow
 	   user ALL=NOPASSWD: /path/to/googleads-doubleclick block
 	
+### google-wrapper
+
+	usage: google-wrap [arguments]
+	       google-wrap --help
+	
+	   Wrap google web sites. google-wrap will:
+	
+	   * allow googleads-doubleclick access
+	   * execute `bromium [arguments]`
+	   * disallow googleads-doubleclick access
+	
 ### heat.sh
 
 	usage: heat.sh
