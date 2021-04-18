@@ -440,6 +440,13 @@ Here's the --help for each shell script:
 	   * execute `bromium [arguments]`
 	   * disallow googleads-doubleclick access
 	
+### gtranslate
+
+	usage: gtranslate
+	       gtranslate --help
+	
+	   Access Google Translate
+	
 ### heat.sh
 
 	usage: heat.sh
