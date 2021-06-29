@@ -41,8 +41,10 @@ cat_template() {
 config=~/.ssh/config
 name=$( basename "$0" )
 
-if ! versioned_backup $config ; then
-  error_and_exit "ERROR: failed to make backup of $config"
+if [ -e $config ]; then
+  if ! versioned_backup $config ; then
+    error_and_exit "ERROR: failed to make backup of $config"
+  fi
 fi
 
 if [ "$name" == "ssh-update-config-template" ]; then
