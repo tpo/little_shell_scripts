@@ -1,9 +1,20 @@
 #!/bin/bash
 
 help() {
-   echo 'usage: cert-show (--help|certificate|--host host:port [--smtp|--postgres])'
+   echo 'usage: cert-show (--type TYPE) (--help|certificate|--host host:port [--smtp|--postgres])'
    echo
    echo '    print all kinds of certificates'
+   echo
+   echo '    the following extensions are automatically recognized:'
+   echo
+   echo '      p7b             -> pkcs7'
+   echo '      pfx|p12         -> pkcs12'
+   echo '      key             -> rsa private key'
+   echo '      csr             -> certificate signing request'
+   echo '      crl             -> certificate revocation list'
+   echo '      cer|der|crt|pem -> certificates'
+   echo
+   echo '    you can force a format with `-type one_of_the_extensions_above`'
    echo
    exit 1
 }
@@ -25,8 +36,17 @@ if [ "$1" == "--host" ]; then
    openssl x509 -inform pem -noout -text
 
 else
+   if [ "$1" == "--type" ]; then
+     shift
+     EXT="$1"
+     shift
+   fi
+
    CERT="$1"
-   EXT=$( file_extension --lowercase "$CERT" )
+
+   if [ "$EXT" == "" ]; then
+     EXT=$( file_extension --lowercase "$CERT" )
+   fi
    
    case "$EXT" in
       p7b)
