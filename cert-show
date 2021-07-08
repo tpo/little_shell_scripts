@@ -42,7 +42,7 @@ else
             openssl req    -in "$CERT" -noout -text
          ;;
       crl)
-            openssl crl    -in "$CERT" -noout -text -inform der
+            openssl crl    -in "$CERT" -noout -text
          ;;
       cer|der|crt|pem)
          if grep -q "BEGIN CERTIFICATE" "$CERT"; then
