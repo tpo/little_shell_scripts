@@ -568,6 +568,22 @@ Here's the --help for each shell script:
 	
 	  Move the symbolic link src_ln into dest_dir while
 	  keeping it relative
+### pas
+
+	usage: pas
+	
+	    suspend all pulseaudio processes
+	
+	    See also: paw
+	
+### paw
+
+	usage: paw
+	
+	    wake up all pulseaudio processes
+	
+	    See also: pas
+	
 ### psa
 
 	usage: psa [-w] [pattern]
