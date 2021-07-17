@@ -196,9 +196,26 @@ Here's the --help for each shell script:
 	
 ### cert-show
 
-	usage: cert-show (--help|certificate|--host host:port [--smtp|--postgres])
+	usage: cert-show (--type TYPE) (--der|--pem) (--help|certificate|--host host:port [--smtp|--postgres])
+	usage: cert-show certificate
+	usage: cert-show --help
 	
 	    print all kinds of certificates
+	
+	    the following extensions are automatically recognized:
+	
+	      p7b             -> pkcs7
+	      pfx|p12         -> pkcs12
+	      key             -> rsa private key
+	      csr             -> certificate signing request
+	      crl             -> certificate revocation list
+	      cer|der|crt|pem -> certificates
+	
+	    you can force a type with `--type one_of_the_extensions_above`
+	
+	    TODO:
+	    I am not sure: will openssl autorecognize formats?
+	    you can force a format with `--der` or `--pem`
 	
 ### cert-show-all
 
