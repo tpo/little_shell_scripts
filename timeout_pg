@@ -2,7 +2,7 @@
 #
 
 help() {
-  echo "usage: timeout seconds [--pg] command [parameters]*"
+  echo "usage: timeout_pg seconds [--pg] command [parameters]*"
   echo
   echo "    Run command and send SIGTERM to it after given seconds."
   echo

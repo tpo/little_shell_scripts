@@ -12,7 +12,7 @@ def help():
          you manipulate other windows, in particular suspend
          CPU hungry applications, such as browsers.
          
-         This application requires the `timeout` command.
+         This application requires the `timeout_pg` command.
    """)
    print(help_)
    exit(1)
@@ -48,7 +48,7 @@ def set_up_window_commands(window_commands):
     root.after(100, exec_window_commands_and_refresh_status, window_commands)
 
 def exec_window_commands_and_refresh_status(window_commands):
-    os.system('timeout 10 --pg window ' + " ".join(window_commands))
+    os.system('timeout_pg 10 --pg window ' + " ".join(window_commands))
     if True:
         # for the time being exit after command
         global root

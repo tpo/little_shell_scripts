@@ -753,9 +753,9 @@ Here's the --help for each shell script:
 	
 	    See also: thunderbird-sleep
 	
-### timeout
+### timeout_pg
 
-	usage: timeout seconds [--pg] command [parameters]*
+	usage: timeout_pg seconds [--pg] command [parameters]*
 	
 	    Run command and send SIGTERM to it after given seconds.
 	
@@ -910,7 +910,7 @@ Here's the --help for each shell script:
 	   you manipulate other windows, in particular suspend
 	   CPU hungry applications, such as browsers.
 	
-	   This application requires the `timeout` command.
+	   This application requires the `timeout_pg` command.
 	
 ### wping
 
