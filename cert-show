@@ -1,7 +1,9 @@
 #!/bin/bash
 
 help() {
-   echo 'usage: cert-show (--type TYPE) (--help|certificate|--host host:port [--smtp|--postgres])'
+   echo 'usage: cert-show (--type TYPE) (--der|--pem) (--help|certificate|--host host:port [--smtp|--postgres])'
+   echo 'usage: cert-show certificate'
+   echo 'usage: cert-show --help'
    echo
    echo '    print all kinds of certificates'
    echo
@@ -14,7 +16,11 @@ help() {
    echo '      crl             -> certificate revocation list'
    echo '      cer|der|crt|pem -> certificates'
    echo
-   echo '    you can force a format with `-type one_of_the_extensions_above`'
+   echo '    you can force a type with `--type one_of_the_extensions_above`'
+   echo
+   echo '    TODO:'
+   echo '    I am not sure: will openssl autorecognize formats?'
+   echo '    you can force a format with `--der` or `--pem`'
    echo
    exit 1
 }
@@ -40,6 +46,15 @@ else
      shift
      EXT="$1"
      shift
+   fi
+
+   if [ "$1" == "--der" ]; then
+     shift
+     FORMAT=der
+   elif [ "$1" == "--pem" ]; then
+     shift
+     FORMAT=pem
+   else
    fi
 
    CERT="$1"
