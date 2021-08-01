@@ -597,7 +597,7 @@ Here's the --help for each shell script:
 
 	usage: paw
 	
-	    wake up all pulseaudio processes
+	    wake up and restart all pulseaudio processes
 	
 	    See also: pas
 	

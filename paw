@@ -3,7 +3,7 @@
 help() {
    echo 'usage: paw'
    echo
-   echo '    wake up all pulseaudio processes'
+   echo '    wake up and restart all pulseaudio processes'
    echo
    echo '    See also: pas'
    echo
@@ -13,3 +13,6 @@ help() {
 [ "$1" == "--help" ] && help
 
 pkill -CONT pulseaudio
+# since I had multiple cases, where PA would not emit sound after
+# restarting:
+systemctl --user restart pulseaudio
