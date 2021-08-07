@@ -55,6 +55,7 @@ else
      shift
      FORMAT=pem
    else
+     : # noop
    fi
 
    CERT="$1"
