@@ -35,6 +35,7 @@ if [ "$1" == "--host" ]; then
    case "$3" in
       --smtp)     start_tls="-starttls smtp" ;;
       --postgres) start_tls="-starttls postgres" ;;
+      "")         start_tls="" ;;
    esac
 
    echo "" | \
