@@ -36,6 +36,7 @@ if [ "$1" == "--host" ]; then
       --smtp)     start_tls="-starttls smtp" ;;
       --postgres) start_tls="-starttls postgres" ;;
       "")         start_tls="" ;;
+      *)          echo "ABORTING: don't know what to do with '$3'"; exit 1 ;;
    esac
 
    echo "" | \
