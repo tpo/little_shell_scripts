@@ -15,10 +15,11 @@ help() {
 
 [ "$1" == "--help" ] && help
 
+GOOGLEADS_DOUBLECLICK_BIN=$( command -v googleads-doubleclick )
 
-sudo -- /home/tpo/bin/googleads-doubleclick allow
+sudo -- $GOOGLEADS_DOUBLECLICK_BIN allow
 
-bromium "$@"
+firefoxium "$@"
 
-sudo -- /home/tpo/bin/googleads-doubleclick block
+sudo -- $GOOGLEADS_DOUBLECLICK_BIN block
 
