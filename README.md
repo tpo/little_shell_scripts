@@ -478,6 +478,20 @@ Here's the --help for each shell script:
 	       host_only_ip --help
 	
 	       Same as `host`, but will return IP address only.
+### hosts
+
+	usage: hosts allow|block|status FQDN
+	       hosts --help
+	
+	   adds or comments out an entry in /etc/hosts like this:
+	
+	       $ grep FQDN /etc/hosts
+	       127.0.0.2 FQDN
+	
+	   thereby blockin or allowing access to the FQDN
+	
+	   ATTENTION: no checks are made on well-formed-ness of the
+	              provided FQDN
 ### kernelog
 
 	usage: kernelog

@@ -1,0 +1,67 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: hosts allow|block|status FQDN'
+   echo '       hosts --help'
+   echo
+   echo '   adds or comments out an entry in /etc/hosts like this:'
+   echo
+   echo '       $ grep FQDN /etc/hosts'
+   echo '       127.0.0.2 FQDN'
+   echo
+   echo '   thereby blockin or allowing access to the FQDN'
+   echo
+   echo '   ATTENTION: no checks are made on well-formed-ness of the'
+   echo '              provided FQDN'
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+set -e          # stop on error
+#set -u          # stop on undefined variable
+set -o pipefail # stop part of pipeline failing
+
+enforce_FQDN_arg() {
+  # "$1" must be set
+  #
+  if [ "$1" == "" ]; then
+    echo 'ERROR: you need to pass a FQDN hostname as parameter' >&2
+    exit 1
+  fi
+  # if "$2" is given then the status of "$1" must be equal to "$2"
+  #
+  if [ "$2" != "" ]; then
+    [ "$2" == "$( hosts status "$1" )" ]
+  fi
+}
+
+case "$1" in
+  allow)
+    enforce_FQDN_arg "$2" 'blocked'
+    sed --in-place \
+        "s/^#127.0.0.2 $2$/127.0.0.2 $2/" \
+        /etc/hosts
+    ;;
+  block)
+    enforce_FQDN_arg "$2" 'allowed'
+    sed --in-place \
+        "s/^127.0.0.2 $2$/#127.0.0.2 $2/" \
+        /etc/hosts
+    ;;
+  status)
+    enforce_FQDN_arg "$2"
+    if grep -q -E "^127.0.0.2 $2$" /etc/hosts; then
+      echo 'allowed'
+    elif grep -q -E "^#127.0.0.2 $2$" /etc/hosts; then
+      echo 'blocked'
+    else
+      echo 'unknown'
+    fi
+    ;;
+  *)
+    echo "ERROR: you need to pass either 'block' or 'allow' as an argument" >&2
+    exit 1
+    ;;
+esac
+
