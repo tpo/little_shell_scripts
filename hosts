@@ -40,20 +40,20 @@ case "$1" in
   allow)
     enforce_FQDN_arg "$2" 'blocked'
     sed --in-place \
-        "s/^#127.0.0.2 $2$/127.0.0.2 $2/" \
+        "s/^127.0.0.2 $2$/#127.0.0.2 $2/" \
         /etc/hosts
     ;;
   block)
     enforce_FQDN_arg "$2" 'allowed'
     sed --in-place \
-        "s/^127.0.0.2 $2$/#127.0.0.2 $2/" \
+        "s/^#127.0.0.2 $2$/127.0.0.2 $2/" \
         /etc/hosts
     ;;
   status)
     enforce_FQDN_arg "$2"
-    if grep -q -E "^127.0.0.2 $2$" /etc/hosts; then
+    if grep -q -E "^#127.0.0.2 $2$" /etc/hosts; then
       echo 'allowed'
-    elif grep -q -E "^#127.0.0.2 $2$" /etc/hosts; then
+    elif grep -q -E "^127.0.0.2 $2$" /etc/hosts; then
       echo 'blocked'
     else
       echo 'unknown'
