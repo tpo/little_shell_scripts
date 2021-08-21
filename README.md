@@ -747,6 +747,20 @@ Here's the --help for each shell script:
 	
 	    tries to switch off the heat producing Radeon VGA card
 	
+### t.co
+
+	usage: t.co
+	       t.co --help
+	
+	   temporarily allow access to t.co
+	
+	   This script will allow t.co access and wait for a
+	   keypress. The assumption is that you want to keep
+	   t.co blocked and only want to shortly enable it
+	   when clicking on a link on Twitter
+	
+	   This script needs the `hosts` script
+	
 ### thunderbird-sleep
 
 	usage: thunderbird-sleep
