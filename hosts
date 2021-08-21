@@ -32,7 +32,10 @@ enforce_FQDN_arg() {
   # if "$2" is given then the status of "$1" must be equal to "$2"
   #
   if [ "$2" != "" ]; then
-    [ "$2" == "$( hosts status "$1" )" ]
+    if [ "$2" != "$( hosts status "$1" )" ]; then
+      echo "ERROR: $1 was not in state '$2' as it should have been"
+      exit 1
+    fi
   fi
 }
 
