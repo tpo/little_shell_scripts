@@ -28,10 +28,7 @@ set -o pipefail # stop part of pipeline failing
 state_file=/tmp/googleads-doubleclick.state.lock
 
 allow_googleads() {
-  sed --in-place \
-      's/^127.0.0.2 googleads.g.doubleclick.net/#127.0.0.2 googleads.g.doubleclick.net/' \
-      /etc/hosts
-
+  hosts allow googleads.g.doubleclick.net || exit 1
   # note that parent is accessing googleads
   echo $PPID >> $state_file
 }
@@ -49,9 +46,7 @@ block_googleads() {
   # no other process is using googleads
   > $state_file # empty the file
 
-  sed --in-place \
-      's/#127.0.0.2 googleads.g.doubleclick.net/127.0.0.2 googleads.g.doubleclick.net/' \
-      /etc/hosts
+  hosts block googleads.g.doubleclick.net || exit 1
 }
 
 # use mutext

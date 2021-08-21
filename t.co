@@ -1,0 +1,30 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: t.co'
+   echo '       t.co --help'
+   echo
+   echo '   temporarily allow access to t.co'
+   echo
+   echo '   This script will allow t.co access and wait for a'
+   echo '   keypress. The assumption is that you want to keep'
+   echo '   t.co blocked and only want to shortly enable it'
+   echo '   when clicking on a link on Twitter'
+   echo
+   echo '   This script needs the `hosts` script'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+set -e          # stop on error
+set -u          # stop on undefined variable
+set -o pipefail # stop part of pipeline failing
+
+HOSTS_EXE=$( command -v hosts )
+
+sudo -- $HOSTS_EXE allow t.co
+echo "press enter to block t.co again"
+read
+sudo -- $HOSTS_EXE block t.co
