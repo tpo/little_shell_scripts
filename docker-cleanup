@@ -7,6 +7,7 @@ help() {
    echo '    Will remove:'
    echo '      - stopped containers'
    echo '      - dangling volumes'
+   echo '      - unused networks'
    echo '      - images without repository and without tag (<none> <none>)'
    echo '      - older versions of images with identical repository and tag'
    echo '      - dangling images'
@@ -20,8 +21,7 @@ set -e          # stop on error
 set -u          # stop on undefined variable
 set -o pipefail # stop part of pipeline failing
 
-docker container prune
-docker volume    prune
+docker system prune --volumes
 
 previous_repository=""
 previous_tag=""
@@ -41,4 +41,6 @@ docker images --format "{{.Repository}} {{.Tag}} {{.CreatedAt}} {{.ID}}" \
     previous_id=$id
 done
 
+# in case iterating through images above left some
+# dangling ones, then delete then now
 docker image prune --filter=dangling=true

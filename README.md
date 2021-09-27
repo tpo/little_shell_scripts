@@ -361,7 +361,8 @@ Here's the --help for each shell script:
 	    Will remove:
 	      - stopped containers
 	      - dangling volumes
-	      - images without repository and without tag (<none> <none>) images
+	      - unused networks
+	      - images without repository and without tag (<none> <none>)
 	      - older versions of images with identical repository and tag
 	      - dangling images
 	
