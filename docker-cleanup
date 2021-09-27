@@ -8,6 +8,7 @@ help() {
    echo '      - stopped containers'
    echo '      - dangling volumes'
    echo '      - images without repository and without tag (<none> <none>) images'
+   echo '      - older versions of images with identical repository and tag'
    echo '      - dangling images'
    echo
    exit 1

@@ -362,6 +362,7 @@ Here's the --help for each shell script:
 	      - stopped containers
 	      - dangling volumes
 	      - images without repository and without tag (<none> <none>) images
+	      - older versions of images with identical repository and tag
 	      - dangling images
 	
 ### executable_wrapper
