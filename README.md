@@ -353,6 +353,17 @@ Here's the --help for each shell script:
 	
 	    Output dmesg with not broken timestamps.
 	
+### docker-cleanup
+
+	usage: docker-cleanup
+	       docker-cleanup --help
+	
+	    Will remove:
+	      - stopped containers
+	      - dangling volumes
+	      - images without repository and without tag (<none> <none>) images
+	      - dangling images
+	
 ### executable_wrapper
 
 	usage: executable_wrapper (unwrap|wrap|test) executable

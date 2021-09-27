@@ -1,0 +1,40 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: docker-cleanup'
+   echo '       docker-cleanup --help'
+   echo
+   echo '    Will remove:'
+   echo '      - stopped containers'
+   echo '      - dangling volumes'
+   echo '      - images without repository and without tag (<none> <none>) images'
+   echo '      - dangling images'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+set -e          # stop on error
+set -u          # stop on undefined variable
+set -o pipefail # stop part of pipeline failing
+
+docker container prune
+docker volume    prune
+
+previous_repository=""
+previous_tag=""
+previous_id=""
+# images are sorted older to younger
+#
+docker images --format "{{.Repository}} {{.Tag}} {{.CreatedAt}} {{.ID}}" \
+| sort \
+| while read repository tag created_at id; do
+    if   [ "$tag" == "<none>" ]        && [ "$repository" == "<none>" ];          then
+        echo docker rmi $id
+    elif [ "$tag" == "$previous_tag" ] && [ "$repository" == "$previous_repository" ]; then
+        echo docker rmi $previous_id
+    fi
+done
+
+docker image prune --filter=dangling=true
