@@ -7,7 +7,7 @@ help() {
    echo '    Will remove:'
    echo '      - stopped containers'
    echo '      - dangling volumes'
-   echo '      - images without repository and without tag (<none> <none>) images'
+   echo '      - images without repository and without tag (<none> <none>)'
    echo '      - older versions of images with identical repository and tag'
    echo '      - dangling images'
    echo
@@ -36,6 +36,9 @@ docker images --format "{{.Repository}} {{.Tag}} {{.CreatedAt}} {{.ID}}" \
     elif [ "$tag" == "$previous_tag" ] && [ "$repository" == "$previous_repository" ]; then
         echo docker rmi $previous_id
     fi
+    previous_repository=$repository
+    previous_tag=$tag
+    previous_id=$id
 done
 
 docker image prune --filter=dangling=true
