@@ -1,0 +1,25 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: fff [params]*'
+   echo '       fff --help'
+   echo
+   echo '    Ask whether to run firefoxium or firefox'
+   echo '    and then run it.'
+   echo
+   echo '    Depends on `kdialog`.'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+set -e          # stop on error
+set -u          # stop on undefined variable
+set -o pipefail # stop part of pipeline failing
+
+if kdialog --yesno "run in firefoxium?"; then
+  firefoxium "$@"
+else
+  /usr/bin/firefox "$@"
+fi

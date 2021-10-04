@@ -392,6 +392,16 @@ Here's the --help for each shell script:
 	
 	    remove all meta-tags from exif informations
 	
+### fff
+
+	usage: fff [params]*
+	       fff --help
+	
+	    Ask whether to run firefoxium or firefox
+	    and then run it.
+	
+	    Depends on `kdialog`.
+	
 ### file_extension
 
 	usage: file_extension [--lowercase|--uppercase] file_path
