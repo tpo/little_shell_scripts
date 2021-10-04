@@ -1,0 +1,18 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: firefoxium [URL|firefox arguments]'
+   echo '       firefoxium --help'
+   echo
+   echo '   Run firefox in a jail with a fresh profile.'
+   echo
+   echo '   Depends on `firejail`.'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+# -private -> empty home
+#
+firejail --private --apparmor --profile=/etc/firejail/firefox.profile /usr/bin/firefox -no-remote "$@"
