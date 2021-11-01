@@ -4,7 +4,7 @@
 help() {
   echo 'usage: findhere SEARCH_STRING [OTHER_FIND_OPTIONS]'
   echo 
-  echo '    will execute "find . -name "*SEARCH_STRING*" [OTHER_FIND_OPTIONS]"'
+  echo '    will execute "find . -iname "*SEARCH_STRING*" [OTHER_FIND_OPTIONS]"'
   echo 
   exit
 }
@@ -13,4 +13,4 @@ help() {
 
 name="$1"; shift
 
-find . -name "*$name*" "$@"
+find . -iname "*$name*" "$@"
