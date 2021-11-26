@@ -420,7 +420,7 @@ Here's the --help for each shell script:
 
 	usage: findhere SEARCH_STRING [OTHER_FIND_OPTIONS]
 	
-	    will execute "find . -name "*SEARCH_STRING*" [OTHER_FIND_OPTIONS]"
+	    will execute "find . -iname "*SEARCH_STRING*" [OTHER_FIND_OPTIONS]"
 	
 ### find_ls_sort
 
