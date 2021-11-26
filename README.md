@@ -428,6 +428,15 @@ Here's the --help for each shell script:
 	
 	    A fusion of find and ls. Very useful for comparing systems.
 	
+### firefoxium
+
+	usage: firefoxium [URL|firefox arguments]
+	       firefoxium --help
+	
+	   Run firefox in a jail with a fresh profile.
+	
+	   Depends on `firejail`.
+	
 ### firefox-sleep
 
 	usage: firefox-sleep
