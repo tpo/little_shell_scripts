@@ -1,0 +1,16 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: dpkg-which EXECUTABLE'
+   echo '       dpkg-which --help'
+   echo
+   echo '    find EXECUTABLE in $PATH and display in which'
+   echo '    Debian package it is.'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+path=$( which "$1" )
+dpkg -S "$path"

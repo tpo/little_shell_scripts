@@ -366,6 +366,14 @@ Here's the --help for each shell script:
 	      - older versions of images with identical repository and tag
 	      - dangling images
 	
+### dpkg-which
+
+	usage: dpkg-which EXECUTABLE
+	       dpkg-which --help
+	
+	    find EXECUTABLE in $PATH and display in which
+	    Debian package it is.
+	
 ### executable_wrapper
 
 	usage: executable_wrapper (unwrap|wrap|test) executable
