@@ -13,6 +13,7 @@ help() {
 
 [ "$1" == "--help" ] && help
 
+# regex by Bernhard Barker, https://stackoverflow.com/a/19377429, thanks!
 if [[ $1 =~ ^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$ ]]; then
   google-wrapper "$1"
 else
