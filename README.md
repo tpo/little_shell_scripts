@@ -989,8 +989,12 @@ Here's the --help for each shell script:
 	
 ### youtube
 
-	usage: youtube "youtube query"
+	usage: youtube ["youtube query"|URL]
 	       youtube --help
+	
+	   Access youtube via `google-wrapper`
+	
+	   Depends on `google-wrapper`
 	
 ### zuletzt
 

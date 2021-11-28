@@ -1,8 +1,12 @@
 #!/bin/bash
 
 help() {
-   echo 'usage: youtube "youtube query"'
+   echo 'usage: youtube ["youtube query"|URL]'
    echo '       youtube --help'
+   echo
+   echo '   Access youtube via `google-wrapper`'
+   echo
+   echo '   Depends on `google-wrapper`'
    echo
    exit 1
 }
