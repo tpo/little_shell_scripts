@@ -13,5 +13,8 @@ help() {
 
 [ "$1" == "--help" ] && help
 
-google-wrapper "https://www.youtube.com/results?search_query=$@"
-
+if [[ $1 =~ ^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$ ]]; then
+  google-wrapper "$1"
+else
+  google-wrapper "https://www.youtube.com/results?search_query=$@"
+fi
