@@ -1,0 +1,23 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: kill_citrix'
+   echo '       kill_citrix --help'
+   echo
+   echo '   For some reason citrix client infrastructure wants'
+   echo '   to run all the time and keep on wasting resources'
+   echo "   even when it's not in use. This script kills all"
+   echo '   those Citrix daemons.'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+# /opt/Citrix/ICAClient/...
+sudo killall UtilDaemon
+sudo killall icasessionmgr
+sudo killall ServiceRecord
+sudo killall AuthManagerDaemon
+sudo killall ctxlogd
+

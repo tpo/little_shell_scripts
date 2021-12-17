@@ -539,6 +539,16 @@ Here's the --help for each shell script:
 	    Will jump to the end of /var/log/kern.log, page it with
 	    'less' and update it when it changes.
 	
+### kill_citrix
+
+	usage: kill_citrix
+	       kill_citrix --help
+	
+	   For some reason citrix client infrastructure wants
+	   to run all the time and keep on wasting resources
+	   even when it's not in use. This script kills all
+	   those Citrix daemons.
+	
 ### konsole_fork_ssh
 
 	usage: konsole_fork_ssh
