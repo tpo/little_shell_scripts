@@ -770,6 +770,17 @@ Here's the --help for each shell script:
 	            _known_hosts_real -a -F ~/.ssh/config "$cur"
 	        } && complete -F _ssh_host ssh-host
 	
+### ssh-show-host-keys
+
+	usage: ssh-show-host-keys HOST
+	       ssh-show-host-keys --help
+	
+	    HOST should be the same host you use to connect
+	    to the host
+	
+	    This commend will ssh to the host and display all
+	    its public keys
+	
 ### ssh-update-config
 
 	usage: (ssh-update-config|ssh-update-config-template)

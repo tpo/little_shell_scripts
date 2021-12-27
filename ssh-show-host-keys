@@ -1,0 +1,22 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: ssh-show-host-keys HOST'
+   echo '       ssh-show-host-keys --help'
+   echo
+   echo '    HOST should be the same host you use to connect'
+   echo '    to the host'
+   echo
+   echo '    This commend will ssh to the host and display all'
+   echo '    its public keys'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+set -e          # stop on error
+set -u          # stop on undefined variable
+set -o pipefail # stop part of pipeline failing
+
+ssh "$1" 'for k in /etc/ssh/ssh_host_*_key.pub; do ssh-keygen -l -f $k; done | column -t'
