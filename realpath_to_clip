@@ -1,0 +1,26 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: realpath_to_clip [FILE]'
+   echo '       realpath_to_clip --help'
+   echo
+   echo '    Copies to realpath of FILE to the clipboard.'
+   echo
+   echo '    If file is not given, then the current'
+   echo '    directory is used.'
+   echo
+   echo '    Depends on: copy_file_to_clip'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+if [ "$1" == "" ]; then
+  realpath=$( realpath . )
+else
+  realpath=$( realpath "$1" )
+fi
+
+echo "$realpath" # output to STDOUT
+echo "$realpath" | copy_file_to_clip -

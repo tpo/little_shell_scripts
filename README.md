@@ -720,6 +720,18 @@ Here's the --help for each shell script:
 	       role "postgres" allowed "alice" to:
 	         c -- CONNECT to DB
 	
+### realpath_to_clip
+
+	usage: realpath_to_clip [FILE]
+	       realpath_to_clip --help
+	
+	    Copies to realpath of FILE to the clipboard.
+	
+	    If file is not given, then the current
+	    directory is used.
+	
+	    Depends on: copy_file_to_clip
+	
 ### reset_usb_devices
 
 	usage: reset_usb_devices
