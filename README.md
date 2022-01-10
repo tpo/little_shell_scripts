@@ -642,6 +642,18 @@ Here's the --help for each shell script:
 	usage: mount_iso iso_image destination
 	       mount_iso --help
 	
+### mount_stuff_into_chroot
+
+	usage: mount_stuff_into_chroot [--umount] path_to_chroot
+	       mount_stuff_into_chroot --help
+	
+	    Mounts /proc /sys and /dev into chroot
+	    and makes sure /tmp is correctly set up.
+	
+	    With --umount: umounts all those filesystems
+	    again, that were previously mounted into
+	    the chroot.
+	
 ### mv_ln
 
 	usage: mv_ln src_ln dest_dir

@@ -1,0 +1,55 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: mount_stuff_into_chroot [--umount] path_to_chroot'
+   echo '       mount_stuff_into_chroot --help'
+   echo
+   echo '    Mounts /proc /sys and /dev into chroot'
+   echo '    and makes sure /tmp is correctly set up.'
+   echo
+   echo '    With --umount: umounts all those filesystems'
+   echo '    again, that were previously mounted into'
+   echo '    the chroot.'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+if [ "$1" == "--umount" ]; then
+  MOUNT_OR_UMOUNT=umount
+  shift
+else
+  MOUNT_OR_UMOUNT=mount
+fi
+
+if [ "$1" == "" ]; then
+  echo "ABORTING: chroot path not given" >&2
+  exit 1
+else
+  CHROOT="$1"
+fi
+
+set -e          # stop on error
+set -u          # stop on undefined variable
+set -o pipefail # stop part of pipeline failing
+
+if [ "$MOUNT_OR_UMOUNT" == "mount" ]; then
+  for fs in proc sys dev tmp; do
+    if [ ! -d "${CHROOT}/${fs}/" ]; then
+      sudo mkdir "${CHROOT}/${fs}/"
+    fi
+  done
+
+  sudo mount -t proc  /proc "${CHROOT}/proc/"
+  sudo mount -t sysfs /sys  "${CHROOT}/sys/"
+  sudo mount --bind   /dev  "${CHROOT}/dev/"
+
+  # /tmp
+  chmod ugo+rwx "${CHROOT}/tmp/"
+  chmod +t      "${CHROOT}/tmp/"
+else 
+  sudo umount -l "${CHROOT}/dev/"
+  sudo umount "${CHROOT}/sys/"
+  sudo umount "${CHROOT}/proc/"
+fi
