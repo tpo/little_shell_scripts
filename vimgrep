@@ -24,13 +24,17 @@ help() {
 
 echo
 rg --color always "$@" 
+res=$?
 echo
 
-echo 'CTRL-C now if you do not want to edit the file(s) above or ENTER to continue.'
-echo
-echo 'once editing a file use `:cnext` to jump to the next occurence of the search string'
-
-read answer
-
-vim $VVV -q <(rg --vimgrep "$1")
-
+if [ "$res" == "0" ]; then
+  echo 'CTRL-C now if you do not want to edit the file(s) above or ENTER to continue.'
+  echo
+  echo 'once editing a file use `:cnext` to jump to the next occurence of the search string'
+  
+  read answer
+  
+  vim $VVV -q <(rg --vimgrep "$1")
+else
+  echo 'No match was found'
+fi
