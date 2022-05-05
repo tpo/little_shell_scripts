@@ -457,6 +457,13 @@ Here's the --help for each shell script:
 	
 	    See also: firefox-sleep
 	
+### git_show_upstream_log
+
+	usage: git_show_upstream_log
+	       git_show_upstream_log --help
+	
+	    Show git log of upstream repo
+	
 ### gmaps
 
 	usage: gmaps

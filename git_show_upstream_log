@@ -1,0 +1,17 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: git_show_upstream_log'
+   echo '       git_show_upstream_log --help'
+   echo
+   echo '    Show git log of upstream repo'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+set -e          # stop on error
+
+git fetch
+git log origin/master ^master
