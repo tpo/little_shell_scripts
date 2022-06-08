@@ -1,13 +1,22 @@
 #!/bin/bash
 
 help() {
-  echo "usage: exif-del image"
+  echo "usage: exif-del [--nocopy] image"
   echo
   echo "    remove all meta-tags from exif informations"
+  echo
+  echo "    --nocopy - do not preserve original image"
   echo
   exit 255
 }
 
 [ "$1" == "--help" ] && help
 
-exiftool -All= "$1"
+
+if [ "$1" == "--nocopy" ]; then
+  shift
+  exiftool -overwrite_original_in_place -All= "$1"
+else
+  exiftool                              -All= "$1"
+fi
+

@@ -396,9 +396,11 @@ Here's the --help for each shell script:
 	
 ### exif-del
 
-	usage: exif-del image
+	usage: exif-del [--nocopy] image
 	
 	    remove all meta-tags from exif informations
+	
+	    --nocopy - do not preserve original image
 	
 ### fff
 
