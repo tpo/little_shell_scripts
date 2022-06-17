@@ -976,6 +976,13 @@ Here's the --help for each shell script:
 	    create and edit executable bash script under ~/bin
 	
 	
+### wait_for_ssh
+
+	usage: wait_for_ssh HOST [PORT]
+	       wait_for_ssh --help
+	
+	    Loops trying to connect via ssh until it succeeds
+	
 ### wake-sleep-log
 
 	usage: wake-sleep-log

@@ -1,0 +1,46 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: wait_for_ssh HOST [PORT]'
+   echo '       wait_for_ssh --help'
+   echo
+   echo '    Loops trying to connect via ssh until it succeeds'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+[ "$1" == ""       ] && help
+HOST="$1"
+if [ "$2" == "" ]; then
+  PORT=
+else
+  PORT="$2"
+fi
+
+set -e          # stop on error
+set -u          # stop on undefined variable
+set -o pipefail # stop part of pipeline failing
+
+SLEEP=5 # seconds
+ssh_status=down
+
+log() {
+  echo "$( date --rfc-3339=ns ): $1" >&2
+}
+
+while [ "$ssh_status" == "down" ]; do
+  log "trying to connect"
+  if [ "$PORT" == "" ]; then
+    ssh $HOST true
+  else
+    ssh $HOST -p $PORT true
+  fi
+  if [ "$?" != "0" ]; then
+    log "failed. Sleeping for ${SLEEP}s"
+    sleep $SLEEP
+  else
+    log "connected successfully"
+    break
+  fi
+done
