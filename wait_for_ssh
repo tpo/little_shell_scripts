@@ -18,7 +18,6 @@ else
   PORT="$2"
 fi
 
-set -e          # stop on error
 set -u          # stop on undefined variable
 set -o pipefail # stop part of pipeline failing
 
