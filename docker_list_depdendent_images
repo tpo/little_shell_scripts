@@ -1,0 +1,83 @@
+#!/bin/bash
+#
+# based on https://stackoverflow.com/a/41176677 by Simon Brady
+
+help() {
+   echo 'usage: docker_list_depdendent_images [-nh] [-v] [-r] IMAGE_ID'
+   echo '       docker_list_depdendent_images --help'
+   echo
+   echo '    -nh - do not output header'
+   echo '    -v  - verbose image info output'
+   echo '    -r  - recursive (dependencies of depencies)'
+   echo "          (TODO: doesn' work yet)"
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+recursion_options=()
+
+if [ "$1" == "-nh" ]; then
+  header=false
+  shift
+else
+  header=true
+fi
+# we do not output headers when recursing
+recursion_options+=("-nh")
+
+if [ "$1" == "-v" ]; then
+  verbose=true
+  if [ "$header" == "true" ]; then
+    docker images | head -n 1 # output header
+  fi
+  recursion_options+=("-v")
+  shift
+else
+  verbose=false
+fi
+
+if [ "$1" == "-r" ]; then
+  recursive=true
+  recursion_options+=("-r")
+  shift
+else
+  recursive=false
+fi
+
+IMAGE_ID="$1"
+
+get_dependent_image_ids() {
+  local IMAGE_ID="$1"
+  for i in $(docker images -q); do
+    docker history $i \
+    | grep -q "$IMAGE_ID" \
+    && if [ "$i" != "$IMAGE_ID" ]; then
+         echo "$i"
+       fi
+  done
+}
+
+show_image_info() {
+  local IMAGE_ID="$1"
+  if [ "$verbose" == "true" ]; then
+    docker image ls | grep "$IMAGE_ID"
+  else
+    echo "$IMAGE_ID"
+  fi 
+}
+
+set -e          # stop on error
+set -u          # stop on undefined variable
+set -o pipefail # stop part of pipeline failing
+
+get_dependent_image_ids "$IMAGE_ID" \
+| sort -u \
+| while read DEPENDEND_IMAGE_ID; do
+    show_image_info "$DEPENDEND_IMAGE_ID"
+    if [ "$recursive" == "true" ]; then
+      recursion_options+=("$DEPENDEND_IMAGE_ID")
+      $0 "${options[@]}"
+    fi
+  done

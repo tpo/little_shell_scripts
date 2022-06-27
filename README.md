@@ -366,6 +366,16 @@ Here's the --help for each shell script:
 	      - older versions of images with identical repository and tag
 	      - dangling images
 	
+### docker_list_depdendent_images
+
+	usage: docker_list_depdendent_images [-nh] [-v] [-r] IMAGE_ID
+	       docker_list_depdendent_images --help
+	
+	    -nh - do not output header
+	    -v  - verbose image info output
+	    -r  - recursive (dependencies of depencies)
+	          (TODO: doesn' work yet)
+	
 ### dpkg-which
 
 	usage: dpkg-which EXECUTABLE
