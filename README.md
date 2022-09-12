@@ -624,7 +624,7 @@ Here's the --help for each shell script:
 	
 ### mkdir-now
 
-	mkdir-now [--full] [--no-create] [--script|-s] [--name TEXT]
+	mkdir-now [--full] [--no-create] [--ignore-existing] [--script|-s] [--name TEXT]
 	
 	    creates a directory named by the current date. F.ex.
 	
@@ -634,6 +634,7 @@ Here's the --help for each shell script:
 	      --script     will only return name of created dir on stdout
 	      -s           same as --script
 	      --no-create  don't create dir, only return name of dir that would be
+	      --ignore-existing do not error out if directory already exists
 	      --full       create directory with full date, such as
 	                   2010-01-22_20:26/
 	      --name TEXT  will allow you to add so string to the name
