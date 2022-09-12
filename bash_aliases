@@ -121,9 +121,9 @@ mcptmp() { tmpdir=$( cptmp --dir "$@" | grep 'copying to /tmp/foo.' | awk '{ pri
 	   cd $tmpdir
 }
 mcdnow() { if [ "$1" == "" ]; then
-	     cd "$( mkdir-now --script )"
+	     cd "$( mkdir-now --script --ignore-existing )"
            else
-	     cd "$( mkdir-now --script --name "$1" )"
+	     cd "$( mkdir-now --script --ignore-existing --name "$1" )"
 	   fi
 }
 
