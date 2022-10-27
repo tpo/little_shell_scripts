@@ -568,6 +568,14 @@ Here's the --help for each shell script:
 	   even when it's not in use. This script kills all
 	   those Citrix daemons.
 	
+### kill_ssh
+
+	usage: kill_ssh destination
+	       kill_ssh --help
+	
+	    kills ssh processes currenctly connecting to
+	    the given destination
+	
 ### konsole_fork_ssh
 
 	usage: konsole_fork_ssh
