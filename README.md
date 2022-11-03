@@ -14,6 +14,39 @@ Here's the --help for each shell script:
 	    be compatible with windows.
 	
 	    7ze will ask for the password.
+### ansible-playbook-with-vault
+
+	usage: ansible-playbook-with-vault [ansible_parameters]*
+	       ansible-playbook-with-vault --help
+	
+	   will check if there's a ansible.cfg in the same
+	   directory that the script has been called that
+	   contains a line:
+	
+	       #vault_password_file = ansible/vault/file
+	
+	   and if it does will:
+	
+	   * `export ANSIBLE_VAULT_PASSWORD_FILE=ansible/vault/file`
+	   * call ansible-playbook with all the parameters given on
+	     the command line
+	
+	   The idea of this script is to work with vault_password_files
+	   on a team, where not everybody has vault_password_files
+	   set up.
+	
+	   So those that *have* vault_password_files set up can
+	   add the respective comment line as shown above to the
+	   ansible.cfg file and have ansible-playbook use that
+	   automatically.
+	
+	   Note that:
+	
+	   * this way different vault_password_files can be set up
+	     per ansible repo
+	   * those in the team that do use vault_password_files need
+	     to have them located at the same place
+	
 ### ansible-vault-rgrep
 
 	usage: ansible-vault-rgrep [-H] directory [GREP_PARAMS]

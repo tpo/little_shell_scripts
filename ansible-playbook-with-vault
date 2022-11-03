@@ -1,0 +1,52 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: ansible-playbook-with-vault [ansible_parameters]*'
+   echo '       ansible-playbook-with-vault --help'
+   echo
+   echo "   will check if there's a ansible.cfg in the same"
+   echo '   directory that the script has been called that'
+   echo '   contains a line:'
+   echo
+   echo '       #vault_password_file = ansible/vault/file'
+   echo
+   echo '   and if it does will:'
+   echo
+   echo '   * `export ANSIBLE_VAULT_PASSWORD_FILE=ansible/vault/file`'
+   echo '   * call ansible-playbook with all the parameters given on'
+   echo '     the command line'
+   echo
+   echo '   The idea of this script is to work with vault_password_files'
+   echo '   on a team, where not everybody has vault_password_files'
+   echo '   set up.'
+   echo
+   echo '   So those that *have* vault_password_files set up can'
+   echo '   add the respective comment line as shown above to the'
+   echo '   ansible.cfg file and have ansible-playbook use that'
+   echo '   automatically.'
+   echo
+   echo '   Note that:'
+   echo
+   echo '   * this way different vault_password_files can be set up'
+   echo '     per ansible repo'
+   echo '   * those in the team that do use vault_password_files need'
+   echo '     to have them located at the same place'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+if [ -e ansible.cfg ]; then
+  pwd_file=$(
+    cat ansible.cfg \
+    | grep '#vault_password_file' \
+    | sed 's/#vault_password_file *= *//'
+  )
+
+  if [ "$pwd_file" != "" ]; then
+    export ANSIBLE_VAULT_PASSWORD_FILE=$pwd_file
+  fi
+fi
+
+ansible-playbook "$@"
