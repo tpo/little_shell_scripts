@@ -1,0 +1,19 @@
+#!/usr/bin/python3
+# Originally from: https://gist.github.com/mboersma/1329669?permalink_comment_id=2691156#gistcomment-2691156
+import json, sys, yaml
+
+help="""
+usage: cat foo.yml | yaml2json
+       yaml2json --help'
+
+    transforms YAML to JSON
+"""
+
+if len(sys.argv) > 1 and sys.argv[1] == "--help":
+  print(help.lstrip("\n"))
+else:
+  y = yaml.safe_load( sys.stdin.read() )
+  
+  json.dump(y, sys.stdout)
+  
+  print() # finish dump with newline

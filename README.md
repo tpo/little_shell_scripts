@@ -1100,6 +1100,13 @@ Here's the --help for each shell script:
 	    retrieves website via HTTP in order to see whether the web/internet
 	    works. Default site is http://sourcepole.ch
 	
+### yaml2json
+
+	usage: cat foo.yml | yaml2json
+	       yaml2json --help'
+	
+	    transforms YAML to JSON
+	
 ### youtube
 
 	usage: youtube ["youtube query"|URL]
