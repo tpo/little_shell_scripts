@@ -3,6 +3,7 @@
 help() {
    echo 'usage: ansible-playbook-with-vault [ansible_parameters]*'
    echo '       ansible-playbook-with-vault --help'
+   echo '       ansible-playbook-with-vault --clear'
    echo
    echo "   will check if there's a ansible.cfg in the same"
    echo '   directory that the script has been called that'
@@ -32,10 +33,20 @@ help() {
    echo '   * those in the team that do use vault_password_files need'
    echo '     to have them located at the same place'
    echo
+   echo '   --clear: will call the `vault_password_file` with a'
+   echo '            parameter `--clear` in orderr to clear a'
+   echo '            possible (wrong) password that is remembered/cached'
+   echo '            by the `vault_password_file`/pin entry program'
+   echo
    exit 1
 }
 
 [ "$1" == "--help" ] && help
+if [ "$1" == "--clear" ]; then
+ CLEAR=true
+else
+ CLEAR=false
+fi
 
 if [ -e ansible.cfg ]; then
   pwd_file=$(
@@ -45,8 +56,14 @@ if [ -e ansible.cfg ]; then
   )
 
   if [ "$pwd_file" != "" ]; then
-    export ANSIBLE_VAULT_PASSWORD_FILE=$pwd_file
+    export ANSIBLE_VAULT_PASSWORD_FILE="$pwd_file"
   fi
 fi
 
-ansible-playbook "$@"
+if [ "$CLEAR" == "true" ]; then
+   # expand '~'
+   pwd_file="${pwd_file/#\~/$HOME}"
+  "$pwd_file" --clear
+else
+  ansible-playbook "$@"
+fi

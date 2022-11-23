@@ -18,6 +18,7 @@ Here's the --help for each shell script:
 
 	usage: ansible-playbook-with-vault [ansible_parameters]*
 	       ansible-playbook-with-vault --help
+	       ansible-playbook-with-vault --clear
 	
 	   will check if there's a ansible.cfg in the same
 	   directory that the script has been called that
@@ -46,6 +47,11 @@ Here's the --help for each shell script:
 	     per ansible repo
 	   * those in the team that do use vault_password_files need
 	     to have them located at the same place
+	
+	   --clear: will call the `vault_password_file` with a
+	            parameter `--clear` in orderr to clear a
+	            possible (wrong) password that is remembered/cached
+	            by the `vault_password_file`/pin entry program
 	
 ### ansible-vault-rgrep
 
