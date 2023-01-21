@@ -14,22 +14,37 @@ Here's the --help for each shell script:
 	    be compatible with windows.
 	
 	    7ze will ask for the password.
-### ansible-playbook-password-file-from-ansible.cfg
+### ansible-password-file-from-ansible.cfg
 
-	usage: ansible-playbook-password-file-from-ansible.cfg [ansible_parameters]*
-	       ansible-playbook-password-file-from-ansible.cfg --help
-	       ansible-playbook-password-file-from-ansible.cfg --clear
+	usage: ansible-password-file-from-ansible.cfg [ansible_vault_parameters]*
+	       ansible-password-file-from-ansible.cfg --help
 	
-	   will check if there's a ansible.cfg in the same
-	   directory that the script has been called that
-	   contains a line:
+	    See `ansible-password-file-from-ansible.cfg-wrapper --help` for
+	    further help
 	
-	       #vault_password_file = ansible/vault/file
+### ansible-password-file-from-ansible.cfg-wrapper
+
+	usage: ANSIBLE_COMMAND_WITH_PASSWORD_FILE_FROM_ANSIBLE_CFG=[ansible-vault|ansible-playbook|ansible] ansible-password-file-from-ansible.cfg-wrapper [ansible_command_parameters]*'
+	   echo '       ansible-password-file-from-ansible.cfg-wrapper --help'
+	   echo '       ansible-password-file-from-ansible.cfg-wrapper --clear'
+	   echo
+	   echo  This is a wrapper for ansible commands. It will get
+	   echo "   the vault_password_file from ansible.cfg if the"
+	   echo "   latter exists and execute the ansible command with it."
+	   echo
+	   echo "   ANSIBLE_COMMAND_WITH_PASSWORD_FILE_FROM_ANSIBLE_CFG contains the"
+	   echo "   name of the ansible command to execute."
+	   echo
+	   echo "   More precisely it will check if theres a ansible.cfg
+	   echo  in the same directory that the script has been called that
+	   echo  contains a line:
+	   echo
+	   echo 
 	
 	   and if it does will:
 	
 	   * `export ANSIBLE_VAULT_PASSWORD_FILE=ansible/vault/file`
-	   * call ansible-playbook with all the parameters given on
+	   * call the ansible command with all the parameters given on
 	     the command line
 	
 	   The idea of this script is to work with vault_password_files
@@ -52,6 +67,22 @@ Here's the --help for each shell script:
 	            parameter `--clear` in orderr to clear a
 	            possible (wrong) password that is remembered/cached
 	            by the `vault_password_file`/pin entry program
+	
+### ansible-playbook-password-file-from-ansible.cfg
+
+	usage: ansible-playbook-password-file-from-ansible.cfg [ansible_vault_parameters]*
+	       ansible-playbook-password-file-from-ansible.cfg --help
+	
+	    See `ansible-password-file-from-ansible.cfg-wrapper --help` for
+	    further help
+	
+### ansible-vault-password-file-from-ansible.cfg
+
+	usage: ansible-vault-password-file-from-ansible.cfg [ansible_vault_parameters]*
+	       ansible-vault-password-file-from-ansible.cfg --help
+	
+	    See `ansible-password-file-from-ansible.cfg-wrapper --help` for
+	    further help
 	
 ### ansible-vault-rgrep
 
