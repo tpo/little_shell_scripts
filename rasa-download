@@ -1,0 +1,115 @@
+#!/bin/bash
+#
+# * [pup docu](https://github.com/ericchiang/pup)
+# * [yt-dl search docu](https://write.corbpie.com/searching-youtube-videos-with-yt-dlp/)
+#
+
+help() {
+   echo 'usage: rasa-download'
+   echo '       rasa-download --help'
+   echo
+   echo '    download currently playing song on rasa.ch'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+set -e          # stop on error
+set -u          # stop on undefined variable
+set -o pipefail # stop part of pipeline failing
+
+to_table_in_html() {
+  echo "<html><body><table>$1</table></body></html>"
+}
+
+currently_playing=$(
+  curl https://www.rasa.ch/playlist \
+  | pup '#contentRight > table:nth-child(1) > tbody:nth-child(1)'
+)
+
+# render songs
+songs_in_html=$( to_table_in_html "$currently_playing" )
+echo "$songs_in_html" | lynx -stdin -dump
+
+# let user choose song
+echo "press return to retrieve first song, otherwise print number of song (starting from 1)"
+read input
+
+if [ "$input" == "" ]; then
+  no_of_song="1"
+else
+  no_of_song="$input"
+fi
+
+# get the entry that user has chosen
+entry_to_get=$(
+  echo "$songs_in_html" \
+  | pup "table:nth-child(1) > tbody:nth-child(1) > tr:nth-child($no_of_song)"
+)
+# entry_to_get =
+#
+#     <tr>
+#      <td>
+#       18:07:52
+#      </td>
+#      <td>
+#       One Daay
+#      </td>
+#      <td>
+#       Brenk Sinatra
+#      </td>
+#     </tr>
+
+# get song name and artist
+entry_in_html=$( to_table_in_html "$entry_to_get" )
+
+title=$( 
+  echo "$entry_in_html" \
+  | pup 'table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(2) text{}'
+)
+artist=$( 
+  echo "$entry_in_html" \
+  | pup 'table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(3) text{}'
+)
+
+search_string=$( echo "$title $artist" | tr '\n' ' ' )
+
+# display available songs on Youtube - top 5
+echo "I'm executing this:"
+echo
+echo "     yt-dlp ytsearch5:\"$search_string\" --get-id --get-title"
+echo
+echo "Please wait until the list is shown"
+echo
+
+media_list=$( yt-dlp ytsearch5:"$search_string" --get-id --get-title )
+echo "$media_list"
+# One Daaay
+# EGHw7Cvdohw
+# Brenk Sinatra - One Daay
+# HuaueUFzl9U
+# Brenk Sinatra - One Daaay
+# JBDaToEOfXQ
+# Brenk Sinatra - One daay
+# uvCqnrUUUgQ
+# Brenk Sinatra - One Daay
+# qsrtV5sa4tQ
+
+echo "press return to get first entry or enter the number of the line containing the media id (starting with 1)"
+read input
+
+if [ "$input" == "" ]; then
+  media_id_line="2"
+else
+  media_id_line="$input"
+fi
+
+media_id=$( echo "$media_list" | sed "${media_id_line}q;d" )
+echo "input:" $input
+echo "media_number:" $media_id_line
+echo "media_id:" $media_id
+
+yt-dlp -f 140 "https://www.youtube.com/watch?v=$media_id"
+
+

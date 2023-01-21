@@ -830,6 +830,13 @@ Here's the --help for each shell script:
 	       role "postgres" allowed "alice" to:
 	         c -- CONNECT to DB
 	
+### rasa-download
+
+	usage: rasa-download
+	       rasa-download --help
+	
+	    download currently playing song on rasa.ch
+	
 ### realpath_to_clip
 
 	usage: realpath_to_clip [FILE]
