@@ -24,22 +24,22 @@ Here's the --help for each shell script:
 	
 ### ansible-password-file-from-ansible.cfg-wrapper
 
-	usage: ANSIBLE_COMMAND_WITH_PASSWORD_FILE_FROM_ANSIBLE_CFG=[ansible-vault|ansible-playbook|ansible] ansible-password-file-from-ansible.cfg-wrapper [ansible_command_parameters]*'
-	   echo '       ansible-password-file-from-ansible.cfg-wrapper --help'
-	   echo '       ansible-password-file-from-ansible.cfg-wrapper --clear'
-	   echo
-	   echo  This is a wrapper for ansible commands. It will get
-	   echo "   the vault_password_file from ansible.cfg if the"
-	   echo "   latter exists and execute the ansible command with it."
-	   echo
-	   echo "   ANSIBLE_COMMAND_WITH_PASSWORD_FILE_FROM_ANSIBLE_CFG contains the"
-	   echo "   name of the ansible command to execute."
-	   echo
-	   echo "   More precisely it will check if theres a ansible.cfg
-	   echo  in the same directory that the script has been called that
-	   echo  contains a line:
-	   echo
-	   echo 
+	usage: ANSIBLE_COMMAND_WITH_PASSWORD_FILE_FROM_ANSIBLE_CFG=[ansible-vault|ansible-playbook|ansible] ansible-password-file-from-ansible.cfg-wrapper [ansible_command_parameters]*
+	       ansible-password-file-from-ansible.cfg-wrapper --help
+	       ansible-password-file-from-ansible.cfg-wrapper --clear
+	
+	   This is a wrapper for ansible commands. It will get
+	   the vault_password_file from ansible.cfg if the
+	   latter exists and execute the ansible command with it.
+	
+	   ANSIBLE_COMMAND_WITH_PASSWORD_FILE_FROM_ANSIBLE_CFG contains the
+	   name of the ansible command to execute.
+	
+	   More precisely it will check if there's a ansible.cfg
+	   in the same directory that the script has been called that
+	   contains a line:
+	
+	       #vault_password_file = ansible/vault/file
 	
 	   and if it does will:
 	
