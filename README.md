@@ -14,11 +14,11 @@ Here's the --help for each shell script:
 	    be compatible with windows.
 	
 	    7ze will ask for the password.
-### ansible-playbook-with-vault
+### ansible-playbook-password-file-from-ansible.cfg
 
-	usage: ansible-playbook-with-vault [ansible_parameters]*
-	       ansible-playbook-with-vault --help
-	       ansible-playbook-with-vault --clear
+	usage: ansible-playbook-password-file-from-ansible.cfg [ansible_parameters]*
+	       ansible-playbook-password-file-from-ansible.cfg --help
+	       ansible-playbook-password-file-from-ansible.cfg --clear
 	
 	   will check if there's a ansible.cfg in the same
 	   directory that the script has been called that
