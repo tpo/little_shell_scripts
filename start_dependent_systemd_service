@@ -27,8 +27,9 @@ set -o pipefail # stop part of pipeline failing
 SERVICE_A="$1"
 SERVICE_B="$2"
 
-# we will see:
-# /org/freedesktop/systemd1: org.freedesktop.systemd1.Manager.JobRemoved (uint32 12045, objectpath '/org/freedesktop/systemd1/job/12045', 'testing.service', 'done')
+# gdbus will output something like this, that is interesting for us:
+#
+#     /org/freedesktop/systemd1: org.freedesktop.systemd1.Manager.JobRemoved (uint32 12045, objectpath '/org/freedesktop/systemd1/job/12045', 'testing.service', 'done')
 #
 gdbus monitor --system \
               --dest org.freedesktop.systemd1 \
