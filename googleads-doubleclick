@@ -49,7 +49,7 @@ block_googleads() {
   hosts block googleads.g.doubleclick.net || exit 1
 }
 
-# use mutext
+# use mutex
 #
 # see https://stackoverflow.com/a/50419392 on how this works
 #
