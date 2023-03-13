@@ -1,0 +1,38 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: start_dependent_systemd_service serviceA serviceB'
+   echo '       start_dependent_systemd_service serviceA serviceB --help'
+   echo
+   echo '   Will watch/monitor dbus for systemd events and will start'
+   echo '   serviceB when it sees that serviceA has started.'
+   echo
+   echo '   ATTENTION: this script will NOT sanitize the serviceA'
+   echo '              or serviceB parameters and pass them straight'
+   echo '              to awk and the shell!!! YOU HAVE BEEN WARNED!!!'
+   echo
+   echo '   Dependencies: gdbus, awk'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+[ "$1" == "" ] && echo "You have to pass the name of serviceA to the script" >&2 && exit 1
+[ "$2" == "" ] && echo "You have to pass the name of serviceB to the script" >&2 && exit 2
+
+set -e          # stop on error
+set -u          # stop on undefined variable
+set -o pipefail # stop part of pipeline failing
+
+SERVICE_A="$1"
+SERVICE_B="$2"
+
+# we will see:
+# /org/freedesktop/systemd1: org.freedesktop.systemd1.Manager.JobRemoved (uint32 12045, objectpath '/org/freedesktop/systemd1/job/12045', 'testing.service', 'done')
+#
+gdbus monitor --system \
+              --dest org.freedesktop.systemd1 \
+              --object-path /org/freedesktop/systemd1 \
+| awk "/^\/org\/freedesktop\/systemd1: org.freedesktop.systemd1.Manager.JobRemoved \(uint32.* '${SERVICE_A}.service', 'done'\)$/ { system(\"systemctl is-active ${SERVICE_A} && systemctl start ${SERVICE_B}.service\") }"
+
+

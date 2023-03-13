@@ -931,6 +931,20 @@ Here's the --help for each shell script:
 	
 	    ssh-update-config requires the `versioned_backup`
 	    script
+### start_dependent_systemd_service
+
+	usage: start_dependent_systemd_service serviceA serviceB
+	       start_dependent_systemd_service serviceA serviceB --help
+	
+	   Will watch/monitor dbus for systemd events and will start
+	   serviceB when it sees that serviceA has started.
+	
+	   ATTENTION: this script will NOT sanitize the serviceA
+	              or serviceB parameters and pass them straight
+	              to awk and the shell!!! YOU HAVE BEEN WARNED!!!
+	
+	   Dependencies: gdbus, awk
+	
 ### switch_off_radeon
 
 	usage: switch_off_radeon
