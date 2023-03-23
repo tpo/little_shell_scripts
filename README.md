@@ -945,6 +945,16 @@ Here's the --help for each shell script:
 	
 	   Dependencies: gdbus, awk
 	
+	   Note: this script was originally created to solve the
+	         following problem:
+	         * you start some containers with `docker-compose`
+	         * you (or something) does
+	          `systemctl stop docker; systemctl stop docker`
+	         * your "docker-compose containers" will not get
+	           started...
+	         To solve this particular problem you better use
+	         `restart: until-stopped`.
+	
 ### switch_off_radeon
 
 	usage: switch_off_radeon

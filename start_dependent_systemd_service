@@ -1,4 +1,6 @@
 #!/bin/bash
+#
+# TODO: Maybe reread https://unix.stackexchange.com/questions/326181/systemd-unit-service-restart-if-another-service-start-or-reload
 
 help() {
    echo 'usage: start_dependent_systemd_service serviceA serviceB'
@@ -12,6 +14,16 @@ help() {
    echo '              to awk and the shell!!! YOU HAVE BEEN WARNED!!!'
    echo
    echo '   Dependencies: gdbus, awk'
+   echo
+   echo '   Note: this script was originally created to solve the'
+   echo '         following problem:'
+   echo '         * you start some containers with `docker-compose`'
+   echo '         * you (or something) does'
+   echo '          `systemctl stop docker; systemctl stop docker`'
+   echo '         * your "docker-compose containers" will not get'
+   echo '           started...'
+   echo '         To solve this particular problem you better use'
+   echo '         `restart: until-stopped`.'
    echo
    exit 1
 }
