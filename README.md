@@ -759,6 +759,21 @@ Here's the --help for each shell script:
 	
 	  Move the symbolic link src_ln into dest_dir while
 	  keeping it relative
+### netstat_cmdline
+
+	usage: netstat_cmdline [netstat_options]*
+	       netstat_cmdline --help
+	
+	    netstat_cmdline will call netstat and replace
+	    the program name with the full command line
+	
+	    See `netstat --help` for all possible options
+	
+	    Note: netstat_cmdline works, but is slow and is
+	          a hack (see its source code). It'd be
+	          better to add a respective option to
+	          netstat itself
+	
 ### pas
 
 	usage: pas
