@@ -34,8 +34,8 @@ netstat "$@" -p | while IPS= read -r line;
      pid="$( sed -En 's/^.*( [0-9]+)\/[^ ]*.*/\1/gp' <<< "$line" )"
      if [ "$pid" != "" ]; then
        cmdline="$(ps -p $pid -o cmd=)"
-       line_start="$( sed -En 's/^(.* [0-9]+)\/([^ ]*)(.*)/\1/gp' <<< "$line" )"
-       line_end="$(   sed -En 's/^(.* [0-9]+)\/([^ ]*)(.*)/\3/gp' <<< "$line" )"
+       line_start="$( sed -En 's/^(.* [0-9]+)\/[^ ]*.*/\1/gp' <<< "$line" )"
+       line_end="$(   sed -En 's/^.* [0-9]+\/[^ ]*(.*)/\1/gp' <<< "$line" )"
        echo "$line_start#$cmdline $line_end"
      else
        echo "$line"
