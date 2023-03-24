@@ -18,7 +18,8 @@ help() {
    echo '    Note: netstat_cmdline works, but is slow and is'
    echo "          a hack (see its source code). It'd be"
    echo '          better to add a respective option to'
-   echo '          netstat itself'
+   echo '          netstat itself. Or to use `ss`, whose'
+   echo '          output seems to be more robust to parse.'
    echo
    exit 1
 }
