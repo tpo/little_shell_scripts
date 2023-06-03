@@ -12,10 +12,12 @@ help() {
 [ "$1" == "" ] && echo "ERROR: you need to provide a host name" && exit 2
 HOST="$1"
 
+slept=0
 while ! ssh "$HOST" "exit 0"
 do
     sleep 1
-    echo "Retrying to connect to $HOST..."
+    slept=$(( $slept + 1 ))
+    echo "Retry #$slept to connect to $HOST..."
 done
 
 set -e          # stop on error
