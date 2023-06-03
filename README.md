@@ -946,6 +946,12 @@ Here's the --help for each shell script:
 	
 	    ssh-update-config requires the `versioned_backup`
 	    script
+### ssh-wait
+
+	usage: ssh-wait host
+	       ssh-wait --help
+	
+	   wait for ssh to become available
 ### start_dependent_systemd_service
 
 	usage: start_dependent_systemd_service serviceA serviceB
