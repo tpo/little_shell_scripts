@@ -492,6 +492,16 @@ Here's the --help for each shell script:
 	
 	    Depends on `kdialog`.
 	
+### file_chooser
+
+	usage: file_chooser
+	       file_chooser --help
+	
+	    Opens a ncurses file selection dialog that
+	    allows you to navigate through the file system
+	    and to select a file.
+	    The full path of the file will be output to STDOUT
+	
 ### file_extension
 
 	usage: file_extension [--lowercase|--uppercase] file_path
