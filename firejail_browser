@@ -1,0 +1,52 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: firejail_browser'
+   echo '       firejail_browser --help'
+   echo
+   echo '    This script lists you the running firejails,'
+   echo '    lets you select one from the menu and lets you'
+   echo '    execute an action on that firejail:'
+   echo '      * get a file from that jail: will option a'
+   echo '        file selection dialogue inside the jail'
+   echo '      * put a file into the jail (currently not'
+   echo '        implemented)'
+   echo '      * open a shell in the jail'
+   echo
+   echo '    Put and get require you to have the'
+   echo '    https://github.com/tpo/little_shell_scripts/blob/master/file_chooser'
+   echo '    script installed in a standard binary path.'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+set -e          # stop on error
+set -u          # stop on undefined variable
+set -o pipefail # stop part of pipeline failing
+
+readarray -t jails < <( firejail --list )
+
+echo "Please select the appropriate device:"
+select jail_line in "${jails[@]}" Quit; do
+    break
+done
+
+jail=$( echo "$jail_line" | sed 's/:.*//' )
+
+select action in get put exec; do
+    break
+done
+
+case "$action" in
+  get)
+    file=$( firejail --join=$jail bash -c 'cd Downloads; file_chooser' )
+    firejail --get=$jail "$file"
+    ;;
+  exec)
+    firejail --join=$jail
+    ;;
+  *)
+    echo "not implemented"
+esac

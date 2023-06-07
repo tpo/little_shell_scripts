@@ -549,6 +549,24 @@ Here's the --help for each shell script:
 	
 	    See also: firefox-sleep
 	
+### firejail_browser
+
+	usage: firejail_browser
+	       firejail_browser --help
+	
+	    This script lists you the running firejails,
+	    lets you select one from the menu and lets you
+	    execute an action on that firejail:
+	      * get a file from that jail: will option a
+	        file selection dialogue inside the jail
+	      * put a file into the jail (currently not
+	        implemented)
+	      * open a shell in the jail
+	
+	    Put and get require you to have the
+	    https://github.com/tpo/little_shell_scripts/blob/master/file_chooser
+	    script installed in a standard binary path.
+	
 ### git_show_upstream_log
 
 	usage: git_show_upstream_log
