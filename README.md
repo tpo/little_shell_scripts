@@ -976,7 +976,7 @@ Here's the --help for each shell script:
 	    script
 ### ssh-wait
 
-	usage: ssh-wait host
+	usage: ssh-wait [--no-multiplex] host
 	       ssh-wait --help
 	
 	   wait for ssh to become available

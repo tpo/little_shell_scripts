@@ -1,7 +1,7 @@
 #!/bin/bash
 
 help() {
-   echo 'usage: ssh-wait host'
+   echo 'usage: ssh-wait [--no-multiplex] host'
    echo '       ssh-wait --help'
    echo
    echo '   wait for ssh to become available'
@@ -9,11 +9,12 @@ help() {
 }
 
 [ "$1" == "--help" ] && help
+[ "$1" == "--no-multiplex" ] && NO_MULTIPLEX="-o ControlPath=none" && shift
 [ "$1" == "" ] && echo "ERROR: you need to provide a host name" && exit 2
 HOST="$1"
 
 slept=0
-while ! ssh "$HOST" "exit 0"
+while ! ssh $NO_MULTIPLEX "$HOST" "exit 0"
 do
     sleep 1
     slept=$(( $slept + 1 ))
