@@ -43,8 +43,13 @@ if [ "$2" == "" ]; then
   MNT="/media/$MNT"
 
   if [ -d "$MNT" ]; then
-    echo "directory '$MNT' already exists"
-    exit_err
+    echo "directory '$MNT' already exists ---"
+    if [ "$( ls $MNT )" == "" ]; then
+      echo "... and is empty, so we don't mind"
+    else
+      echo "--- and is NOT empty"
+      exit_err
+    fi
 
   else
     if ! mkdir $MNT; then
@@ -60,17 +65,28 @@ if ! losetup $LOOP "$IMG"; then
   unmkdir
 
 else
-  echo "cryptsetup create -c aes $DEV_NAME $LOOP"
-  if ! cryptsetup create -c aes $DEV_NAME $LOOP; then
-    unlosetup
+  cyptsetup_command="cryptsetup create -c aes $DEV_NAME $LOOP"
+  crypt_setup=unknown
 
+  crypto_dev_status="$( cryptsetup status $DEV_NAME $LOOP )"
+  if [ "$?" == "0" ]; then
+    echo "no need to execute '$cyptsetup_command' - $DEV_NAME $LOOP already exists"
+    crypt_setup=ok
   else
+    echo "cryptsetup create -c aes $DEV_NAME $LOOP"
+    if ! cryptsetup create -c aes $DEV_NAME $LOOP; then
+      unlosetup
+      crypt_setup=not_ok
+    else
+      crypt_setup=ok
+    fi
+  fi
+
+  if [ "$crypt_setup" == "ok" ]; then
     if ! mount $RO /dev/mapper/$DEV_NAME "$MNT"; then
       uncryptsetup
-
     else
       echo "image is mounted under $MNT"
-
     fi
   fi
 fi
