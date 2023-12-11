@@ -44,6 +44,11 @@ case "$action" in
     file=$( firejail --join=$jail bash -c 'cd Downloads; file_chooser' )
     firejail --get=$jail "$file"
     ;;
+  put)
+    src=$( file_chooser )
+    filename=$( basename $src )
+    firejail --put=$jail "$src" "/tmp/$filename"
+    ;;
   exec)
     firejail --join=$jail
     ;;
