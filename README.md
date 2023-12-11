@@ -800,7 +800,8 @@ Here's the --help for each shell script:
 	    Note: netstat_cmdline works, but is slow and is
 	          a hack (see its source code). It'd be
 	          better to add a respective option to
-	          netstat itself
+	          netstat itself. Or to use `ss`, whose
+	          output seems to be more robust to parse.
 	
 ### pas
 
