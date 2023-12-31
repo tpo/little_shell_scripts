@@ -45,8 +45,8 @@ case "$action" in
     firejail --get=$jail "$file"
     ;;
   put)
-    src=$( file_chooser )
-    filename=$( basename $src )
+    src="$( file_chooser )"
+    filename="$( basename "$src" )"
     dest="/tmp/$filename"
     if firejail --put=$jail "$src" "$dest"; then
       echo "'$src' was copied to '$dest'"
