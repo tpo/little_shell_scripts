@@ -7,11 +7,12 @@ help() {
    echo '    This script lists you the running firejails,'
    echo '    lets you select one from the menu and lets you'
    echo '    execute an action on that firejail:'
-   echo '      * get a file from that jail: will option a'
+   echo '      * get one or multiple files from that jail: will option a'
    echo '        file selection dialogue inside the jail'
    echo '        * use cursor and tab keys to navigate'
    echo '        * press Space to select a file or a directory'
    echo '        * press Enter to get file or change into directory'
+   echo '        * press CTRL-C to abort'
    echo '      * put a file into the jail (currently not'
    echo '        implemented)'
    echo '      * open a shell in the jail'
@@ -29,6 +30,11 @@ set -e          # stop on error
 set -u          # stop on undefined variable
 set -o pipefail # stop part of pipeline failing
 
+get() {
+  file=$( firejail --join=$jail bash -c 'cd Downloads; file_chooser' )
+  firejail --get=$jail "$file"
+}
+
 readarray -t jails < <( firejail --list )
 
 echo "Please select the appropriate device:"
@@ -38,14 +44,20 @@ done
 
 jail=$( echo "$jail_line" | sed 's/:.*//' )
 
-select action in get put exec; do
+select action in get multi_get put exec; do
     break
 done
 
 case "$action" in
   get)
-    file=$( firejail --join=$jail bash -c 'cd Downloads; file_chooser' )
-    firejail --get=$jail "$file"
+    get
+    ;;
+  multi_get)
+    while true; do
+      get
+      echo "Press Enter to get next file or CTRL-C to abort"
+      read
+    done
     ;;
   put)
     src="$( file_chooser )"
