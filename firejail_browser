@@ -42,6 +42,8 @@ select jail_line in "${jails[@]}" Quit; do
     break
 done
 
+[ "$jail_line" == "Quit" ] && exit 0
+
 jail=$( echo "$jail_line" | sed 's/:.*//' )
 
 select action in get multi_get put exec; do
