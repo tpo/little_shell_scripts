@@ -64,6 +64,7 @@ help_bash_aliases() {
   echo '                     options as cptmp.'
   echo '    mcdnow  [text] - create directory whose name is the current date'
   echo '                     plus optionally the text and cd into it'
+  echo '    cdrole  community.general.apk - chdir to ~.ansible/collections/ansible_collections/community/general/roles/apk'
   echo
   exit
 }
@@ -182,6 +183,13 @@ cdreal() {
 
 cdwhich() {
    cd $( dirname $( which $1 ))
+}
+
+# $1 is f.ex. community.general.apk
+cdrole() {
+  local role="$(       echo "$1" | sed 's/.*\.//' )"
+  local collection="$( echo "$1" | sed -E 's/(.*)\..*/\1/; s#\.#/#' )"
+  cd ~/".ansible/collections/ansible_collections/$collection/roles/$role"
 }
 
 
