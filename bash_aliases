@@ -187,16 +187,34 @@ cdwhich() {
 }
 
 # $1 is f.ex. community.general.apk
+# mind you a.b.c.d.e can be a/b/roles/c/d/e
+#
 cdrole() {
-  local role="$(       echo "$1" | sed 's/.*\.//' )"
-  local collection="$( echo "$1" | sed -E 's/(.*)\..*/\1/; s#\.#/#' )"
-  cd ~/".ansible/collections/ansible_collections/$collection/roles/$role"
+  local path_rest="$1"
+  local head_part="."
+  cd ~/.ansible/collections/ansible_collections/
+  while [ -e "$head_part" ]; do
+    cd $head_part
+    head_part="$( echo "$path_rest" | sed 's/\..*//'  )"
+    path_rest="$( echo "$path_rest" | sed 's/[^.]*\.//' )"
+  done
+  cd roles
+  while [ -e "$head_part" ]; do
+    cd $head_part
+    head_part="$( echo "$path_rest" | sed 's/\..*//'  )"
+    path_rest="$( echo "$path_rest" | sed 's/[^.]*\.//' )"
+  done
 }
 # $1 is f.ex. acme.general.setup
 cdplaybook() {
-  local playbook="$(   echo "$1" | sed 's/.*\.//' )"
-  local collection="$( echo "$1" | sed -E 's/(.*)\..*/\1/; s#\.#/#' )"
-  cd ~/".ansible/collections/ansible_collections/$collection/playbooks"
+  local path_rest="$1"
+  local head_part="."
+  cd ~/.ansible/collections/ansible_collections/
+  while [ -e "$head_part" ]; do
+    cd $head_part
+    head_part="$( echo "$path_rest" | sed 's/\..*//'  )"
+    path_rest="$( echo "$path_rest" | sed 's/[^.]*\.//' )"
+  done
 }
 
 
