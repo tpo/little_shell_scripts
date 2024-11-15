@@ -1,0 +1,26 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: findhereselect findhere_args'
+   echo '       findhereselect --help'
+   echo
+   echo '    uses findhere and lets you select a line'
+   echo '    which will be copied into the clipboard'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+set -e          # stop on error
+set -u          # stop on undefined variable
+set -o pipefail # stop part of pipeline failing
+
+readarray -t lines < <( findhere "$@" )
+
+echo "Press number to copy into clipboard"
+select line in "${lines[@]}"; do
+    echo -n "$line" | copy_file_to_clip -
+    break
+done
+

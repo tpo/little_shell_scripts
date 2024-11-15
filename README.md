@@ -514,6 +514,14 @@ Here's the --help for each shell script:
 	
 	    will execute "find . -iname "*SEARCH_STRING*" [OTHER_FIND_OPTIONS]"
 	
+### findhereselect
+
+	usage: findhereselect findhere_args
+	       findhereselect --help
+	
+	    uses findhere and lets you select a line
+	    which will be copied into the clipboard
+	
 ### find_ls_sort
 
 	usage: find_ls_sort [--help]
