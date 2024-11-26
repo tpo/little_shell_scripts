@@ -570,6 +570,10 @@ Here's the --help for each shell script:
 	    execute an action on that firejail:
 	      * get one or multiple files from that jail: will option a
 	        file selection dialogue inside the jail
+	        * use cursor and tab keys to navigate
+	        * press Space to select a file or a directory
+	        * press Enter to get file or change into directory
+	        * press CTRL-C to abort
 	      * put a file into the jail (currently not
 	        implemented)
 	      * open a shell in the jail
