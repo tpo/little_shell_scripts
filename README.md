@@ -79,6 +79,7 @@ Here's the --help for each shell script:
 ### ansible-vault-password-file-from-ansible.cfg
 
 	usage: ansible-vault-password-file-from-ansible.cfg [ansible_vault_parameters]*
+	       ansible-vault-password-file-from-ansible.cfg --clear
 	       ansible-vault-password-file-from-ansible.cfg --help
 	
 	    See `ansible-password-file-from-ansible.cfg-wrapper --help` for
