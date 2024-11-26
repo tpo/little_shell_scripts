@@ -1,0 +1,51 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: echo "mail text" | mail_to_self SUBJECT'
+   echo '       mail_to_self SUBJECT TEXT'
+   echo '       mail_to_self --help'
+   echo
+   echo '    deliver email to local mbox of user that is'
+   echo '    executing this script'
+   echo
+   echo '    Requires the dmail executable from the'
+   echo '    alpine/pine mailutils'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+set -e          # stop on error
+set -o pipefail # stop part of pipeline failing
+set -u          # stop on undefined variable
+
+local_user=`id -u --name`
+
+if [ "$1" == "" ]; then
+  echo "ERROR: you must set a subject"
+  exit 2
+else
+  subject="$1"
+fi
+
+if [ -v 2 ]; then # if TEXT parameter was given
+  pass_on_stdin=false
+  text="$2"
+else
+  pass_on_stdin=true
+fi
+
+(
+  echo "From: $local_user"
+  echo "To: $local_user"
+  echo "Subject: $subject"
+  echo
+  if [ "$pass_on_stdin" == "false" ]; then
+    echo "$text"
+  else
+    cat # pass on STDIN
+  fi
+
+) | dmail $local_user
+

@@ -701,6 +701,18 @@ Here's the --help for each shell script:
 	       linechop --help
 	
 	    chop lines of at right margin of the screen
+### mail_to_self
+
+	usage: echo "mail text" | mail_to_self SUBJECT
+	       mail_to_self SUBJECT TEXT
+	       mail_to_self --help
+	
+	    deliver email to local mbox of user that is
+	    executing this script
+	
+	    Requires the dmail executable from the
+	    alpine/pine mailutils
+	
 ### mairi
 
 	usage: mairi _search _parameters
