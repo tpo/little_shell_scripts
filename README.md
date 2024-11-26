@@ -164,6 +164,8 @@ Here's the --help for each shell script:
 	                     options as cptmp.
 	    mcdnow  [text] - create directory whose name is the current date
 	                     plus optionally the text and cd into it
+	    cdrole  community.general.apk - chdir to ~.ansible/collections/ansible_collections/community/general/roles/apk
+	    cdplaybook acme.general.setup - chdir to ~.ansible/collections/ansible_collections/acme/general/playbooks/
 	
 ### brightness
 
