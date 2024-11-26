@@ -568,7 +568,7 @@ Here's the --help for each shell script:
 	    This script lists you the running firejails,
 	    lets you select one from the menu and lets you
 	    execute an action on that firejail:
-	      * get a file from that jail: will option a
+	      * get one or multiple files from that jail: will option a
 	        file selection dialogue inside the jail
 	      * put a file into the jail (currently not
 	        implemented)
