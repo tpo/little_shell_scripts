@@ -970,6 +970,13 @@ Here's the --help for each shell script:
 	            _known_hosts_real -a -F ~/.ssh/config "$cur"
 	        } && complete -F _ssh_host ssh-host
 	
+### ssh-no-multiplex
+
+	usage: ssh-no-multiplex
+	       ssh-no-multiplex --help
+	
+	    Does ssh -o ControlPath=none "$@"
+	
 ### ssh-show-host-keys
 
 	usage: ssh-show-host-keys HOST

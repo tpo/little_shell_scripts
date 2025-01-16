@@ -1,0 +1,14 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: ssh-no-multiplex'
+   echo '       ssh-no-multiplex --help'
+   echo
+   echo '    Does ssh -o ControlPath=none "$@"'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+ssh -o ControlPath=none "$@"
