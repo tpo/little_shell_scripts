@@ -1257,10 +1257,13 @@ Here's the --help for each shell script:
 	
 ### wping
 
-	usage: wping [URL]
+	usage: wping [--waitloop] [URL]
 	
 	    retrieves website via HTTP in order to see whether the web/internet
 	    works. Default site is http://sourcepole.ch
+	
+	    --waitloop will silently loop until it can retrieve
+	               the URL
 	
 ### yaml2json
 
