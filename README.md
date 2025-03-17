@@ -449,6 +449,16 @@ Here's the --help for each shell script:
 	    -r  - recursive (dependencies of depencies)
 	          (TODO: doesn' work yet)
 	
+### dockerviz
+
+	usage: dockerviz
+	       dockerviz --help
+	
+	    Visualize docker image dependencies
+	
+	    Needs https://github.com/justone/dockviz
+	    Uses geeqie
+	
 ### dpkg-which
 
 	usage: dpkg-which EXECUTABLE
