@@ -76,6 +76,27 @@ Here's the --help for each shell script:
 	    See `ansible-password-file-from-ansible.cfg-wrapper --help` for
 	    further help
 	
+### ansible-show-secret
+
+	usage: ansible-show-secret yq-expression inventory-file-with-secret
+	       ansible-show-secret --help
+	
+	   Example:
+	       $ cat inventory/group_vars/all/samba-password
+	       samba_pwd: !vault |
+	                 $ANSIBLE_VAULT;1.1;AES256
+	                 27313536676839633045586678353332333735663738623162633435646764768181920237272716
+	                 [...]
+	
+	       $ ansible-show-secret .samba_pwd inventory/group_vars/all/samba-password
+	       Decryption successful
+	       s3cr3t
+	
+	       $ ansible-show-secret .samba_pwd inventory/group_vars/all/samba-password | cat
+	       s3cr3t
+	
+	   ATTENTION: this uses mikefarah's yq
+	
 ### ansible-vault-password-file-from-ansible.cfg
 
 	usage: ansible-vault-password-file-from-ansible.cfg [ansible_vault_parameters]*
