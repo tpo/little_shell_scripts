@@ -38,19 +38,20 @@ set -o pipefail # stop part of pipeline failing
 #
 # Therefore we:
 # * first sanitize the file name
-# * copy the file to a sanely named file
-# * return the sanitized file name
+# * symlink the file to sanely named version
+# * return the sanely named symlink
 #
 sanitize_file() {
   local file_path="$1"
   local sane_file_path
+  local tmp_dir
 
-  sane_file_path="$( echo "$file_path" | sed 's/,/_/g' )"
+  tmp_dir="$( firejail --join=$jail bash -c "mktemp -d /tmp/firejail_browser_sanitized_files_XXXXXX" )"
+  sane_file_name="$( echo "$( basename "$file_path" )" | sed 's/,/_/g' )"
+  sane_file_path="$tmp_dir/$sane_file_name"
 
   if [ "$file_path" != "$sane_file_path" ]; then
-    firejail --join=$jail bash -c "cp \"$file_path\" \"$sane_file_path\""
-    # debug:
-    # echo "sanitized (moved/renamed) \"$file_path\" -> \"$sane_file_path\"" >&2
+    firejail --join=$jail bash -c "ln -s \"$file_path\" \"$sane_file_path\""
   fi
 
   # return sanitized path
@@ -58,15 +59,17 @@ sanitize_file() {
 }
 
 get() {
-  local file_path="$( firejail --join=$jail bash -c 'cd Downloads; file_chooser' )"
+  local echo_dir="$1"
+  local initial_dir="$2"
+  local file_path="$( firejail --join=$jail bash -c "cd \"$initial_dir\"; file_chooser" )"
 
   # firejail will refuse to get files with real names.
   #
   # Therefore we:
   # * inside `sanitize_file`
   #   * first sanitize the file name
-  #   * rename the file to a sanely named file
-  # * get the sanitized file
+  #   * symlink the file to sanely named version
+  # * get the file with the sanitized name
   # * rename it to the name it had before
   #
   file_name="$( basename "$file_path" )"
@@ -75,6 +78,10 @@ get() {
   firejail --get=$jail "$sane_file_path"
   if [ "$file_name" != "$sane_file_name" ]; then
     mv "$sane_file_name" "$file_name"
+  fi
+
+  if [ "$echo_dir" == "--echo-dir" ]; then
+    echo "$( dirname "$file_path" )"
   fi
 }
 
@@ -93,13 +100,16 @@ select action in get multi_get put exec; do
     break
 done
 
+initial_dir="Downloads"
+
 case "$action" in
   get)
-    get
+    get --no-echo-dir "$initial_dir"
     ;;
   multi_get)
     while true; do
-      get
+      dir_of_last_get="$( get --echo-dir "$initial_dir" )"
+      initial_dir="$dir_of_last_get"
       echo "Press Enter to get next file or CTRL-C to abort"
       read
     done
