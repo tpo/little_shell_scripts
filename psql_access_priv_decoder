@@ -29,13 +29,13 @@ help() {
    echo '     $ psql -c "\l accounting" | psql_access_priv_decoder'
    echo '     "=T/accounting" means:'
    echo '       role "postgres" allowed "PUBLIC" to:'
-   echo '         T -- create TEMPORARAY tables while using the DB'
+   echo '         T -- create TEMPORARY tables while using the DB'
    echo
    echo '     "henry=CTc/accounting" means:'
    echo '       role "postgres" allowed "henry" to:'
    echo '         C -- CREATE new tables/schemas'
    echo '         c -- CONNECT to DB'
-   echo '         T -- create TEMPORARAY tables while using the DB'
+   echo '         T -- create TEMPORARY tables while using the DB'
    echo
    echo '     "alice=c/accounting" means:'
    echo '       role "postgres" allowed "alice" to:'
@@ -153,7 +153,7 @@ echo "$access_privileges" \
      echo '    c -- CONNECT to DB'
   fi
   if [[ "$permissions" =~ T ]]; then
-     echo '    T -- create TEMPORARAY tables while using the DB'
+     echo '    T -- create TEMPORARY tables while using the DB'
   fi
   if [[ "$permissions" =~ arwdDxt ]]; then
      echo '    arwdDxt -- ALL PRIVILEGES (for tables, varies for other objects)'
