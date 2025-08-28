@@ -22,7 +22,7 @@ help() {
    echo '    script installed in a standard binary path.'
    echo
    echo '    ATTENTION: when getting files from a jail we will at least partly'
-   echo '               circumven the file name sanitacion that firejail is'
+   echo '               circumvent the file name sanitacion that firejail is'
    echo '               trying to enforce'
    echo
    exit 1
