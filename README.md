@@ -613,6 +613,10 @@ Here's the --help for each shell script:
 	    https://github.com/tpo/little_shell_scripts/blob/master/file_chooser
 	    script installed in a standard binary path.
 	
+	    ATTENTION: when getting files from a jail we will at least partly
+	               circumvent the file name sanitacion that firejail is
+	               trying to enforce
+	
 ### git_show_upstream_log
 
 	usage: git_show_upstream_log
@@ -920,13 +924,13 @@ Here's the --help for each shell script:
 	     $ psql -c "\l accounting" | psql_access_priv_decoder
 	     "=T/accounting" means:
 	       role "postgres" allowed "PUBLIC" to:
-	         T -- create TEMPORARAY tables while using the DB
+	         T -- create TEMPORARY tables while using the DB
 	
 	     "henry=CTc/accounting" means:
 	       role "postgres" allowed "henry" to:
 	         C -- CREATE new tables/schemas
 	         c -- CONNECT to DB
-	         T -- create TEMPORARAY tables while using the DB
+	         T -- create TEMPORARY tables while using the DB
 	
 	     "alice=c/accounting" means:
 	       role "postgres" allowed "alice" to:
