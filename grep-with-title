@@ -1,0 +1,19 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: grep-with-title pattern'
+   echo '       grep-with-title --help'
+   echo
+   echo '    Will grep STDIN, but will preserve the first line.'
+   echo '    Under the hood `sed` is used for grepping.'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+set -e          # stop on error
+set -u          # stop on undefined variable
+set -o pipefail # stop part of pipeline failing
+
+sed -n "1p; /$1/p"

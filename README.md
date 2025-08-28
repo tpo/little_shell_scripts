@@ -663,7 +663,15 @@ Here's the --help for each shell script:
 	   * allow googleads-doubleclick access
 	   * execute `bromium [arguments]`
 	   * disallow googleads-doubleclick access
-	
+
+### grep-with-title
+
+	usage: grep-with-title pattern
+	       grep-with-title --help
+
+	    Will grep STDIN, but will preserve the first line.
+	    Under the hood `sed` is used for grepping.
+
 ### gtranslate
 
 	usage: gtranslate
