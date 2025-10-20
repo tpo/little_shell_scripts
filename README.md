@@ -944,6 +944,13 @@ Here's the --help for each shell script:
 	       role "postgres" allowed "alice" to:
 	         c -- CONNECT to DB
 
+### rasa
+
+	usage: rasa
+	       rasa --help
+
+	    Listen to Radio Rasa from the command line
+
 ### rasa-download
 
 	usage: rasa-download
