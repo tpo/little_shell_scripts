@@ -635,6 +635,13 @@ Here's the --help for each shell script:
 	               circumvent the file name sanitacion that firejail is
 	               trying to enforce
 
+### firejail_save_all_ff_tabs
+
+	usage: firejail_save_all_ff_tabs
+	       firejail_save_all_ff_tabs --help
+
+	    Save all tabs of all firefoxes inside firejail
+
 ### git_show_upstream_log
 
 	usage: git_show_upstream_log
