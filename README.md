@@ -526,6 +526,24 @@ Here's the --help for each shell script:
 
 	    Depends on `kdialog`.
 
+### ff_tabs_list_in
+
+
+	usage: ff_tabs_list_in recovery_file [output_template]
+
+	    List all Firefox tabs with title and URL
+	    
+	    Supported input: json or jsonlz4 recovery files
+	    Default output: title (URL)
+	    Output format can be specified as argument
+	    
+	    Example:
+
+	        ff_tabs_list_in ~/.mozilla/firefox/1du5sdlg.default-esr/sessionstore-backups/recovery.jsonlz4 '<a href="%(url)s">%(title)s</a>'
+
+	    Based on https://gist.github.com/tmonjalo/33c4402b0d35f1233020bf427b5539fa
+	    by thomas@monjalon.net
+
 ### file_chooser
 
 	usage: file_chooser
