@@ -1063,27 +1063,6 @@ Here's the --help for each shell script:
 	    This commend will ssh to the host and display all
 	    its public keys
 
-### ssh-update-config
-
-	usage: (ssh-update-config|ssh-update-config-template)
-
-	    Construct a new ~/.ssh/config from ~/.ssh/config.d.
-	    A backup of the current ~/.ssh/config is done
-	    automatically.
-
-	    If called as `ssh-update-config` then:
-
-	      * ~/.ssh/config.d/* is `cat`ed together and
-	        the result used as ~/.ssh/config
-
-	    If called as `ssh-update-config-template` then:
-
-	      * ~/.ssh/config.d/main.template is
-	        `source`d instead and the result written to
-	        ~/.ssh/config
-
-	    ssh-update-config requires the `versioned_backup`
-	    script
 ### ssh-wait
 
 	usage: ssh-wait [--no-multiplex] host
