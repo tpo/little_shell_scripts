@@ -24,6 +24,10 @@ help_bash_aliases() {
   echo "    apstv     - execute 'ansible-playbook setup.yml \\"
   echo "                        --vault-password-file ~/vault_from_gpg_agent.py \\"
   echo "                        --tags='"
+  echo "    select_stdin - bash select, but reads from STDIN. whitespace in input breaks it!"
+  echo "                   Sets the variable SELECTION. Use like this:"
+  echo
+  echo '                       select_stdin < <( ls ); echo "$SELECTION"'
   echo
   echo '    apt-find file - say which Debian package contains "file"'
   echo '                    needs apt-file'
@@ -217,4 +221,7 @@ cdplaybook() {
   done
 }
 
-
+select_stdin() {
+  local input=`cat`
+  select SELECTION in $input; do echo $SELECTION; break; done < /dev/tty
+}
