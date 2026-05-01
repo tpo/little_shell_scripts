@@ -776,6 +776,23 @@ Here's the --help for each shell script:
 	       linechop --help
 
 	    chop lines of at right margin of the screen
+### list_images_in_manifests_on_docker_hub
+
+	usage: ls *.yaml | list_images_in_manifests_on_docker_hub
+	       list_images_in_manifests_on_docker_hub --help
+
+	    Will lookup if image and version is available for
+	    each:
+
+	        image: name:tag
+
+	    line in the provided manifests.
+
+	    Currently only a single `image` line per manifest
+	    is supported.
+
+	    Requires `skopeo` to be installed.
+
 ### mail_to_self
 
 	usage: echo "mail text" | mail_to_self SUBJECT

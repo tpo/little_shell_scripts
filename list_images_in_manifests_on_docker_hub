@@ -1,0 +1,66 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: ls *.yaml | list_images_in_manifests_on_docker_hub'
+   echo '       list_images_in_manifests_on_docker_hub --help'
+   echo
+   echo '    Will lookup if image and version is available for'
+   echo '    each:'
+   echo
+   echo '        image: name:tag'
+   echo
+   echo '    line in the provided manifests.'
+   echo
+   echo '    Currently only a single `image` line per manifest'
+   echo '    is supported.'
+   echo
+   echo '    Requires `skopeo` to be installed.'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+set -e          # stop on error
+set -u          # stop on undefined variable
+set -o pipefail # stop part of pipeline failing
+#!/bin/bash
+
+while IFS= read manifest; do
+
+  echo "====================="
+  echo "manifest: $manifest"
+
+  image=$( grep image: "$manifest" | sed 's/.*image: //' )
+  container=$( echo "$image" | sed 's/:.*//' )
+
+  if echo "$image" | grep -q :; then
+    tag=$( echo "$image" | sed 's/.*://' )
+  else
+    tag=""
+  fi
+
+  echo "image: $image"
+  echo "tag: $tag"
+
+  skopeo_output=$( skopeo list-tags "docker://docker.io/$container" )
+  if [ "$tag" != "" ]; then
+    echo -n "specific version available: "
+    if echo "$skopeo_output" | grep -q "$tag"; then
+      echo "yes"
+      list_versions="false"
+    else
+      echo "no"
+      list_versions="true"
+    fi
+  else
+    list_versions="true"
+  fi
+  if [ "$list_versions" == "true" ]; then
+    echo "versions available:"
+    echo "$skopeo_output"
+  fi
+
+done
+
+
