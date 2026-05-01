@@ -145,6 +145,10 @@ Here's the --help for each shell script:
 	    apstv     - execute 'ansible-playbook setup.yml \
 	                        --vault-password-file ~/vault_from_gpg_agent.py \
 	                        --tags='
+	    select_stdin - bash select, but reads from STDIN. whitespace in input breaks it!
+	                   Sets the variable SELECTION. Use like this:
+
+	                       select_stdin < <( ls ); echo "$SELECTION"
 
 	    apt-find file - say which Debian package contains "file"
 	                    needs apt-file
