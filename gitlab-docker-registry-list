@@ -1,0 +1,27 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: gitlab-docker-registry-list'
+   echo '       gitlab-docker-registry-list --help'
+   echo
+   echo '    List all Docker registries in your Gitlab'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+
+#set -e          # stop on error
+#set -u          # stop on undefined variable
+#set -o pipefail # stop part of pipeline failing
+
+# list of projects i am member of, output path_with_namespace property
+projects=`glab repo list --member --per-page 500 --output json --jq .[].path_with_namespace`
+
+for p in $projects
+do
+  echo "=============================================================="
+  echo "Project: $p"
+  echo "=============================================================="
+  glab container-registry repository list --repo "$p"
+done 

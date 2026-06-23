@@ -646,6 +646,13 @@ Here's the --help for each shell script:
 
 	    Save all tabs of all firefoxes inside firejail
 
+### gitlab-docker-registry-list
+
+	usage: gitlab-docker-registry-list
+	       gitlab-docker-registry-list --help
+
+	    List all Docker registries in your Gitlab
+
 ### git_show_upstream_log
 
 	usage: git_show_upstream_log
