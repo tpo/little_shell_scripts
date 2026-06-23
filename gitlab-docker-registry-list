@@ -15,8 +15,8 @@ help() {
 #set -u          # stop on undefined variable
 #set -o pipefail # stop part of pipeline failing
 
-# list of projects i am member of, output path_with_namespace property
-projects=`glab repo list --member --per-page 500 --output json --jq .[].path_with_namespace`
+# list projects, output path_with_namespace property
+projects=`glab repo list --all --per-page 500 --output json --jq .[].path_with_namespace`
 
 for p in $projects
 do
