@@ -14,5 +14,7 @@ help() {
 [ "$1" == "--help" ] && help
 
 # -private -> empty home
+# -c ...   -> do not show the "Firefox Privacy Notice" tab
 #
-firejail --private --apparmor --profile=/etc/firejail/firefox.profile /usr/bin/firefox -no-remote "$@"
+firejail --private --apparmor --profile=/etc/firejail/firefox.profile bash \
+         -c 'firefox -CreateProfile test-profile; DIR=$( find ~/.mozilla/firefox/ -name "*test-profile"); echo '"'"'user_pref("datareporting.policy.dataSubmissionPolicyBypassNotification",true);'"'"' > "$DIR/user.js"; firefox -P test-profile -no-remote '"$@"
