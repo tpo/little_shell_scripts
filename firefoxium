@@ -2,9 +2,15 @@
 
 help() {
    echo 'usage: firefoxium [URL|firefox arguments]'
+   echo '       firefoxium --recover PATH_TO_RECOVER_FILE'
    echo '       firefoxium --help'
    echo
    echo '   Run firefox in a jail with a fresh profile.'
+   echo
+   echo '   --recover PATH_TO_RECOVER_FILE - recover the state saved in'
+   echo '                                    the PATH_TO_RECOVER_FILE.'
+   echo '                                    See'
+   echo '                                    `firefoxium_rescue_tabs --help`'
    echo
    echo '   Depends on `firejail`.'
    echo
@@ -15,14 +21,49 @@ help() {
 
 uuid=`mkpasswd`
 
+user_js_tmp=`mktemp /tmp/foo-firefoxium-XXXXXX`
+
+cleanup() {
+  rm "$user_js_tmp"
+}
+
+trap cleanup EXIT INT TERM
+
 # -private -> empty home
-# -c ...   -> do not show the "Firefox Privacy Notice" tab
-#
 firejail --private --apparmor --profile=/etc/firejail/firefox.profile --name=firefoxium-$uuid bash -c "sleep infinity" &
 PID=$!
 disown $PID # don't close if shell closes!
 until [ -e /run/firejail/name/$PID ]; do sleep 0.1; done
 firejail --join=firefoxium-$uuid firefox -CreateProfile firefoxium-profile
-firejail --join=firefoxium-$uuid bash -c 'DIR=$( find ~/.mozilla/firefox/ -name "*firefoxium-profile"); echo '"'"'user_pref("datareporting.policy.dataSubmissionPolicyBypassNotification",true);'"'"' > "$DIR/user.js"'
+FF_PROFILE_DIR=`firejail --join=firefoxium-$uuid find "$HOME/.mozilla/firefox/" -name "*firefoxium-profile" | tail -n 1`
+
+if [ "$1" == "--recover" ]; then
+  shift
+  RECOVER_FILE_PATH="$1"
+  RECOVER_FILE_NAME="$( basename "$1" )"
+  shift
+  firejail --join=firefoxium-$uuid mkdir "$FF_PROFILE_DIR/sessionstore-backups"
+  firejail --put=firefoxium-$uuid "$RECOVER_FILE_PATH" "$FF_PROFILE_DIR/sessionstore-backups/$RECOVER_FILE_NAME"
+
+  (
+    # don't show:
+    # * the "We love keeping you safe" tab
+    # * an empty tab
+    # * an import bookmarks button
+    #
+    echo 'user_pref("browser.aboutwelcome.enabled", false);'
+    echo 'user_pref("browser.startup.homepage_override.mstone", "ignore");'
+    echo 'user_pref("startup.homepage_welcome_url", "");'
+    echo 'user_pref("startup.homepage_welcome_url.additional", "");'
+    echo 'user_pref("browser.startup.firstrunSkipsHomepage", true);'
+    echo 'user_pref("browser.shell.checkDefaultBrowser", false);'
+  ) >> "$user_js_tmp"
+fi
+
+# do not show the "Firefox Privacy Notice" tab
+echo 'user_pref("datareporting.policy.dataSubmissionPolicyBypassNotification",true);' >> "$user_js_tmp"
+
+firejail --put=firefoxium-$uuid "$user_js_tmp" "$FF_PROFILE_DIR/user.js"
+
 firejail --join=firefoxium-$uuid firefox -P firefoxium-profile -no-remote "$@"
 firejail --shutdown=firefoxium-$uuid
