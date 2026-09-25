@@ -1,7 +1,7 @@
 #!/bin/bash
 
 help() {
-   echo 'usage: firejail_browser'
+   echo 'usage: firejail_browser [action]'
    echo '       firejail_browser --help'
    echo
    echo '    This script lists you the running firejails,'
@@ -16,6 +16,10 @@ help() {
    echo '      * put a file into the jail (currently not'
    echo '        implemented)'
    echo '      * open a shell in the jail'
+   echo '      * output_id   - output the id of the firejail session'
+   echo
+   echo '    If `action` is not given, then firejail_browser lets you select'
+   echo '    the action to execute interactively'
    echo
    echo '    Put and get require you to have the'
    echo '    https://github.com/tpo/little_shell_scripts/blob/master/file_chooser'
@@ -29,6 +33,11 @@ help() {
 }
 
 [ "$1" == "--help" ] && help
+if [ "$1" == "" ]; then
+  action=
+else
+  action="$1"
+fi
 
 set -e          # stop on error
 set -u          # stop on undefined variable
@@ -96,9 +105,11 @@ done
 
 jail=$( echo "$jail_line" | sed 's/:.*//' )
 
-select action in get multi_get put exec; do
-    break
-done
+if [ "$action" == "" ]; then
+  select action in get multi_get put exec output_id; do
+      break
+  done
+fi
 
 initial_dir="Downloads"
 
@@ -126,6 +137,9 @@ case "$action" in
     ;;
   exec)
     firejail --join=$jail
+    ;;
+  output_id)
+    echo "$jail"
     ;;
   *)
     echo "not implemented"
