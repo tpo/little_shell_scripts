@@ -20,6 +20,7 @@ help() {
    echo '                      implemented)'
    echo '      * exec        - open a shell in the jail'
    echo '      * output_id   - output the id of the firejail session'
+   echo '      * output_name - output the id of the firejail session'
    echo
    echo '    If `action` is not given, then firejail_browser lets you select'
    echo '    the action to execute interactively'
@@ -115,7 +116,7 @@ else
 fi
 
 if [ "$action" == "" ]; then
-  select action in get multi_get put exec output_id; do
+  select action in get multi_get put exec output_id output_name; do
       break
   done
 fi
@@ -149,6 +150,9 @@ case "$action" in
     ;;
   output_id)
     echo "$jail"
+    ;;
+  output_name)
+    echo "$jail_name"
     ;;
   *)
     echo "not implemented"
