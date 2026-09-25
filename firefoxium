@@ -13,8 +13,16 @@ help() {
 
 [ "$1" == "--help" ] && help
 
+uuid=`mkpasswd`
+
 # -private -> empty home
 # -c ...   -> do not show the "Firefox Privacy Notice" tab
 #
-firejail --private --apparmor --profile=/etc/firejail/firefox.profile bash \
-         -c 'firefox -CreateProfile firefoxium-profile; DIR=$( find ~/.mozilla/firefox/ -name "*firefoxium-profile"); echo '"'"'user_pref("datareporting.policy.dataSubmissionPolicyBypassNotification",true);'"'"' > "$DIR/user.js"; firefox -P firefoxium-profile -no-remote '"$@"
+firejail --private --apparmor --profile=/etc/firejail/firefox.profile --name=firefoxium-$uuid bash -c "sleep infinity" &
+PID=$!
+disown $PID # don't close if shell closes!
+until [ -e /run/firejail/name/$PID ]; do sleep 0.1; done
+firejail --join=firefoxium-$uuid firefox -CreateProfile firefoxium-profile
+firejail --join=firefoxium-$uuid bash -c 'DIR=$( find ~/.mozilla/firefox/ -name "*firefoxium-profile"); echo '"'"'user_pref("datareporting.policy.dataSubmissionPolicyBypassNotification",true);'"'"' > "$DIR/user.js"'
+firejail --join=firefoxium-$uuid firefox -P firefoxium-profile -no-remote "$@"
+firejail --shutdown=firefoxium-$uuid
