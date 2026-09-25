@@ -58,12 +58,12 @@ sanitize_file() {
   local sane_file_path
   local tmp_dir
 
-  tmp_dir="$( firejail --join=$jail bash -c "mktemp -d /tmp/firejail_browser_sanitized_files_XXXXXX" )"
+  tmp_dir="$( firejail --join=$jail_id bash -c "mktemp -d /tmp/firejail_browser_sanitized_files_XXXXXX" )"
   sane_file_name="$( echo "$( basename "$file_path" )" | sed 's/,/_/g' )"
   sane_file_path="$tmp_dir/$sane_file_name"
 
   if [ "$file_path" != "$sane_file_path" ]; then
-    firejail --join=$jail bash -c "ln -s \"$file_path\" \"$sane_file_path\""
+    firejail --join=$jail_id bash -c "ln -s \"$file_path\" \"$sane_file_path\""
   fi
 
   # return sanitized path
@@ -73,7 +73,7 @@ sanitize_file() {
 get() {
   local echo_dir="$1"
   local initial_dir="$2"
-  local file_path="$( firejail --join=$jail bash -c "cd \"$initial_dir\"; file_chooser" )"
+  local file_path="$( firejail --join=$jail_id bash -c "cd \"$initial_dir\"; file_chooser" )"
 
   # firejail will refuse to get files with real names.
   #
@@ -87,7 +87,7 @@ get() {
   file_name="$( basename "$file_path" )"
   sane_file_path="$( sanitize_file "$file_path" )"
   sane_file_name="$( basename "$sane_file_path" )"
-  firejail --get=$jail "$sane_file_path"
+  firejail --get=$jail_id "$sane_file_path"
   if [ "$file_name" != "$sane_file_name" ]; then
     mv "$sane_file_name" "$file_name"
   fi
@@ -106,7 +106,13 @@ done
 
 [ "$jail_line" == "Quit" ] && exit 0
 
-jail=$( echo "$jail_line" | sed 's/:.*//' )
+jail_pid=$( echo "$jail_line" | sed 's/:.*//' )
+jail_name=$( echo "$jail_line" | cut -d: -f3 )
+if [ "$jail_name" != "" ]; then
+  jail_id="$jail_name"
+else
+  jail_id="$jail_pid"
+fi
 
 if [ "$action" == "" ]; then
   select action in get multi_get put exec output_id; do
@@ -132,14 +138,14 @@ case "$action" in
     src="$( file_chooser )"
     filename="$( basename "$src" )"
     dest="/tmp/$filename"
-    if firejail --put=$jail "$src" "$dest"; then
+    if firejail --put=$jail_id "$src" "$dest"; then
       echo "'$src' was copied to '$dest'"
     else
       echo "There was some error"
     fi
     ;;
   exec)
-    firejail --join=$jail
+    firejail --join=$jail_id
     ;;
   output_id)
     echo "$jail"
