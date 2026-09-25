@@ -1,0 +1,39 @@
+#!/bin/bash
+
+help() {
+   echo 'usage: firefoxium_cat_recovery name'
+   echo '       firefoxium_cat_recovery --help'
+   echo
+   echo '   gets the recovery.jsonlz4 file of a firefox browser running inside'
+   echo '   a firejail defined by the firejails given by "name" and outputs it'
+   echo '   to stdout.'
+   echo
+   echo '   - name - name of the firejail sandbox'
+   echo
+   exit 1
+}
+
+[ "$1" == "--help" ] && help
+[ "$1" == "" ] && echo "ERROR: you need to provide the name parameter" >&2 && exit 2
+
+set -e          # stop on error
+set -u          # stop on undefined variable
+set -o pipefail # stop part of pipeline failing
+
+jail="$1"
+
+files="$( firejail --join=$jail bash -c 'find ~/.mozilla/firefox/ -name recovery.jsonlz4' )"
+
+if [[ -z "$files" ]]; then
+    echo "ERROR: no recovery.jsonlz4 found under $root" >&2
+    echo "hint: firefox may not have written a session backup yet" >&2
+    exit 4
+elif [[ $(wc -l <<< "$files") -gt 1 ]]; then
+    echo "ERROR: multiple recovery.jsonlz4 files found under $root, refusing to guess:" >&2
+    echo "$files" >&2
+    exit 5
+else
+    file="$files"
+fi
+
+firejail --join=$jail cat "$file"
