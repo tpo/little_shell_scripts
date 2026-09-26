@@ -76,27 +76,6 @@ Here's the --help for each shell script:
 	    See `ansible-password-file-from-ansible.cfg-wrapper --help` for
 	    further help
 
-### ansible-vault-show-secret
-
-	usage: ansible-vault-show-secret yq-expression inventory-file-with-secret
-	       ansible-vault-show-secret --help
-
-	   Example:
-	       $ cat inventory/group_vars/all/samba-password
-	       samba_pwd: !vault |
-	                 $ANSIBLE_VAULT;1.1;AES256
-	                 27313536676839633045586678353332333735663738623162633435646764768181920237272716
-	                 [...]
-
-	       $ ansible-vault-show-secret .samba_pwd inventory/group_vars/all/samba-password
-	       Decryption successful
-	       s3cr3t
-
-	       $ ansible-vault-show-secret .samba_pwd inventory/group_vars/all/samba-password | cat
-	       s3cr3t
-
-	   ATTENTION: this uses mikefarah's yq
-
 ### ansible-vault-password-file-from-ansible.cfg
 
 	usage: ansible-vault-password-file-from-ansible.cfg [ansible_vault_parameters]*
@@ -119,6 +98,27 @@ Here's the --help for each shell script:
 	   or set `vault_password_file` in your ansible
 	   config file, otherwise ansible-vault-rgrep will
 	   be hardly useful.
+
+### ansible-vault-show-secret
+
+	usage: ansible-vault-show-secret yq-expression inventory-file-with-secret
+	       ansible-vault-show-secret --help
+
+	   Example:
+	       $ cat inventory/group_vars/all/samba-password
+	       samba_pwd: !vault |
+	                 $ANSIBLE_VAULT;1.1;AES256
+	                 27313536676839633045586678353332333735663738623162633435646764768181920237272716
+	                 [...]
+
+	       $ ansible-vault-show-secret .samba_pwd inventory/group_vars/all/samba-password
+	       Decryption successful
+	       s3cr3t
+
+	       $ ansible-vault-show-secret .samba_pwd inventory/group_vars/all/samba-password | cat
+	       s3cr3t
+
+	   ATTENTION: this uses mikefarah's yq
 
 ### bash_aliases
 
@@ -587,11 +587,36 @@ Here's the --help for each shell script:
 ### firefoxium
 
 	usage: firefoxium [URL|firefox arguments]
+	       firefoxium --recover PATH_TO_RECOVER_FILE
 	       firefoxium --help
 
 	   Run firefox in a jail with a fresh profile.
 
+	   --recover PATH_TO_RECOVER_FILE - recover the state saved in
+	                                    the PATH_TO_RECOVER_FILE.
+	                                    See
+	                                    `firefoxium_rescue_tabs --help`
+
 	   Depends on `firejail`.
+
+### firefoxium_cat_recovery
+
+	usage: firefoxium_cat_recovery name
+	       firefoxium_cat_recovery --help
+
+	   gets the recovery.jsonlz4 file of a firefox browser running inside
+	   a firejail defined by the firejails given by "name" and outputs it
+	   to stdout.
+
+	   - name - name of the firejail sandbox
+
+### firefoxium_rescue_tabs
+
+	usage: firefoxium_rescue_tabs
+	       firefoxium_rescue_tabs --help
+
+	    Let the user choose which firefoxium tabs state to
+	    save under ~/tmp/browsertabs
 
 ### firefox-sleep
 
@@ -615,21 +640,29 @@ Here's the --help for each shell script:
 
 ### firejail_browser
 
-	usage: firejail_browser
+	usage: firejail_browser [action]
 	       firejail_browser --help
 
 	    This script lists you the running firejails,
 	    lets you select one from the menu and lets you
 	    execute an action on that firejail:
-	      * get one or multiple files from that jail: will option a
-	        file selection dialogue inside the jail
-	        * use cursor and tab keys to navigate
-	        * press Space to select a file or a directory
-	        * press Enter to get file or change into directory
-	        * press CTRL-C to abort
-	      * put a file into the jail (currently not
-	        implemented)
-	      * open a shell in the jail
+	      * get         - get files from that jail: will option a
+	                      file selection dialogue inside the jail
+	                      * use cursor and tab keys to navigate
+	                      * press Space to select a file or a
+	                        directory
+	                      * press Enter to get file or change into
+	                        directory
+	                      * press CTRL-C to abort
+	      * multi_get   - same as get, but for multiple files
+	      * put         - put a file into the jail (currently not
+	                      implemented)
+	      * exec        - open a shell in the jail
+	      * output_id   - output the id of the firejail session
+	      * output_name - output the id of the firejail session
+
+	    If `action` is not given, then firejail_browser lets you select
+	    the action to execute interactively
 
 	    Put and get require you to have the
 	    https://github.com/tpo/little_shell_scripts/blob/master/file_chooser
