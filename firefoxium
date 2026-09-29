@@ -19,7 +19,7 @@ help() {
 
 [ "$1" == "--help" ] && help
 
-uuid=`mkpasswd`
+uuid=`makepasswd --chars=16`
 
 user_js_tmp=`mktemp /tmp/foo-firefoxium-XXXXXX`
 
