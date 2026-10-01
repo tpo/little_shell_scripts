@@ -37,14 +37,15 @@ disown $PID # don't close if shell closes!
 until [ -e /run/firejail/name/$PID ]; do sleep 0.1; done
 firejail --join=$JAIL_NAME firefox -CreateProfile firefoxium-profile
 FF_PROFILE_DIR=`firejail --join=$JAIL_NAME find "$HOME/.config/mozilla/firefox/" -name "*firefoxium-profile" | tail -n 1`
+SESSION_BACKUPS="$FF_PROFILE_DIR/sessionstore-backups"
 
 if [ "$1" == "--recover" ]; then
   shift
   RECOVER_FILE_PATH="$1"
   RECOVER_FILE_NAME="$( basename "$1" )"
   shift
-  firejail --join=$JAIL_NAME mkdir "$FF_PROFILE_DIR/sessionstore-backups"
-  firejail --put=$JAIL_NAME "$RECOVER_FILE_PATH" "$FF_PROFILE_DIR/sessionstore-backups/$RECOVER_FILE_NAME"
+  firejail --join=$JAIL_NAME mkdir "$SESSION_BACKUPS"
+  firejail --put=$JAIL_NAME "$RECOVER_FILE_PATH" "$SESSION_BACKUPS/$RECOVER_FILE_NAME"
 
   (
     # don't show:
