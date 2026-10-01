@@ -42,10 +42,9 @@ SESSION_BACKUPS="$FF_PROFILE_DIR/sessionstore-backups"
 if [ "$1" == "--recover" ]; then
   shift
   RECOVER_FILE_PATH="$1"
-  RECOVER_FILE_NAME="$( basename "$1" )"
   shift
   firejail --join=$JAIL_NAME mkdir "$SESSION_BACKUPS"
-  firejail --put=$JAIL_NAME "$RECOVER_FILE_PATH" "$SESSION_BACKUPS/$RECOVER_FILE_NAME"
+  firejail --put=$JAIL_NAME "$RECOVER_FILE_PATH" "$SESSION_BACKUPS/recovery.jsonlz4"
 
   (
     # don't show:
