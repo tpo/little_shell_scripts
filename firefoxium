@@ -36,7 +36,7 @@ PID=$!
 disown $PID # don't close if shell closes!
 until [ -e /run/firejail/name/$PID ]; do sleep 0.1; done
 firejail --join=$JAIL_NAME firefox -CreateProfile firefoxium-profile
-FF_PROFILE_DIR=`firejail --join=firefoxium-$uuid find "$HOME/.mozilla/firefox/" -name "*firefoxium-profile" | tail -n 1`
+FF_PROFILE_DIR=`firejail --join=$JAIL_NAME find "$HOME/.config/mozilla/firefox/" -name "*firefoxium-profile" | tail -n 1`
 
 if [ "$1" == "--recover" ]; then
   shift
