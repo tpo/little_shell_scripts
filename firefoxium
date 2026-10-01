@@ -20,6 +20,7 @@ help() {
 [ "$1" == "--help" ] && help
 
 uuid=`makepasswd --chars=16`
+JAIL_NAME="firefoxium-$uuid"
 
 user_js_tmp=`mktemp /tmp/foo-firefoxium-XXXXXX`
 
@@ -30,11 +31,11 @@ cleanup() {
 trap cleanup EXIT INT TERM
 
 # -private -> empty home
-firejail --private --apparmor --profile=/etc/firejail/firefox.profile --name=firefoxium-$uuid bash -c "sleep infinity" &
+firejail --private --apparmor --profile=/etc/firejail/firefox.profile --name=$JAIL_NAME bash -c "sleep infinity" &
 PID=$!
 disown $PID # don't close if shell closes!
 until [ -e /run/firejail/name/$PID ]; do sleep 0.1; done
-firejail --join=firefoxium-$uuid firefox -CreateProfile firefoxium-profile
+firejail --join=$JAIL_NAME firefox -CreateProfile firefoxium-profile
 FF_PROFILE_DIR=`firejail --join=firefoxium-$uuid find "$HOME/.mozilla/firefox/" -name "*firefoxium-profile" | tail -n 1`
 
 if [ "$1" == "--recover" ]; then
@@ -42,8 +43,8 @@ if [ "$1" == "--recover" ]; then
   RECOVER_FILE_PATH="$1"
   RECOVER_FILE_NAME="$( basename "$1" )"
   shift
-  firejail --join=firefoxium-$uuid mkdir "$FF_PROFILE_DIR/sessionstore-backups"
-  firejail --put=firefoxium-$uuid "$RECOVER_FILE_PATH" "$FF_PROFILE_DIR/sessionstore-backups/$RECOVER_FILE_NAME"
+  firejail --join=$JAIL_NAME mkdir "$FF_PROFILE_DIR/sessionstore-backups"
+  firejail --put=$JAIL_NAME "$RECOVER_FILE_PATH" "$FF_PROFILE_DIR/sessionstore-backups/$RECOVER_FILE_NAME"
 
   (
     # don't show:
@@ -57,13 +58,15 @@ if [ "$1" == "--recover" ]; then
     echo 'user_pref("startup.homepage_welcome_url.additional", "");'
     echo 'user_pref("browser.startup.firstrunSkipsHomepage", true);'
     echo 'user_pref("browser.shell.checkDefaultBrowser", false);'
+    # do not prompt the user whether he wants to restore - just restore
+    echo 'user_pref("browser.sessionstore.max_resumed_crashes", -1);'
   ) >> "$user_js_tmp"
 fi
 
 # do not show the "Firefox Privacy Notice" tab
 echo 'user_pref("datareporting.policy.dataSubmissionPolicyBypassNotification",true);' >> "$user_js_tmp"
 
-firejail --put=firefoxium-$uuid "$user_js_tmp" "$FF_PROFILE_DIR/user.js"
+firejail --put=$JAIL_NAME "$user_js_tmp" "$FF_PROFILE_DIR/user.js"
 
-firejail --join=firefoxium-$uuid firefox -P firefoxium-profile -no-remote "$@"
-firejail --shutdown=firefoxium-$uuid
+firejail --join=$JAIL_NAME firefox -P firefoxium-profile -no-remote "$@"
+firejail --shutdown=$JAIL_NAME
