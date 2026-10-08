@@ -22,7 +22,7 @@ set -o pipefail # stop part of pipeline failing
 
 jail="$1"
 
-files="$( firejail --join=$jail bash -c 'find ~/.mozilla/firefox/ -name recovery.jsonlz4' )"
+files="$( firejail --join=$jail bash -c 'find ~/.config/mozilla/firefox/ -name recovery.jsonlz4' )"
 
 if [[ -z "$files" ]]; then
     echo "ERROR: no recovery.jsonlz4 found under $root" >&2
