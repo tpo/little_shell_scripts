@@ -936,6 +936,23 @@ Here's the --help for each shell script:
 	    again, that were previously mounted into
 	    the chroot.
 
+### mutt-tag-recovered-icinga-service-messages.sh
+
+	usage: mutt-tag-recovered-icinga-service-messages.sh
+	       mutt-tag-recovered-icinga-service-messages.sh --help
+
+	   * finds the last email in /var/spool/mail/tpo whose subject matches
+	     "[RECOVERY] <service description> OK!" and
+	   * tags that message and all previous messages with subject
+	     "...<service description>"
+	   * then it opens the mbox in mutt for review
+	   * which allows you to delete those messages with
+	     ';' (apply) 'd' (delete) '$' (expunge). Also
+	     useful '/' (search) '~T' (tagged message)
+
+	   Assumes the mbox is append-only, i.e. message order in
+	   the file matches chronological order.
+
 ### mv_ln
 
 	usage: mv_ln src_ln dest_dir
