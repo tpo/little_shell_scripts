@@ -13,7 +13,7 @@ help() {
   echo
   echo '   Example:'
   echo
-  echo '       docker-compose-each.sh '"'"'LIB=brotli; $d && (dpkg -l | grep ^ii | grep $LIB); $r && (rpm -qa | grep -i $LIB); $a && (apk info | grep -i $LIB)'"'"
+  echo '       docker-compose-each.sh '"'"'LIB=brotli; ($d && (dpkg -l | grep ^ii ); $r && rpm -qa; $a && apk info ) | grep -i $LIB'"'"
   echo
   exit 1
 }

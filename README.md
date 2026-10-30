@@ -478,7 +478,7 @@ Here's the --help for each shell script:
 
 	   Example:
 
-	       docker-compose-each.sh 'LIB=brotli; $d && (dpkg -l | grep ^ii | grep $LIB); $r && (rpm -qa | grep -i $LIB); $a && (apk info | grep -i $LIB)'
+	       docker-compose-each.sh 'LIB=brotli; ($d && (dpkg -l | grep ^ii ); $r && rpm -qa; $a && apk info ) | grep -i $LIB'
 
 ### docker_list_depdendent_images
 
