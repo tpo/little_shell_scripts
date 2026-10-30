@@ -464,6 +464,22 @@ Here's the --help for each shell script:
 	      - older versions of images with identical repository and tag
 	      - dangling images
 
+### docker-compose-each.sh
+
+	usage: docker-compose-each.sh [commands]
+	       docker-compose-each.sh --help
+
+	   - iterates over each running docker compose container
+	   - displays its OS
+	   - if given executes the given "commands" string
+	     in a shell inside the container. The shell will have
+	     the variables "a", "d", "r" set to true or false depending
+	     on whether it is running in a rpm, dpkg or alpine container.
+
+	   Example:
+
+	       docker-compose-each.sh 'LIB=brotli; $d && (dpkg -l | grep ^ii | grep $LIB); $r && (rpm -qa | grep -i $LIB); $a && (apk info | grep -i $LIB)'
+
 ### docker_list_depdendent_images
 
 	usage: docker_list_depdendent_images [-nh] [-v] [-r] IMAGE_ID
