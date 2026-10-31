@@ -626,6 +626,13 @@ Here's the --help for each shell script:
 
 	   - name - name of the firejail sandbox
 
+### firefoxium_recover_last_tabs
+
+	usage: firefoxium_recover_last_tabs
+	       firefoxium_recover_last_tabs --help
+
+	    Start firefoxium with the tab set that was rescued last
+
 ### firefoxium_rescue_tabs
 
 	usage: firefoxium_rescue_tabs
