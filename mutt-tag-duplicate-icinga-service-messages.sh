@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+#
+# claude --resume 298f08ca-43f4-4e07-b257-179a6b9f1fca
 
 import mailbox
 import os
