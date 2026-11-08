@@ -14,6 +14,7 @@ Here's the --help for each shell script:
 	    be compatible with windows.
 
 	    7ze will ask for the password.
+
 ### ansible-password-file-from-ansible.cfg
 
 	usage: ansible-password-file-from-ansible.cfg [ansible_vault_parameters]*
@@ -932,6 +933,7 @@ Here's the --help for each shell script:
 
 	./modinfo_all : list information on all currently installed kernel modules
 	./modinfo_all --desc : list only description of each module
+
 ### mount_encrypted
 
 	usage: mount_encrypted [options] image [mountpoint]
@@ -996,6 +998,7 @@ Here's the --help for each shell script:
 
 	  Move the symbolic link src_ln into dest_dir while
 	  keeping it relative
+
 ### netstat_cmdline
 
 	usage: netstat_cmdline [netstat_options]*
@@ -1041,6 +1044,7 @@ Here's the --help for each shell script:
 	    -w    wrap lines instead of chopping them off
 
 	    psa depends on the linechop tool.
+
 ### psql_access_priv_decoder
 
 	usage: psql_access_priv_decoder
@@ -1135,6 +1139,7 @@ Here's the --help for each shell script:
 	       show_csv --help
 
 	    pretty print and page CSV file with 'less'
+
 ### show_rh_updates
 
 	usage: show_rh_updates [--help]
@@ -1183,6 +1188,7 @@ Here's the --help for each shell script:
 	       ssh-wait --help
 
 	   wait for ssh to become available
+
 ### start_dependent_systemd_service
 
 	usage: start_dependent_systemd_service serviceA serviceB
@@ -1297,6 +1303,7 @@ Here's the --help for each shell script:
 	    foo.0002
 	    bar.mp3
 	    bar.0001.mp3
+
 ### vimgrep
 
 	usage: vimgrep (REGULAR_EXPRESSION|rg_option)+
@@ -1373,6 +1380,7 @@ Here's the --help for each shell script:
 	    and filter out the relevant fields. Used as a
 	    help tool to manually drop spammer IPs and
 	    networks into a firewall
+
 ### window
 
 	usage: window (kill|sleep|wake|minimize|pid|pgid) ...

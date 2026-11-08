@@ -11,6 +11,7 @@ help() {
   echo "    be compatible with windows."
   echo
   echo "    7ze will ask for the password."
+  echo
   exit 1
 }
 

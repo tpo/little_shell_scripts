@@ -12,6 +12,7 @@ help() {
    echo '    -w    wrap lines instead of chopping them off'
    echo
    echo '    psa depends on the 'linechop' tool.'
+   echo
    exit 1
 }
 

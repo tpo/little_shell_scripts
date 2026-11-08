@@ -33,6 +33,7 @@ def help_and_exit
   puts "    foo.0002"
   puts "    bar.mp3"
   puts "    bar.0001.mp3"
+  puts
   exit -1
 end
 

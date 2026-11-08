@@ -9,6 +9,7 @@ help() {
    echo
    echo '  Move the symbolic link src_ln into dest_dir while'
    echo '  keeping it relative'
+   echo
    exit 1
 }
 

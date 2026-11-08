@@ -3,6 +3,7 @@
 help() {
   echo "$0 : list information on all currently installed kernel modules"
   echo "$0 --desc : list only description of each module"
+  echo
 }
 
 [ "$1" = "--help" ] && help && exit 1

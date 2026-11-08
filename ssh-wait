@@ -5,6 +5,7 @@ help() {
    echo '       ssh-wait --help'
    echo
    echo '   wait for ssh to become available'
+   echo
    exit 1
 }
 

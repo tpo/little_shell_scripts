@@ -8,6 +8,7 @@ help() {
    echo '    and filter out the relevant fields. Used as a'
    echo '    help tool to manually drop spammer IPs and'
    echo '    networks into a firewall'
+   echo
    exit 1
 }
 

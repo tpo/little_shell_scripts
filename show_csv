@@ -5,6 +5,7 @@ help() {
    echo '       show_csv --help'
    echo
    echo "    pretty print and page CSV file with 'less'"
+   echo
    exit 1
 }
 
