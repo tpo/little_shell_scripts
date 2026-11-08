@@ -959,7 +959,7 @@ Here's the --help for each shell script:
 	    again, that were previously mounted into
 	    the chroot.
 
-### mutt-tag-duplicate-icinga-service-messages.sh
+### mutt-tag-duplicate-icinga-service-messages.py
 
 	usage: mutt-tag-duplicate-icinga-service-messages.py
 	       mutt-tag-duplicate-icinga-service-messages.py --help
