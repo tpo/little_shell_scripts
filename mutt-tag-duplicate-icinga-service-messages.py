@@ -16,13 +16,11 @@ def help():
         usage: mutt-tag-duplicate-icinga-service-messages.py
                mutt-tag-duplicate-icinga-service-messages.py --help
 
-           - mbox_file  path to the mbox to scan
-                        defaults to /var/spool/mail/<current user>
-
            finds emails whose Subject matches "[PROBLEM] <service> is ..."
-           in the user mbox and, for the first subject shared by 2 or
-           more emails, launches mutt with those messages highlighted and
-           tagged, except for the last one, to which it jumps.
+           in /var/spool/mail/<current user> and, for the first subject
+           shared by 2 or more emails, launches mutt with those messages
+           highlighted and tagged, except for the last one, to which it
+           jumps.
         '''))
     sys.exit(1)
 

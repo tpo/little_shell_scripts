@@ -6,8 +6,8 @@ help() {
   echo 'usage: mutt-tag-recovered-icinga-service-messages.sh'
   echo '       mutt-tag-recovered-icinga-service-messages.sh --help'
   echo
-  echo "   * finds the last email in $mbox whose subject matches"
-  echo '     "[RECOVERY] <service description> OK!" and'
+  echo '   * finds the last email in /var/spool/mail/<current user>'
+  echo '     whose subject matches "[RECOVERY] <service description> OK!"'
   echo '   * tags that message and all previous messages with subject'
   echo '     "...<service description>"'
   echo '   * then it opens the mbox in mutt for review'
