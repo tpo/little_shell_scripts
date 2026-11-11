@@ -76,6 +76,8 @@ def main():
             '-e', f'color index black yellow "{pattern}"',
             '-e', f'push "{push}"',
         ])
+    else:
+        print("INFO: no duplicate emails with subject '[PROBLEM] ... is ...' found")
 
 
 if __name__ == '__main__':
